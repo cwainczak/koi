@@ -8,7 +8,7 @@ const App = () => {
     return (
         <div>
             <NavBar/>
-            // empty toolbar to push content away fom underneath the navbar
+            {/* empty toolbar to push content away fom underneath the navbar */}
             <Toolbar/>
 
             <Typography variant="h1">Hello World</Typography>
