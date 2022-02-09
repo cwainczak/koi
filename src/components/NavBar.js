@@ -11,12 +11,17 @@ import Avatar from '@mui/material/Avatar';
 import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
-
+import {withRouter} from "react-router-dom";
+import Home from "../pages/Home";
+import Friends from "../pages/Friends";
+import Chats from "../pages/Chats";
+import Profile from "../pages/Profile";
 
 const pages = ['Home', 'Friends', 'Chats'];
 const settings = ['Profile', 'Logout'];
 
-const NavBar = () => {
+const NavBar = (props) => {
+    const {history} = props;
     const [anchorElNav, setAnchorElNav] = React.useState(null);
     const [anchorElUser, setAnchorElUser] = React.useState(null);
 
@@ -27,11 +32,13 @@ const NavBar = () => {
         setAnchorElUser(event.currentTarget);
     };
 
-    const handleCloseNavMenu = () => {
+    const handleCloseNavMenu = (pageURL) => {
+        history.push(pageURL);
         setAnchorElNav(null);
     };
 
-    const handleCloseUserMenu = () => {
+    const handleCloseUserMenu = (pageURL) => {
+        history.push(pageURL);
         setAnchorElUser(null);
     };
 
@@ -72,13 +79,13 @@ const NavBar = () => {
                                 horizontal: 'left',
                             }}
                             open={Boolean(anchorElNav)}
-                            onClose={handleCloseNavMenu}
+                            onClose={() => handleCloseNavMenu(null)}
                             sx={{
                                 display: {xs: 'block', md: 'none'},
                             }}
                         >
                             {pages.map((page) => (
-                                <MenuItem key={page} onClick={handleCloseNavMenu}>
+                                <MenuItem key={page} onClick={() => handleCloseNavMenu(page)}>
                                     <Typography textAlign="center">{page}</Typography>
                                 </MenuItem>
                             ))}
@@ -96,7 +103,7 @@ const NavBar = () => {
                         {pages.map((page) => (
                             <Button
                                 key={page}
-                                onClick={handleCloseNavMenu}
+                                onClick={() => handleCloseNavMenu("/" + page)}
                                 sx={{my: 2, color: 'white', display: 'block'}}
                             >
                                 {page}
@@ -124,10 +131,10 @@ const NavBar = () => {
                                 horizontal: 'right',
                             }}
                             open={Boolean(anchorElUser)}
-                            onClose={handleCloseUserMenu}
+                            onClose={() => handleCloseUserMenu(null)}
                         >
                             {settings.map((setting) => (
-                                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                                <MenuItem key={setting} onClick={() => handleCloseUserMenu("/" + setting)}>
                                     <Typography textAlign="center">{setting}</Typography>
                                 </MenuItem>
                             ))}
@@ -139,4 +146,4 @@ const NavBar = () => {
     );
 };
 
-export default NavBar;
+export default withRouter(NavBar);
