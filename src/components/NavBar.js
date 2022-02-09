@@ -79,7 +79,7 @@ const NavBar = (props) => {
                                 horizontal: 'left',
                             }}
                             open={Boolean(anchorElNav)}
-                            onClose={() => handleCloseNavMenu(null)}
+                            onClose={() => handleCloseNavMenu()}
                             sx={{
                                 display: {xs: 'block', md: 'none'},
                             }}
@@ -131,7 +131,7 @@ const NavBar = (props) => {
                                 horizontal: 'right',
                             }}
                             open={Boolean(anchorElUser)}
-                            onClose={() => handleCloseUserMenu(null)}
+                            onClose={() => handleCloseUserMenu()}
                         >
                             {settings.map((setting) => (
                                 <MenuItem key={setting} onClick={() => handleCloseUserMenu("/" + setting)}>
