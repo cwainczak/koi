@@ -14,7 +14,7 @@ import Typography from '@mui/material/Typography';
 const SignIn = (props) => {
     const {history} = props;
 
-    const handleSubmit = (event) => {
+    const handleButtonClick = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         // eslint-disable-next-line no-console
@@ -59,7 +59,7 @@ const SignIn = (props) => {
                     <Typography component="h1" variant="h5">
                         Sign in
                     </Typography>
-                    <Box component="form" noValidate onSubmit={handleSubmit} sx={{mt: 1}}>
+                    <Box component="form" noValidate onSubmit={handleButtonClick} sx={{mt: 1}}>
                         <TextField
                             margin="normal"
                             required
