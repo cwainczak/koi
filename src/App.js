@@ -1,7 +1,7 @@
 import React from "react";
 import NavBar from "./components/NavBar";
 import Toolbar from "@mui/material/Toolbar";
-import {Route, Switch} from "react-router-dom";
+import {Redirect, Route, Switch} from "react-router-dom";
 import SignIn from "./pages/SignIn";
 import Home from "./pages/Home";
 import Friends from "./pages/Friends";
@@ -12,6 +12,11 @@ import Profile from "./pages/Profile";
 const App = () => {
     return (
         <div>
+            {/* starting at the sign-in in page */}
+            <Route exact from="/" render={props => <SignIn {...props} />}>
+                <Redirect to="/SignIn"/>
+            </Route>
+
             <Switch>
                 <Route exact from="/SignIn" render={props => <SignIn {...props} />}/>
 
