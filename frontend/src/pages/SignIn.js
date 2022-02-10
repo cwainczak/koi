@@ -93,12 +93,22 @@ const SignIn = (props) => {
                         </Button>
                         <Grid container>
                             <Grid item xs>
-                                <Link href="#" variant="body2">
+                                <Link
+                                    variant="body2"
+                                    onClick={() => {
+                                        history.push("#");
+                                    }}
+                                >
                                     Forgot password?
                                 </Link>
                             </Grid>
                             <Grid item>
-                                <Link href="#" variant="body2">
+                                <Link
+                                    variant="body2"
+                                    onClick={() => {
+                                        history.push("/SignUp");
+                                    }}
+                                >
                                     {"Don't have an account? Sign Up"}
                                 </Link>
                             </Grid>
