@@ -29,7 +29,7 @@ const App = () => {
                     <Switch>
                         <Route exact from="/Home" render={props => <Home {...props} />}/>
                         <Route exact from="/Friends" render={props => <Friends {...props} />}/>
-                        <Route exact path="/chats" render={props => <Chats {...props} />}/>
+                        <Route exact path="/Chats" render={props => <Chats {...props} />}/>
                         <Route exact path="/Profile" render={props => <Profile {...props} />}/>
                     </Switch>
                 </div>
