@@ -2,6 +2,7 @@ import React from "react";
 import NavBar from "./components/NavBar";
 import Toolbar from "@mui/material/Toolbar";
 import {Redirect, Route, Switch} from "react-router-dom";
+import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
 import Home from "./pages/Home";
 import Friends from "./pages/Friends";
@@ -19,6 +20,7 @@ const App = () => {
 
             <Switch>
                 <Route exact from="/SignIn" render={props => <SignIn {...props} />}/>
+                <Route exact from="/SignUp" render={props => <SignUp {...props} />}/>
 
                 <div>
                     <NavBar/>
