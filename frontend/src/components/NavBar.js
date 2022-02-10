@@ -17,6 +17,7 @@ import Friends from "../pages/Friends";
 import Chats from "../pages/Chats";
 import Profile from "../pages/Profile";
 
+
 const pages = ['Home', 'Friends', 'Chats'];
 const settings = ['Profile', 'Logout'];
 
@@ -38,7 +39,11 @@ const NavBar = (props) => {
     };
 
     const handleCloseUserMenu = (pageURL) => {
-        history.push(pageURL);
+        if (pageURL !== "/Logout") {
+            history.push(pageURL);
+        } else {
+            history.push("/SignIn");
+        }
         setAnchorElUser(null);
     };
 
