@@ -1,6 +1,10 @@
 
 body {
-  background: rgb(111,155,89);
-  background: linear-gradient(189deg, rgba(111,155,89,1) 0%, rgba(100,149,237,1) 100%);
-  padding: 50px;
+/*  background: rgb(111,155,89);*/
+/*  background: linear-gradient(189deg, rgba(111,155,89,1) 0%, rgba(100,149,237,1) 100%);*/
+/*  padding: 50px;*/
+
+    background: rgb(218,147,1);
+    background: linear-gradient(103deg, rgba(218,147,1,1) 0%, rgba(16,17,21,1) 100%);
+
 }
