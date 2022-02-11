@@ -53,7 +53,7 @@ const SignIn = (props) => {
                         alignItems: 'center',
                     }}
                 >
-                    <Avatar sx={{m: 1, bgcolor: '#da9301'}}>
+                    <Avatar sx={{m: 1, bgcolor: '#e4b109'}}>
                         <LockOutlinedIcon/>
                     </Avatar>
                     <Typography component="h1" variant="h5">
