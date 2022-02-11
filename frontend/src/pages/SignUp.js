@@ -68,9 +68,6 @@ const SignUp = (props) => {
                         </Grid>
                     </Grid>
                     <Button
-                        style={{
-                            backgroundColor: "#da9301",
-                        }}
                         type="submit"
                         fullWidth
                         variant="contained"
