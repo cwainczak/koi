@@ -1,6 +1,7 @@
 import React from "react";
 import NavBar from "./components/NavBar";
 import Toolbar from "@mui/material/Toolbar";
+import {createTheme, ThemeProvider} from "@mui/material";
 import {Redirect, Route, Switch} from "react-router-dom";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
@@ -10,7 +11,6 @@ import Home from "./pages/Home";
 import Friends from "./pages/Friends";
 import Chats from "./pages/Chats";
 import Profile from "./pages/Profile";
-import {createTheme, ThemeProvider} from "@mui/material";
 
 
 const App = () => {
