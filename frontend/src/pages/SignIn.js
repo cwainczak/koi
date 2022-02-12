@@ -67,7 +67,6 @@ const SignIn = (props) => {
                             id="username"
                             label="Username"
                             name="username"
-                            autoComplete="username"
                             autoFocus
                         />
                         <TextField
@@ -78,7 +77,6 @@ const SignIn = (props) => {
                             label="Password"
                             type="password"
                             id="password"
-                            autoComplete="current-password"
                         />
                         <Button
                             type="submit"

@@ -68,7 +68,6 @@ const SignUp = (props) => {
                             id="email"
                             label="Email Address"
                             name="email"
-                            autoComplete="email"
                             autoFocus
                         />
                         <TextField
@@ -78,7 +77,6 @@ const SignUp = (props) => {
                             id="username"
                             label="Username"
                             name="username"
-                            autoComplete="username"
                         />
                         <TextField
                             margin="normal"
@@ -88,7 +86,6 @@ const SignUp = (props) => {
                             label="Password"
                             type="password"
                             id="password"
-                            autoComplete="current-password"
                         />
                         <Button
                             type="submit"

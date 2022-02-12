@@ -67,7 +67,6 @@ const ResetPassword = (props) => {
                             id="code"
                             label="Code"
                             name="code"
-                            autoComplete="code"
                             autoFocus
                         />
                         <TextField
@@ -77,7 +76,6 @@ const ResetPassword = (props) => {
                             id="newPassword"
                             label="New Password"
                             name="newPassword"
-                            autoComplete="newPassword"
                         />
                         <TextField
                             margin="normal"
@@ -87,7 +85,6 @@ const ResetPassword = (props) => {
                             label="Confirm Password"
                             type="confirmPassword"
                             id="confirmPassword"
-                            autoComplete="confirmPassword"
                         />
                         <Button
                             type="submit"
