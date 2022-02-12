@@ -8,7 +8,7 @@ import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import LockOutlinedIcon from '@mui/icons-material/LockOutlined';
 import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
+import Paper from "@mui/material/Paper";
 
 
 const SignUp = (props) => {
@@ -19,6 +19,7 @@ const SignUp = (props) => {
         const data = new FormData(event.currentTarget);
         // eslint-disable-next-line no-console
         console.log({
+            email: data.get('email'),
             username: data.get('username'),
             password: data.get('password'),
         });
@@ -27,69 +28,92 @@ const SignUp = (props) => {
     };
 
     return (
-        <Container component="main" maxWidth="xs">
+        <Grid container component="main" sx={{height: '100vh'}}>
             <CssBaseline/>
-            <Box
+            <Grid
+                item
+                xs={false}
+                sm={4}
+                md={7}
                 sx={{
-                    marginTop: 8,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    alignItems: 'center',
+                    backgroundImage: 'url(https://images.hdqwalls.com/wallpapers/koi-fishes-minimal-4k-vh.jpg)',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundColor: (t) =>
+                        t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+                    backgroundSize: 'cover',
+                    backgroundPosition: 'center',
                 }}
-            >
-                <Avatar sx={{m: 1, bgcolor: '#e4b109'}}>
-                    <LockOutlinedIcon/>
-                </Avatar>
-                <Typography component="h1" variant="h5">
-                    Sign Up
-                </Typography>
-                <Box component="form" noValidate onSubmit={handleButtonClick} sx={{mt: 3}}>
-                    <Grid container spacing={2}>
-                        <Grid item xs={12}>
-                            <TextField
-                                required
-                                fullWidth
-                                id="username"
-                                label="Username"
-                                name="username"
-                                autoComplete="username"
-                            />
-                        </Grid>
-                        <Grid item xs={12}>
-                            <TextField
-                                required
-                                fullWidth
-                                name="password"
-                                label="Password"
-                                type="password"
-                                id="password"
-                                autoComplete="new-password"
-                            />
-                        </Grid>
-                    </Grid>
-                    <Button
-                        type="submit"
-                        fullWidth
-                        variant="contained"
-                        sx={{mt: 3, mb: 2}}
-                    >
+            />
+            <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
+                <Box
+                    sx={{
+                        my: 8,
+                        mx: 4,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                    }}
+                >
+                    <Avatar sx={{m: 1, bgcolor: '#e4b109'}}>
+                        <LockOutlinedIcon/>
+                    </Avatar>
+                    <Typography component="h1" variant="h5">
                         Sign Up
-                    </Button>
-                    <Grid container justifyContent="flex-end">
-                        <Grid item>
-                            <Link
-                                variant="body2"
-                                onClick={() => {
-                                    history.push("/SignIn");
-                                }}
-                            >
-                                Already have an account? Sign in
-                            </Link>
+                    </Typography>
+                    <Box component="form" noValidate onSubmit={handleButtonClick} sx={{mt: 1}}>
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="email"
+                            label="Email Address"
+                            name="email"
+                            autoComplete="email"
+                            autoFocus
+                        />
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            id="username"
+                            label="Username"
+                            name="username"
+                            autoComplete="username"
+                        />
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="password"
+                            label="Password"
+                            type="password"
+                            id="password"
+                            autoComplete="current-password"
+                        />
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{mt: 3, mb: 2}}
+                        >
+                            Sign Up
+                        </Button>
+                        <Grid container justifyContent="flex-end">
+                            <Grid item>
+                                <Link
+                                    variant="body2"
+                                    onClick={() => {
+                                        history.push("/SignIn");
+                                    }}
+                                >
+                                    {"Already have an account? Sign in"}
+                                </Link>
+                            </Grid>
                         </Grid>
-                    </Grid>
+                    </Box>
                 </Box>
-            </Box>
-        </Container>
+            </Grid>
+        </Grid>
     );
 }
 
