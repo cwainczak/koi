@@ -93,7 +93,7 @@ const SignIn = (props) => {
                                 <Link
                                     variant="body2"
                                     onClick={() => {
-                                        history.push("#");
+                                        history.push("/RecoverPassword");
                                     }}
                                 >
                                     Forgot password?
