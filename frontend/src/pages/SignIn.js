@@ -9,6 +9,7 @@ import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
+import Container from "@mui/material/Container";
 
 
 const SignIn = (props) => {
@@ -59,7 +60,7 @@ const SignIn = (props) => {
                     <Typography component="h1" variant="h5">
                         Sign In
                     </Typography>
-                    <Box component="form" noValidate onSubmit={handleButtonClick} sx={{mt: 1}}>
+                    <Container component="form" noValidate onSubmit={handleButtonClick} sx={{mt: 1}} maxWidth="sm">
                         <TextField
                             margin="normal"
                             required
@@ -108,7 +109,7 @@ const SignIn = (props) => {
                                 </Link>
                             </Grid>
                         </Grid>
-                    </Box>
+                    </Container>
                 </Box>
             </Grid>
         </Grid>
