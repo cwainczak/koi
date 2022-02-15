@@ -68,7 +68,7 @@ const NavBar = (props) => {
                             aria-controls="menu-appbar"
                             aria-haspopup="true"
                             onClick={handleOpenNavMenu}
-                            color="inherit"
+                            color="primary"
                         >
                             <MenuIcon/>
                         </IconButton>
@@ -121,7 +121,7 @@ const NavBar = (props) => {
                     <Box sx={{flexGrow: 0}}>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
-                                <Avatar alt="Amir Elrahep" src="/static/images/avatar/2.jpg"/>
+                                <Avatar sx={{ bgcolor: "#e4b109"}}/>
                             </IconButton>
                         </Tooltip>
                         <Menu
