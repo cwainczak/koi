@@ -1,16 +1,16 @@
-import React from 'react';
-import AppBar from '@mui/material/AppBar';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
-import Menu from '@mui/material/Menu';
-import MenuIcon from '@mui/icons-material/Menu';
-import Container from '@mui/material/Container';
-import Avatar from '@mui/material/Avatar';
-import Button from '@mui/material/Button';
-import Tooltip from '@mui/material/Tooltip';
-import MenuItem from '@mui/material/MenuItem';
+import React from "react";
+import AppBar from "@mui/material/AppBar";
+import Box from "@mui/material/Box";
+import Toolbar from "@mui/material/Toolbar";
+import IconButton from "@mui/material/IconButton";
+import Typography from "@mui/material/Typography";
+import Menu from "@mui/material/Menu";
+import MenuIcon from "@mui/icons-material/Menu";
+import Container from "@mui/material/Container";
+import Avatar from "@mui/material/Avatar";
+import Button from "@mui/material/Button";
+import Tooltip from "@mui/material/Tooltip";
+import MenuItem from "@mui/material/MenuItem";
 import {withRouter} from "react-router-dom";
 import Home from "../pages/Home";
 import Friends from "../pages/Friends";
@@ -48,7 +48,7 @@ const NavBar = (props) => {
     };
 
     return (
-        <AppBar position="fixed" style={{backgroundColor: "#292929"}}>
+        <AppBar position="fixed">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
                     <Typography
@@ -56,6 +56,7 @@ const NavBar = (props) => {
                         noWrap
                         component="div"
                         sx={{mr: 2, display: {xs: 'none', md: 'flex'}}}
+                        color="#e4b109"
                     >
                         App Name |
                     </Typography>
@@ -67,7 +68,7 @@ const NavBar = (props) => {
                             aria-controls="menu-appbar"
                             aria-haspopup="true"
                             onClick={handleOpenNavMenu}
-                            color="inherit"
+                            color="primary"
                         >
                             <MenuIcon/>
                         </IconButton>
@@ -101,8 +102,9 @@ const NavBar = (props) => {
                         noWrap
                         component="div"
                         sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}
+                        color="#e4b109"
                     >
-                        LOGO
+                        App Name
                     </Typography>
                     <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
                         {pages.map((page) => (
@@ -119,7 +121,7 @@ const NavBar = (props) => {
                     <Box sx={{flexGrow: 0}}>
                         <Tooltip title="Open settings">
                             <IconButton onClick={handleOpenUserMenu} sx={{p: 0}}>
-                                <Avatar alt="Amir Elrahep" src="/static/images/avatar/2.jpg"/>
+                                <Avatar sx={{ bgcolor: "#e4b109"}}/>
                             </IconButton>
                         </Tooltip>
                         <Menu
