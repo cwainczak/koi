@@ -1,16 +1,16 @@
 import React from "react";
-import NavBar from "./components/NavBar";
+import NavBar from "./frontend/components/NavBar";
 import Toolbar from "@mui/material/Toolbar";
 import {createTheme, ThemeProvider} from "@mui/material";
 import {Redirect, Route, Switch} from "react-router-dom";
-import SignUp from "./pages/SignUp";
-import SignIn from "./pages/SignIn";
-import RecoverPassword from "./pages/RecoverPassword";
-import ResetPassword from "./pages/ResetPassword";
-import Home from "./pages/Home";
-import Friends from "./pages/Friends";
-import Chats from "./pages/Chats";
-import Profile from "./pages/Profile";
+import SignUp from "./frontend/pages/SignUp";
+import SignIn from "./frontend/pages/SignIn";
+import RecoverPassword from "./frontend/pages/RecoverPassword";
+import ResetPassword from "./frontend/pages/ResetPassword";
+import Home from "./frontend/pages/Home";
+import Friends from "./frontend/pages/Friends";
+import Chats from "./frontend/pages/Chats";
+import Profile from "./frontend/pages/Profile";
 
 
 const App = () => {
