@@ -1,14 +1,16 @@
 import React from "react";
 import NavBar from "./components/NavBar";
 import Toolbar from "@mui/material/Toolbar";
+import {createTheme, ThemeProvider} from "@mui/material";
 import {Redirect, Route, Switch} from "react-router-dom";
 import SignUp from "./pages/SignUp";
 import SignIn from "./pages/SignIn";
+import RecoverPassword from "./pages/RecoverPassword";
+import ResetPassword from "./pages/ResetPassword";
 import Home from "./pages/Home";
 import Friends from "./pages/Friends";
 import Chats from "./pages/Chats";
 import Profile from "./pages/Profile";
-import {createTheme, ThemeProvider} from "@mui/material";
 
 
 const App = () => {
@@ -32,6 +34,8 @@ const App = () => {
                 <Switch>
                     <Route exact from="/SignIn" render={props => <SignIn {...props} />}/>
                     <Route exact from="/SignUp" render={props => <SignUp {...props} />}/>
+                    <Route exact from="/RecoverPassword" render={props => <RecoverPassword {...props} />}/>
+                    <Route exact from="/ResetPassword" render={props => <ResetPassword {...props} />}/>
 
                     <div>
                         <NavBar/>
@@ -42,7 +46,7 @@ const App = () => {
                         <Switch>
                             <Route exact from="/Home" render={props => <Home {...props} />}/>
                             <Route exact from="/Friends" render={props => <Friends {...props} />}/>
-                            <Route exact path="/chats" render={props => <Chats {...props} />}/>
+                            <Route exact path="/Chats" render={props => <Chats {...props} />}/>
                             <Route exact path="/Profile" render={props => <Profile {...props} />}/>
                         </Switch>
                     </div>

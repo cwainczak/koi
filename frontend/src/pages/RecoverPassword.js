@@ -4,15 +4,15 @@ import Button from "@mui/material/Button";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
-import Paper from "@mui/material/Paper";
-import Box from "@mui/material/Box";
 import Grid from "@mui/material/Grid";
+import Box from "@mui/material/Box";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
+import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
 
 
-const SignIn = (props) => {
+const RecoverPassword = (props) => {
     const {history} = props;
 
     const handleButtonClick = (event) => {
@@ -20,11 +20,10 @@ const SignIn = (props) => {
         const data = new FormData(event.currentTarget);
         // eslint-disable-next-line no-console
         console.log({
-            username: data.get('username'),
-            password: data.get('password'),
+            email: data.get('email'),
         });
 
-        history.push("/Home");
+        history.push("/ResetPassword");
     };
 
     return (
@@ -58,26 +57,17 @@ const SignIn = (props) => {
                         <LockOutlinedIcon/>
                     </Avatar>
                     <Typography component="h1" variant="h5">
-                        Sign In
+                        Recover Password
                     </Typography>
                     <Container component="form" noValidate onSubmit={handleButtonClick} sx={{mt: 1}} maxWidth="sm">
                         <TextField
                             margin="normal"
                             required
                             fullWidth
-                            id="username"
-                            label="Username"
-                            name="username"
+                            id="email"
+                            label="Email Address"
+                            name="email"
                             autoFocus
-                        />
-                        <TextField
-                            margin="normal"
-                            required
-                            fullWidth
-                            name="password"
-                            label="Password"
-                            type="password"
-                            id="password"
                         />
                         <Button
                             type="submit"
@@ -85,27 +75,17 @@ const SignIn = (props) => {
                             variant="contained"
                             sx={{mt: 3, mb: 2}}
                         >
-                            Sign In
+                            Send Code
                         </Button>
-                        <Grid container>
-                            <Grid item xs>
-                                <Link
-                                    variant="body2"
-                                    onClick={() => {
-                                        history.push("/RecoverPassword");
-                                    }}
-                                >
-                                    Forgot password?
-                                </Link>
-                            </Grid>
+                        <Grid container justifyContent="flex-end">
                             <Grid item>
                                 <Link
                                     variant="body2"
                                     onClick={() => {
-                                        history.push("/SignUp");
+                                        history.push("/SignIn");
                                     }}
                                 >
-                                    {"Don't have an account? Sign Up"}
+                                    {"Already have an account? Sign in"}
                                 </Link>
                             </Grid>
                         </Grid>
@@ -116,4 +96,4 @@ const SignIn = (props) => {
     );
 }
 
-export default SignIn;
+export default RecoverPassword;
