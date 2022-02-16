@@ -44,7 +44,7 @@ const Post = (props) => {
                     <br/>
                     <br/>
 
-                    <Typography variant="body2" component="h1">Likes {props.likes}</Typography>
+                    <Typography variant="body2" component="h1">{props.likes} Likes</Typography>
 
                     <br/>
                     <Divider/>
