@@ -26,10 +26,16 @@ const Post = (props) => {
                 <Divider/>
                 <br/>
 
-                {/* post title */}
                 <Typography gutterBottom variant="h6" component="h2">{props.title}</Typography>
-                {/* post content */}
                 <Typography>{props.content}</Typography>
+
+                <br/>
+                <br/>
+
+                <Typography variant="body2" component="h1">Likes {props.likes}</Typography>
+
+                <br/>
+                <Divider/>
             </CardContent>
             <CardActions>
                 <Button size="small">Like</Button>
