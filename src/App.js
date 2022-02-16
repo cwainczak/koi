@@ -13,16 +13,16 @@ import Chats from "./frontend/pages/Chats";
 import Profile from "./frontend/pages/Profile";
 
 
-const App = () => {
-    const theme = createTheme({
-        palette: {
-            mode: "dark",
-            primary: {
-                main: "#e4b109"
-            }
+const theme = createTheme({
+    palette: {
+        mode: "dark",
+        primary: {
+            main: "#e4b109"
         }
-    });
+    }
+});
 
+const App = () => {
     return (
         <ThemeProvider theme={theme}>
             <div>
