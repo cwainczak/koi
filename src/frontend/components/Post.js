@@ -5,7 +5,8 @@ import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import Typography from '@mui/material/Typography';
 import Avatar from "@mui/material/Avatar";
-import {Divider, Grid} from "@mui/material";
+import Divider from "@mui/material/Divider";
+import Grid from "@mui/material/Grid";
 
 
 const Post = (props) => {
