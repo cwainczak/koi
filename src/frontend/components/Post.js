@@ -8,17 +8,17 @@ import Avatar from "@mui/material/Avatar";
 import {Divider, Grid} from "@mui/material";
 
 
-const Post = () => {
+const Post = (props) => {
     return (
         <Card sx={{height: '100%', display: 'flex', flexDirection: 'column'}}>
             <CardContent sx={{flexGrow: 1}}>
                 {/* user icon and name */}
                 <Grid container spacing={3}>
                     <Grid item xs="auto">
-                        <Avatar alt="Amir Elrahep" src="/static/images/avatar/2.jpg"/>
+                        <Avatar alt={props.username} src="/static/images/avatar/2.jpg"/>
                     </Grid>
                     <Grid item xs={6}>
-                        <Typography gutterBottom variant="body1" component="h1">User Name</Typography>
+                        <Typography gutterBottom variant="body1" component="h1">{props.username}</Typography>
                     </Grid>
                 </Grid>
 
@@ -27,15 +27,9 @@ const Post = () => {
                 <br/>
 
                 {/* post title */}
-                <Typography gutterBottom variant="h6" component="h2">Post Title</Typography>
+                <Typography gutterBottom variant="h6" component="h2">{props.title}</Typography>
                 {/* post content */}
-                <Typography>
-                    This is a media card. You can use this section to describe the
-                    content. This is a media card. You can use this section to describe the
-                    content. This is a media card. You can use this section to describe the
-                    content. This is a media card. You can use this section to describe the
-                    content.
-                </Typography>
+                <Typography>{props.content}</Typography>
             </CardContent>
             <CardActions>
                 <Button size="small">Like</Button>
