@@ -15,11 +15,21 @@ const theme = createTheme({
         mode: "dark",
         primary: {
             main: "#e4b109"
+        },
+        secondary: {
+            main: "#b1b3b9"
         }
     }
 });
 
 const Post = (props) => {
+    const [flag, setFlag] = React.useState(false);
+
+    const handleLikeClick = () => {
+        setFlag(!flag);
+        // todo - increment like count for ths post
+    };
+
     return (
         <ThemeProvider theme={theme}>
             <Card sx={{height: '100%', display: 'flex', flexDirection: 'column'}}>
@@ -50,8 +60,17 @@ const Post = (props) => {
                     <Divider/>
                 </CardContent>
                 <CardActions>
-                    <Button size="small">Like</Button>
-                    <Button size="small">Comment</Button>
+                    <Button
+                        size="small"
+                        onClick={handleLikeClick}
+                        color={flag ? "primary" : "secondary"}
+                    >
+                        Like</Button>
+                    <Button
+                        size="small"
+                        color="secondary"
+                    >
+                        Comment</Button>
                 </CardActions>
             </Card>
         </ThemeProvider>
