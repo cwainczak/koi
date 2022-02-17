@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -23,7 +23,7 @@ const theme = createTheme({
 });
 
 const Post = (props) => {
-    const [flag, setFlag] = React.useState(false);
+    const [flag, setFlag] = useState(false);
 
     const handleLikeClick = () => {
         setFlag(!flag);
@@ -72,6 +72,23 @@ const Post = (props) => {
                     >
                         Comment</Button>
                 </CardActions>
+
+                <Divider/>
+
+                {/* comments */}
+                <CardContent>
+                    {props.comments.map((comment) => (
+                        <Grid>
+                            <br/>
+                            <Typography variant="body1" component="h1">
+                                {comment[0]}
+                            </Typography>
+                            <Typography variant="body2" component="h1">
+                                {comment[1]}
+                            </Typography>
+                        </Grid>
+                    ))}
+                </CardContent>
             </Card>
         </ThemeProvider>
     );
