@@ -43,7 +43,7 @@ const Post = (props) => {
         setShow(prev => !prev)
     };
 
-    const handleCommentClick = () => {
+    const handleSubmitCommentClick = () => {
         // todo - add comment to the post
     };
 
@@ -108,7 +108,7 @@ const Post = (props) => {
                                 <Button
                                     variant="contained"
                                     endIcon={<SendIcon/>}
-                                    onClick={handleCommentClick}
+                                    onClick={handleSubmitCommentClick}
                                 >
                                     Comment
                                 </Button>
