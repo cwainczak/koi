@@ -8,7 +8,6 @@ import Avatar from "@mui/material/Avatar";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import {createTheme, ThemeProvider} from "@mui/material";
-import {TextFields} from "@mui/icons-material";
 import TextField from "@mui/material/TextField";
 import SendIcon from '@mui/icons-material/Send';
 
