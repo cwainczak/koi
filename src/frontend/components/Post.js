@@ -14,7 +14,7 @@ import SendIcon from '@mui/icons-material/Send';
 
 function shrinkUsername(name) {
     return {
-        children: `${name.split(' ')[0][0]}`,
+        children: `${name.split(' ')[0][0]}`
     };
 }
 
