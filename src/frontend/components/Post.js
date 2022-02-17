@@ -12,6 +12,12 @@ import TextField from "@mui/material/TextField";
 import SendIcon from '@mui/icons-material/Send';
 
 
+function shrinkUsername(name) {
+    return {
+        children: `${name.split(' ')[0][0]}`,
+    };
+}
+
 const theme = createTheme({
     palette: {
         mode: "dark",
@@ -48,7 +54,7 @@ const Post = (props) => {
                     {/* user icon and name */}
                     <Grid container spacing={3}>
                         <Grid item xs="auto">
-                            <Avatar alt={props.username} src="/static/images/avatar/2.jpg"/>
+                            <Avatar {...shrinkUsername(props.username)}/>
                         </Grid>
                         <Grid item xs={6}>
                             <Typography gutterBottom variant="body1" component="h1">{props.username}</Typography>
