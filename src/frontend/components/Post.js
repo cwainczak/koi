@@ -76,7 +76,7 @@ const Post = (props) => {
                         color="secondary"
                         onClick={handleCommentsClick}
                     >
-                        Comment</Button>
+                        Comments</Button>
                 </CardActions>
 
                 <Divider/>
