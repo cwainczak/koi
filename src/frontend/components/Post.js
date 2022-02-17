@@ -24,10 +24,15 @@ const theme = createTheme({
 
 const Post = (props) => {
     const [flag, setFlag] = useState(false);
+    const [show, setShow] = useState(false);
 
     const handleLikeClick = () => {
         setFlag(!flag);
         // todo - increment like count for ths post
+    };
+
+    const handleCommentsClick = () => {
+        setShow(prev => !prev)
     };
 
     return (
@@ -69,6 +74,7 @@ const Post = (props) => {
                     <Button
                         size="small"
                         color="secondary"
+                        onClick={handleCommentsClick}
                     >
                         Comment</Button>
                 </CardActions>
@@ -76,19 +82,21 @@ const Post = (props) => {
                 <Divider/>
 
                 {/* comments */}
-                <CardContent>
-                    {props.comments.map((comment) => (
-                        <Grid>
-                            <br/>
-                            <Typography variant="body1" component="h1">
-                                {comment[0]}
-                            </Typography>
-                            <Typography variant="body2" component="h1">
-                                {comment[1]}
-                            </Typography>
-                        </Grid>
-                    ))}
-                </CardContent>
+                {show &&
+                    <CardContent>
+                        {props.comments.map((comment) => (
+                            <Grid>
+                                <br/>
+                                <Typography variant="body1" component="h1">
+                                    {comment[0]}
+                                </Typography>
+                                <Typography variant="body2" component="h1">
+                                    {comment[1]}
+                                </Typography>
+                            </Grid>
+                        ))}
+                    </CardContent>
+                }
             </Card>
         </ThemeProvider>
     );
