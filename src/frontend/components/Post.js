@@ -8,6 +8,9 @@ import Avatar from "@mui/material/Avatar";
 import Divider from "@mui/material/Divider";
 import Grid from "@mui/material/Grid";
 import {createTheme, ThemeProvider} from "@mui/material";
+import {TextFields} from "@mui/icons-material";
+import TextField from "@mui/material/TextField";
+import SendIcon from '@mui/icons-material/Send';
 
 
 const theme = createTheme({
@@ -33,6 +36,10 @@ const Post = (props) => {
 
     const handleCommentsClick = () => {
         setShow(prev => !prev)
+    };
+
+    const handleCommentClick = () => {
+        // todo - add comment to the post
     };
 
     return (
@@ -84,6 +91,25 @@ const Post = (props) => {
                 {/* comments */}
                 {show &&
                     <CardContent>
+                        <Grid container spacing={2}>
+                            <Grid item xs>
+                                <TextField
+                                    fullWidth
+                                    label="comment"
+                                    size="small"
+                                />
+                            </Grid>
+                            <Grid item alignItems="stretch" style={{display: "flex"}}>
+                                <Button
+                                    variant="contained"
+                                    endIcon={<SendIcon/>}
+                                    onClick={handleCommentClick}
+                                >
+                                    Comment
+                                </Button>
+                            </Grid>
+                        </Grid>
+
                         {props.comments.map((comment) => (
                             <Grid>
                                 <br/>
