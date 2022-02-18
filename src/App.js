@@ -36,16 +36,11 @@ const App = () => {
     const fetchMessage = async () => {
         // Use Fetch API to fetch '/api' endpoint
         const message = await fetch('/api')
-        .then(res => res.text()) // process incoming data
+        .then(res => res.text()).catch(err => console.error(err)) // process incoming data
 
         // Update welcomeMessage state
         setWelcomeMessage(message)
     }
-
-    // Use useEffect to call fetchMessage() on initial render
-    useEffect(() => {
-        fetchMessage()
-    }, [])
 
     // Create async function for fetching users list
     const fetchUsers = async () => {
@@ -54,9 +49,24 @@ const App = () => {
 
         // Update usersList state
         setUsersList(users)
-    }
+}
+
+    // Use useEffect to call fetchMessage() on initial render
+    useEffect(() => {
+        fetchMessage()
+        fetchUsers()
+    }, [])
+
+    console.log("Message: " + welcomeMessage)
+    console.log("User List: " + usersList)
 
     return (
+        // <>
+        // <p>
+        //     {welcomeMessage}
+        //     {usersList}
+        //     Your mom
+        // </p>
         <ThemeProvider theme={theme}>
             <div>
                 {/* starting at the sign-in in page */}
@@ -86,6 +96,7 @@ const App = () => {
                 </Switch>
             </div>
         </ThemeProvider>
+        // </>
     );
 }
 

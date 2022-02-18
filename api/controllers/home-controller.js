@@ -1,10 +1,4 @@
-// Import json with list of users
-const users = require('./../data/users.json')
-
-// Create controller for GET request to '/users/all'
-usersGetAll = async (req, res) => {
-  // res.send('There will be dragons, not posts.')
-  res.json(users)
+// Create controller for GET request to '/api'
+exports.homeGet = async (req, res) => {
+  res.send('Welcome back commander.')
 }
-
-export default usersGetAll;
