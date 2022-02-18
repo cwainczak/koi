@@ -1,7 +1,7 @@
 import React from "react";
 import NavBar from "./frontend/components/NavBar";
 import Toolbar from "@mui/material/Toolbar";
-import {createTheme, ThemeProvider} from "@mui/material";
+import {createTheme, CssBaseline, ThemeProvider} from "@mui/material";
 import {Redirect, Route, Switch} from "react-router-dom";
 import SignUp from "./frontend/pages/SignUp";
 import SignIn from "./frontend/pages/SignIn";
@@ -13,18 +13,22 @@ import Chats from "./frontend/pages/Chats";
 import Profile from "./frontend/pages/Profile";
 
 
-const App = () => {
-    const theme = createTheme({
-        palette: {
-            mode: "dark",
-            primary: {
-                main: "#e4b109"
-            }
+const theme = createTheme({
+    palette: {
+        mode: "dark",
+        primary: {
+            main: "#e4b109"
+        },
+        background: {
+            default: "#4b5059"
         }
-    });
+    }
+});
 
+const App = () => {
     return (
         <ThemeProvider theme={theme}>
+            <CssBaseline/>
             <div>
                 {/* starting at the sign-in in page */}
                 <Route exact from="/" render={props => <SignIn {...props} />}>
