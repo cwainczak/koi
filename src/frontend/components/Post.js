@@ -99,7 +99,7 @@ const Post = (props) => {
                                 <TextField
                                     fullWidth
                                     size="small"
-                                    label="comment"
+                                    label="Add a comment!"
                                 />
                             </Grid>
                             <Grid item alignItems="stretch" style={{display: "flex"}}>
