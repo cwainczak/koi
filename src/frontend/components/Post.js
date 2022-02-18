@@ -60,19 +60,16 @@ const Post = (props) => {
                             <Typography gutterBottom variant="body1" component="h1">{props.username}</Typography>
                         </Grid>
                     </Grid>
-
                     <br/>
                     <Divider/>
                     <br/>
-
+                    {/* post title and content */}
                     <Typography gutterBottom variant="h6" component="h2">{props.title}</Typography>
                     <Typography>{props.content}</Typography>
-
                     <br/>
                     <br/>
-
+                    {/* like counter */}
                     <Typography variant="body2" component="h1">{props.likes} Likes</Typography>
-
                     <br/>
                     <Divider/>
                 </CardContent>
@@ -90,12 +87,11 @@ const Post = (props) => {
                     >
                         Comments</Button>
                 </CardActions>
-
                 <Divider/>
-
-                {/* comments */}
+                {/* comments section */}
                 {show &&
                     <CardContent>
+                        {/* comment text-field and button */}
                         <Grid container spacing={2}>
                             <Grid item xs>
                                 <TextField
@@ -114,7 +110,7 @@ const Post = (props) => {
                                 </Button>
                             </Grid>
                         </Grid>
-
+                        {/* comments */}
                         {props.comments.map((comment) => (
                             <Grid>
                                 <br/>
