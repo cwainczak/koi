@@ -76,16 +76,18 @@ const Post = (props) => {
                 <CardActions>
                     <Button
                         size="small"
-                        onClick={handleLikeClick}
                         color={flag ? "primary" : "secondary"}
+                        onClick={handleLikeClick}
                     >
-                        Like</Button>
+                        Like
+                    </Button>
                     <Button
                         size="small"
                         color="secondary"
                         onClick={handleCommentsClick}
                     >
-                        Comments</Button>
+                        Comments
+                    </Button>
                 </CardActions>
                 <Divider/>
                 {/* comments section */}
@@ -96,8 +98,8 @@ const Post = (props) => {
                             <Grid item xs>
                                 <TextField
                                     fullWidth
-                                    label="comment"
                                     size="small"
+                                    label="comment"
                                 />
                             </Grid>
                             <Grid item alignItems="stretch" style={{display: "flex"}}>
