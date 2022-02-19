@@ -3,8 +3,7 @@ import {createTheme, ThemeProvider} from "@mui/material";
 import Card from "@mui/material/Card";
 import CardHeader from "@mui/material/CardHeader";
 import Avatar from "@mui/material/Avatar";
-import IconButton from "@mui/material/IconButton";
-import PersonRemoveIcon from "@mui/icons-material/PersonRemove";
+import Confirmation from "../components/Confirmation";
 
 
 function shrinkUsername(name) {
@@ -34,9 +33,10 @@ const Friend = (props) => {
                         <Avatar {...shrinkUsername(props.username)}/>
                     }
                     action={
-                        <IconButton>
-                            <PersonRemoveIcon style={{color: "#b1b3b9"}}/>
-                        </IconButton>
+                        <Confirmation
+                            title="Remove Friend?"
+                            text={"Are you sure you want to remove" + props.username + " from bring your friend?"}
+                        />
                     }
                     title={props.username}
                     subheader={props.friends + " mutual friends"}
