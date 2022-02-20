@@ -35,7 +35,7 @@ const Friend = (props) => {
                     action={
                         <Confirmation
                             title="Remove Friend?"
-                            text={"Are you sure you want to remove" + props.username + " from being your friend?"}
+                            text={"Are you sure you want to remove " + props.username + " from being your friend?"}
                         />
                     }
                     title={props.username}
