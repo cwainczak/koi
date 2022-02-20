@@ -59,11 +59,9 @@ const Friends = () => {
                 <TabPanel>
                     <Grid container rowSpacing={2} columnSpacing={2}>
                         {friends.map((friend) => (
-                            <>
-                                <Grid item xs={12} sm={6}>
-                                    <Friend username={friend.username} friends={friend.mutualFriends}/>
-                                </Grid>
-                            </>
+                            <Grid item xs={12} sm={6}>
+                                <Friend username={friend.username} friends={friend.mutualFriends}/>
+                            </Grid>
                         ))}
                     </Grid>
                 </TabPanel>
