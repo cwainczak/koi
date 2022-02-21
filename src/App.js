@@ -25,8 +25,10 @@ const App = () => {
 
     //API
 
+    //const URL = "http://localhost:4000"
+
     // Prepare state hook for welcome message
-    const [welcomeMessage, setWelcomeMessage] = useState('')
+    const [welcomeMessage, setWelcomeMessage] = useState("")
 
     // Prepare state hook for users list
     // It specifies the shape of usersList state
@@ -35,8 +37,9 @@ const App = () => {
     // Create async function for fetching welcome message
     const fetchMessage = async () => {
         // Use Fetch API to fetch '/api' endpoint
-        const message = await fetch('/api')
-        .then(res => res.text()).catch(err => console.error(err)) // process incoming data
+        const message = await fetch("http://localhost:4000/api")
+        .then(res => res.text())
+        .catch(err => console.error(err)) // process incoming data
 
         // Update welcomeMessage state
         setWelcomeMessage(message)
@@ -44,12 +47,15 @@ const App = () => {
 
     // Create async function for fetching users list
     const fetchUsers = async () => {
-        const users = await fetch('/users/all')
-        .then(res => res.json()) // Process the incoming data
+        const users = await fetch("http://localhost:4000/users/all")
+        .then(res => {
+            const JSONData = res.json().then(data => data)
+            return JSONData
+        }).catch(err => console.error(err)) // Process the incoming data
 
         // Update usersList state
         setUsersList(users)
-}
+    }
 
     // Use useEffect to call fetchMessage() on initial render
     useEffect(() => {
@@ -58,15 +64,9 @@ const App = () => {
     }, [])
 
     console.log("Message: " + welcomeMessage)
-    console.log("User List: " + usersList)
+    console.log("User List: " + JSON.stringify(usersList))
 
     return (
-        // <>
-        // <p>
-        //     {welcomeMessage}
-        //     {usersList}
-        //     Your mom
-        // </p>
         <ThemeProvider theme={theme}>
             <div>
                 {/* starting at the sign-in in page */}
