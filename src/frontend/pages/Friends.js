@@ -9,6 +9,10 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import Friend from "../components/Friend";
 import FriendObj from "../../backend/FriendObj";
+import {InputBase} from "@mui/material";
+import IconButton from "@mui/material/IconButton";
+import SearchIcon from '@mui/icons-material/Search';
+import Paper from "@mui/material/Paper";
 
 
 let friends = [new FriendObj("dellmultiple", 15), new FriendObj("ibmdifference", 20),
@@ -57,6 +61,21 @@ const Friends = () => {
                 onChangeIndex={handleChangeIndex}
             >
                 <TabPanel>
+                    {/* search field */}
+                    <Paper
+                        component="form"
+                        sx={{p: '2px 4px', display: 'flex', alignItems: 'center'}}
+                    >
+                        <InputBase
+                            sx={{ml: 1, flex: 1}}
+                            placeholder="Search Friends"
+                        />
+                        <IconButton type="submit" sx={{p: '10px'}} aria-label="search">
+                            <SearchIcon style={{color: "#b1b3b9"}}/>
+                        </IconButton>
+                    </Paper>
+                    <br/>
+                    {/* friends */}
                     <Grid container rowSpacing={2} columnSpacing={2}>
                         {friends.map((friend) => (
                             <Grid item xs={12} sm={6}>
