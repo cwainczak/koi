@@ -70,7 +70,7 @@ const Friends = () => {
                             sx={{ml: 1, flex: 1}}
                             placeholder="Search Friends"
                         />
-                        <IconButton type="submit" sx={{p: '10px'}} aria-label="search">
+                        <IconButton sx={{p: '10px'}} aria-label="search">
                             <SearchIcon style={{color: "#b1b3b9"}}/>
                         </IconButton>
                     </Paper>
