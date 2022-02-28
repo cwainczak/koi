@@ -10,7 +10,6 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
-import test from "../../backend/Login";
 
 
 const SignUp = (props) => {
@@ -90,7 +89,6 @@ const SignUp = (props) => {
                             id="password"
                         />
                         <Button
-                            onClick={test}
                             type="submit"
                             fullWidth
                             variant="contained"

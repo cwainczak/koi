@@ -14,7 +14,7 @@ const router = express.Router()
 // This means that all users routes
 // will be prefixed with /users'
 // i.e.: '/all' will become '/users/all'
-router.get('/all', usersController.usersGetAll)
+router.get('/all', usersController.getUserData)
 
 // Export router
 module.exports = router

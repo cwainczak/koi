@@ -13,6 +13,10 @@ import Chats from "./frontend/pages/Chats";
 import Profile from "./frontend/pages/Profile";
 
 
+// const wrapState = (state) => ({
+//     get: () => state.value
+// })
+
 const App = () => {
     const theme = createTheme({
         palette: {
@@ -33,6 +37,8 @@ const App = () => {
     // Prepare state hook for users list
     // It specifies the shape of usersList state
     const [usersList, setUsersList] = useState([])
+    //wrapState(usersList)
+
 
     // Create async function for fetching welcome message
     const fetchMessage = async () => {
@@ -100,4 +106,5 @@ const App = () => {
     );
 }
 
+//export const usersListState = 
 export default App;
