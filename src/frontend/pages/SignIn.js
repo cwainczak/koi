@@ -10,7 +10,7 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import test from "../../backend/Login";
+import { handleLogin } from "../../backend/Login";
 
 
 const SignIn = (props) => {
@@ -81,7 +81,7 @@ const SignIn = (props) => {
                             id="password"
                         />
                         <Button
-                            onClick={test}
+                            onClick={handleLogin}
                             type="submit"
                             fullWidth
                             variant="contained"

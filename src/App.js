@@ -11,6 +11,7 @@ import Home from "./frontend/pages/Home";
 import Friends from "./frontend/pages/Friends";
 import Chats from "./frontend/pages/Chats";
 import Profile from "./frontend/pages/Profile";
+import { initUsers } from "./backend/Login";
 
 
 // const wrapState = (state) => ({
@@ -29,6 +30,8 @@ const App = () => {
 
     //API
 
+    initUsers()
+
     //const URL = "http://localhost:4000"
 
     // Prepare state hook for welcome message
@@ -37,8 +40,6 @@ const App = () => {
     // Prepare state hook for users list
     // It specifies the shape of usersList state
     const [usersList, setUsersList] = useState([])
-    //wrapState(usersList)
-
 
     // Create async function for fetching welcome message
     const fetchMessage = async () => {
@@ -69,8 +70,8 @@ const App = () => {
         fetchUsers()
     }, [])
 
-    console.log("Message: " + welcomeMessage)
-    console.log("User List: " + JSON.stringify(usersList))
+    //console.log("Message: " + welcomeMessage)
+    //console.log("User List: " + JSON.stringify(usersList))
 
     return (
         <ThemeProvider theme={theme}>
