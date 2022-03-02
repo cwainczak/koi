@@ -7,14 +7,11 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
+import SearchField from "../components/SearchField";
 import CurrentFriend from "../components/CurrentFriend";
 import FriendRequest from "../components/FriendRequest";
 import FindFriend from "../components/FindFriend";
 import FriendObj from "../../backend/FriendObj";
-import {InputBase} from "@mui/material";
-import IconButton from "@mui/material/IconButton";
-import SearchIcon from '@mui/icons-material/Search';
-import Paper from "@mui/material/Paper";
 
 
 let currentFriends = [new FriendObj("dellmultiple", 15), new FriendObj("ibmdifference", 20),
@@ -71,19 +68,7 @@ const Friends = () => {
                 onChangeIndex={handleChangeIndex}
             >
                 <TabPanel>
-                    {/* search field */}
-                    <Paper
-                        component="form"
-                        sx={{p: '2px 4px', display: 'flex', alignItems: 'center'}}
-                    >
-                        <InputBase
-                            sx={{ml: 1, flex: 1}}
-                            placeholder="Search Friends"
-                        />
-                        <IconButton sx={{p: '10px'}} aria-label="search">
-                            <SearchIcon style={{color: "#b1b3b9"}}/>
-                        </IconButton>
-                    </Paper>
+                    <SearchField promptText={"Search Friends"}/>
                     <br/>
                     {/* my friends */}
                     <Grid container rowSpacing={2} columnSpacing={2}>
@@ -105,19 +90,7 @@ const Friends = () => {
                     </Grid>
                 </TabPanel>
                 <TabPanel>
-                    {/* search field */}
-                    <Paper
-                        component="form"
-                        sx={{p: '2px 4px', display: 'flex', alignItems: 'center'}}
-                    >
-                        <InputBase
-                            sx={{ml: 1, flex: 1}}
-                            placeholder="Find Friends"
-                        />
-                        <IconButton sx={{p: '10px'}} aria-label="search">
-                            <SearchIcon style={{color: "#b1b3b9"}}/>
-                        </IconButton>
-                    </Paper>
+                    <SearchField promptText={"Find Friends"}/>
                     <br/>
                     {/* find friend */}
                     <Grid container rowSpacing={2} columnSpacing={2}>
