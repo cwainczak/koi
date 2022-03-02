@@ -9,6 +9,7 @@ import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import CurrentFriend from "../components/CurrentFriend";
 import FriendRequest from "../components/FriendRequest";
+import FindFriend from "../components/FindFriend";
 import FriendObj from "../../backend/FriendObj";
 import {InputBase} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
@@ -22,6 +23,11 @@ let currentFriends = [new FriendObj("dellmultiple", 15), new FriendObj("ibmdiffe
 
 let friendRequests = [new FriendObj("memberebay", 25), new FriendObj("teasefacebook", 20),
     new FriendObj("considerford", 45), new FriendObj("basmatirolex", 50)];
+
+let findFriends = [new FriendObj("groovysprite"), new FriendObj("putridstarbucks"),
+    new FriendObj("surelytoyota"), new FriendObj("waistpepsi"),
+    new FriendObj("atmospheresubway"), new FriendObj("penguinmcdonalds"),
+    new FriendObj("spiritualibm"), new FriendObj("chantchevrolet")];
 
 
 function TabPanel(props) {
@@ -99,7 +105,28 @@ const Friends = () => {
                     </Grid>
                 </TabPanel>
                 <TabPanel>
-                    Find Friends
+                    {/* search field */}
+                    <Paper
+                        component="form"
+                        sx={{p: '2px 4px', display: 'flex', alignItems: 'center'}}
+                    >
+                        <InputBase
+                            sx={{ml: 1, flex: 1}}
+                            placeholder="Find Friends"
+                        />
+                        <IconButton sx={{p: '10px'}} aria-label="search">
+                            <SearchIcon style={{color: "#b1b3b9"}}/>
+                        </IconButton>
+                    </Paper>
+                    <br/>
+                    {/* find friend */}
+                    <Grid container rowSpacing={2} columnSpacing={2}>
+                        {findFriends.map((friend) => (
+                            <Grid item xs={12} sm={6}>
+                                <FindFriend username={friend.username}/>
+                            </Grid>
+                        ))}
+                    </Grid>
                 </TabPanel>
             </SwipeableViews>
         </Container>
