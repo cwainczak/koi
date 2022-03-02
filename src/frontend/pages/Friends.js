@@ -7,7 +7,7 @@ import Tabs from "@mui/material/Tabs";
 import Tab from "@mui/material/Tab";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
-import MyFriend from "../components/MyFriend";
+import CurrentFriend from "../components/CurrentFriend";
 import FriendRequest from "../components/FriendRequest";
 import FriendObj from "../../backend/FriendObj";
 import {InputBase} from "@mui/material";
@@ -83,7 +83,7 @@ const Friends = () => {
                     <Grid container rowSpacing={2} columnSpacing={2}>
                         {currentFriends.map((friend) => (
                             <Grid item xs={12} sm={6}>
-                                <MyFriend username={friend.username} friends={friend.mutualFriends}/>
+                                <CurrentFriend username={friend.username} friends={friend.mutualFriends}/>
                             </Grid>
                         ))}
                     </Grid>

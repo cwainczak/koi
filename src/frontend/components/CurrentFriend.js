@@ -28,7 +28,7 @@ const theme = createTheme({
     }
 });
 
-const MyFriend = (props) => {
+const CurrentFriend = (props) => {
     const [anchorElOptions, setAnchorElOptions] = React.useState(null);
     const [isOpen, setIsOpen] = React.useState(false);
 
@@ -93,4 +93,4 @@ const MyFriend = (props) => {
     );
 }
 
-export default MyFriend;
+export default CurrentFriend;
