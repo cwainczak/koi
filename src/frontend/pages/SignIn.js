@@ -19,13 +19,15 @@ const SignIn = (props) => {
     const handleButtonClick = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        // eslint-disable-next-line no-console
-        console.log({
-            username: data.get('username'),
-            password: data.get('password'),
-        });
-
-        history.push("/Home");
+        // logic for checking entered credentials
+        const result = handleLogin(data.get('username'), data.get('password'))
+        if (result){
+            history.push("/Home");
+        }
+        else {
+            console.log("Wrong Login Credentials!")
+            history.push("/SignIn")
+        }
     };
 
     return (
@@ -81,7 +83,6 @@ const SignIn = (props) => {
                             id="password"
                         />
                         <Button
-                            onClick={handleLogin}
                             type="submit"
                             fullWidth
                             variant="contained"

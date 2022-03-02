@@ -10,20 +10,38 @@ const fetchUsers = async () => {
         return JSONData
     }).catch(err => console.error(err)) // Process the incoming data
 
-    console.log("In fetch users: " + JSON.stringify(users))
+    //console.log("In fetch users: " + JSON.stringify(users))
     allUsers = users
 }
 
 export function initUsers() {
-    fetchUsers();
+    fetchUsers().then().catch()
     console.log("In init users: " + JSON.stringify(allUsers));
 }
 
-export function handleLogin(){
-    console.log("After return: " + JSON.stringify(allUsers))
-    // for (let i = 0; i < users.length; i++){
-    //     console.log(JSON.stringify(users[i]))
-    //     const userData = JSON.parse(users[i])
-    //     console.log("It has the username of: " + userData.Username)
-    // }
+export function handleLogin(entUser, entPass){
+    //console.log("After return: " + JSON.stringify(allUsers))
+    for (let i = 0; i < allUsers.length; i++){
+        let actUser = allUsers[i].Username
+        let actPass = allUsers[i].Password
+        console.log("Actual username: " + actUser)
+        console.log("Actual password: " + actPass)
+        console.log("Entered username: " + entUser)
+        console.log("Entered password: " + entPass)
+        console.log(actUser === entUser)
+        console.log(actPass === entPass)
+        if (actUser === entUser && actPass === entPass){
+            return true
+        }
+    }
+    return false
+    // return allUsers.forEach((someUser) => {
+    //     console.log("Actual username: " + someUser.Username)
+    //     console.log("Actual password: " + someUser.Password)
+    //     console.log("Entered username: " + entUser)
+    //     console.log("Entered password: " + entPass)
+    //     console.log(someUser.Username === entUser)
+    //     console.log(someUser.Username === entUser)
+    //     return (someUser.Username === entUser && someUser.Username === entUser);
+    // })
 }
