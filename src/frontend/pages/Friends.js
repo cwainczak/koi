@@ -8,6 +8,7 @@ import Tab from "@mui/material/Tab";
 import Grid from "@mui/material/Grid";
 import Typography from "@mui/material/Typography";
 import MyFriend from "../components/MyFriend";
+import FriendRequest from "../components/FriendRequest";
 import FriendObj from "../../backend/FriendObj";
 import {InputBase} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
@@ -18,6 +19,9 @@ import Paper from "@mui/material/Paper";
 let friends = [new FriendObj("dellmultiple", 15), new FriendObj("ibmdifference", 20),
     new FriendObj("volkswagonbream", 25), new FriendObj("nikemelt", 30),
     new FriendObj("ebayclassic", 35), new FriendObj("googlewillow", 40)];
+
+let friendRequests = [new FriendObj("memberebay", 25), new FriendObj("teasefacebook", 20),
+    new FriendObj("considerford", 45), new FriendObj("basmatirolex", 50)];
 
 
 function TabPanel(props) {
@@ -75,7 +79,7 @@ const Friends = () => {
                         </IconButton>
                     </Paper>
                     <br/>
-                    {/* friends */}
+                    {/* my friends */}
                     <Grid container rowSpacing={2} columnSpacing={2}>
                         {friends.map((friend) => (
                             <Grid item xs={12} sm={6}>
@@ -85,7 +89,14 @@ const Friends = () => {
                     </Grid>
                 </TabPanel>
                 <TabPanel>
-                    Friend Requests
+                    {/* friend requests */}
+                    <Grid container rowSpacing={2} columnSpacing={2}>
+                        {friendRequests.map((friend) => (
+                            <Grid item xs={12} sm={6}>
+                                <FriendRequest username={friend.username} friends={friend.mutualFriends}/>
+                            </Grid>
+                        ))}
+                    </Grid>
                 </TabPanel>
                 <TabPanel>
                     Find Friends
