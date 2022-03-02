@@ -16,7 +16,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import Paper from "@mui/material/Paper";
 
 
-let friends = [new FriendObj("dellmultiple", 15), new FriendObj("ibmdifference", 20),
+let currentFriends = [new FriendObj("dellmultiple", 15), new FriendObj("ibmdifference", 20),
     new FriendObj("volkswagonbream", 25), new FriendObj("nikemelt", 30),
     new FriendObj("ebayclassic", 35), new FriendObj("googlewillow", 40)];
 
@@ -81,7 +81,7 @@ const Friends = () => {
                     <br/>
                     {/* my friends */}
                     <Grid container rowSpacing={2} columnSpacing={2}>
-                        {friends.map((friend) => (
+                        {currentFriends.map((friend) => (
                             <Grid item xs={12} sm={6}>
                                 <MyFriend username={friend.username} friends={friend.mutualFriends}/>
                             </Grid>
