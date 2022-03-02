@@ -7,7 +7,7 @@ import IconButton from "@mui/material/IconButton";
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import Menu from "@mui/material/Menu";
 import MenuItem from "@mui/material/MenuItem";
-import Confirmation from "../components/Confirmation";
+import ConfirmationDialog from "./ConfirmationDialog";
 
 
 function shrinkUsername(name) {
@@ -80,7 +80,7 @@ const Friend = (props) => {
                 </Menu>
             </Card>
 
-            <Confirmation
+            <ConfirmationDialog
                 isOpen={isOpen}
                 handleClose={handelCloseDialog}
                 handleAction={handelDialogAction}

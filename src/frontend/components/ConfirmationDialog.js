@@ -7,7 +7,7 @@ import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
 
 
-const Confirmation = (props) => {
+const ConfirmationDialog = (props) => {
     return (
         <Dialog open={props.isOpen} onClose={props.handleClose}>
             <DialogTitle>{props.title}</DialogTitle>
@@ -22,4 +22,4 @@ const Confirmation = (props) => {
     );
 }
 
-export default Confirmation;
+export default ConfirmationDialog;
