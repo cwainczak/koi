@@ -26,8 +26,7 @@ const SignIn = (props) => {
         }
         else {
             console.log("Wrong Login Credentials!")
-            history.push("/SignIn")
-            document.getElementById("invalidCredentials").style.display="initial"
+            document.getElementById("invalidCredentials").hidden = false
         }
     };
 
@@ -83,9 +82,9 @@ const SignIn = (props) => {
                             type="password"
                             id="password"
                         />
-                        <p id="invalidCredentials" style={{fontSize: 12, padding: "30%", color: "red", display: "none"}} >
+                        <Typography id={"invalidCredentials"} fontSize={12} color={"red"} paddingTop={1.5} textAlign={"center"} hidden={true}>
                             Invalid Username or Password
-                        </p>
+                        </Typography>
                         <Button
                             type="submit"
                             fullWidth

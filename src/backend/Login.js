@@ -16,7 +16,7 @@ const fetchUsers = async () => {
 
 export function initUsers() {
     fetchUsers().then().catch()
-    console.log("In init users: " + JSON.stringify(allUsers));
+    //console.log("In init users: " + JSON.stringify(allUsers));
 }
 
 export function handleLogin(entUser, entPass){
@@ -24,12 +24,12 @@ export function handleLogin(entUser, entPass){
     for (let i = 0; i < allUsers.length; i++){
         let actUser = allUsers[i].Username
         let actPass = allUsers[i].Password
-        console.log("Actual username: " + actUser)
-        console.log("Actual password: " + actPass)
-        console.log("Entered username: " + entUser)
-        console.log("Entered password: " + entPass)
-        console.log(actUser === entUser)
-        console.log(actPass === entPass)
+        // console.log("Actual username: " + actUser)
+        // console.log("Actual password: " + actPass)
+        // console.log("Entered username: " + entUser)
+        // console.log("Entered password: " + entPass)
+        // console.log(actUser === entUser)
+        // console.log(actPass === entPass)
         if (actUser === entUser && actPass === entPass){
             return true
         }
