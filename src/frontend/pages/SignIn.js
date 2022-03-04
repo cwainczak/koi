@@ -10,6 +10,7 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import { handleLogin } from "../../backend/Login";
 
 
 const SignIn = (props) => {
@@ -18,13 +19,15 @@ const SignIn = (props) => {
     const handleButtonClick = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        // eslint-disable-next-line no-console
-        console.log({
-            username: data.get('username'),
-            password: data.get('password'),
-        });
-
-        history.push("/Home");
+        // logic for checking entered credentials
+        const result = handleLogin(data.get('username'), data.get('password'))
+        if (result){
+            history.push("/Home");
+        }
+        else {
+            console.log("Wrong Login Credentials!")
+            document.getElementById("invalidCredentials").hidden = false
+        }
     };
 
     return (
@@ -79,6 +82,9 @@ const SignIn = (props) => {
                             type="password"
                             id="password"
                         />
+                        <Typography id={"invalidCredentials"} fontSize={12} color={"red"} paddingTop={1.5} textAlign={"center"} hidden={true}>
+                            Invalid Username or Password
+                        </Typography>
                         <Button
                             type="submit"
                             fullWidth
