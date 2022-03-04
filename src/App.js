@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import NavBar from "./frontend/components/NavBar";
 import Toolbar from "@mui/material/Toolbar";
 import {createTheme, CssBaseline, ThemeProvider} from "@mui/material";
@@ -11,7 +11,7 @@ import Home from "./frontend/pages/Home";
 import Friends from "./frontend/pages/Friends";
 import Chats from "./frontend/pages/Chats";
 import Profile from "./frontend/pages/Profile";
-import { initUsers } from "./backend/Login";
+import {initUsers} from "./backend/Login";
 
 
 const theme = createTheme({
@@ -25,6 +25,8 @@ const theme = createTheme({
         }
     }
 });
+
+const App = () => {
 
     //API
 
@@ -43,8 +45,8 @@ const theme = createTheme({
     const fetchMessage = async () => {
         // Use Fetch API to fetch '/api' endpoint
         const message = await fetch("http://localhost:4000/api")
-        .then(res => res.text())
-        .catch(err => console.error(err)) // process incoming data
+            .then(res => res.text())
+            .catch(err => console.error(err)) // process incoming data
 
         // Update welcomeMessage state
         setWelcomeMessage(message)
@@ -53,10 +55,10 @@ const theme = createTheme({
     // Create async function for fetching users list
     const fetchUsers = async () => {
         const users = await fetch("http://localhost:4000/users/all")
-        .then(res => {
-            const JSONData = res.json().then(data => data)
-            return JSONData
-        }).catch(err => console.error(err)) // Process the incoming data
+            .then(res => {
+                const JSONData = res.json().then(data => data)
+                return JSONData
+            }).catch(err => console.error(err)) // Process the incoming data
 
         // Update usersList state
         setUsersList(users)
