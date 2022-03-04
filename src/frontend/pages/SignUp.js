@@ -10,6 +10,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
+import { createUserAcc } from "./../../backend/Register"
 
 
 const SignUp = (props) => {
@@ -18,12 +19,18 @@ const SignUp = (props) => {
     const handleButtonClick = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        // eslint-disable-next-line no-console
+
+        let entEmail = data.get("email")
+        let entUser = data.get("username")
+        let entPass = data.get("password")
+
         console.log({
-            email: data.get('email'),
-            username: data.get('username'),
-            password: data.get('password'),
+            email: entEmail,
+            username: entUser,
+            password: entPass
         });
+
+        let success = createUserAcc(entEmail, entUser, entPass)
 
         history.push("/Home");
     };

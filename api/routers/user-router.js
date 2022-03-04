@@ -7,14 +7,11 @@ const usersController = require('./../controllers/user-controller')
 // Create express router
 const router = express.Router()
 
-// Create route between usersController and '/all' endpoint
-// Note:
-// Main route (in server.js) for users
-// is set to '/users'
-// This means that all users routes
-// will be prefixed with /users'
-// i.e.: '/all' will become '/users/all'
+// Endpoint for fetching all users from database
 router.get('/all', usersController.getUserData)
+
+// Endpoint for adding user to database
+router.put('/add', usersController.addUserData)
 
 // Export router
 module.exports = router

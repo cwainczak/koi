@@ -1,5 +1,4 @@
 
-// I've tried both var and let
 let allUsers = []
 
 // Create async function for fetching users list
