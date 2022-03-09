@@ -1,4 +1,9 @@
 
+// make API to call that determines if user exists with credentials. If so, API returns user. If not, API returns empty user/null/boolean.
+// use this query in API
+// hashedPass = req.body.entPass -> hashed
+// SELECT UserID FROM User WHERE Username = '" + req.body.entUser + "' AND Password = '" + hashedPass + "';"
+
 let allUsers = []
 
 // Create async function for fetching users list

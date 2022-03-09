@@ -30,9 +30,16 @@ const SignUp = (props) => {
             password: entPass
         });
 
-        let success = createUserAcc(entEmail, entUser, entPass)
+        let success = createUserAcc(entEmail, entUser, entPass);
 
-        history.push("/Home");
+        console.log(success)
+
+        if (success){
+            history.push("/Home");
+        }
+
+        console.log("Something went wrong!")
+
     };
 
     return (

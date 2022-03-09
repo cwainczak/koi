@@ -11,7 +11,7 @@ const router = express.Router()
 router.get('/all', usersController.getUserData)
 
 // Endpoint for adding user to database
-router.put('/add', usersController.addUserData)
+router.put('/add', usersController.addUserData);
 
 // Export router
 module.exports = router
