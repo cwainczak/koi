@@ -10,24 +10,41 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { handleLogin } from "../../backend/Login";
 
 
 const SignIn = (props) => {
     const {history} = props;
 
-    const handleButtonClick = (event) => {
+    const handleButtonClick = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         // logic for checking entered credentials
-        const result = handleLogin(data.get('username'), data.get('password'))
-        if (result){
-            history.push("/Home");
+        let entUser = data.get("username")
+        let entPass = data.get("password")
+        const result = await fetch("http://localhost:4000/users/verify",
+            {
+                method: "PUT",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({entUser, entPass})
+            })
+            .then((res) => {
+            return res.json().then(data => data)
+            })
+            .catch((err) => err);
+        console.log(result)
+        if (result.length === 1){
+            let curUserID = result[0].UserID
+            console.log("curUserID: " + curUserID)
+            history.push("/Home")
         }
         else {
             console.log("Wrong Login Credentials!")
             document.getElementById("invalidCredentials").hidden = false
         }
+
     };
 
     return (
