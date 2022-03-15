@@ -10,6 +10,7 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
+import { login } from "./../../backend/User"
 
 
 const SignIn = (props) => {
@@ -21,27 +22,12 @@ const SignIn = (props) => {
         // logic for checking entered credentials
         let entUser = data.get("username")
         let entPass = data.get("password")
-        const result = await fetch("http://localhost:4000/users/verify",
-            {
-                method: "PUT",
-                headers: {
-                    "Accept": "application/json",
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({entUser, entPass})
-            })
-            .then((res) => {
-            return res.json().then(data => data)
-            })
-            .catch((err) => err);
-        console.log(result)
-        if (result.length === 1){
-            let curUserID = result[0].UserID
-            console.log("curUserID: " + curUserID)
+        // login returns -1 if user doesn't exist, and UserID if user does exist
+        const curUserID = await login(entUser, entPass)
+        if (curUserID !== -1){
             history.push("/Home")
         }
         else {
-            console.log("Wrong Login Credentials!")
             document.getElementById("invalidCredentials").hidden = false
         }
 
