@@ -11,6 +11,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import { login } from "./../../backend/User"
+import { removeWhiteSpace } from "../../backend/Util";
 
 
 const SignIn = (props) => {
@@ -20,15 +21,15 @@ const SignIn = (props) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         // logic for checking entered credentials
-        let entUser = data.get("username")
-        let entPass = data.get("password")
+        let entUser = removeWhiteSpace(data.get("username"))
+        let entPass = removeWhiteSpace(data.get("password"))
         // login returns -1 if user doesn't exist, and UserID if user does exist
         const curUserID = await login(entUser, entPass)
         if (curUserID !== -1){
             history.push("/Home")
         }
         else {
-            document.getElementById("invalidCredentials").hidden = false
+            document.getElementById("invalidCredentialsLogin").hidden = false
         }
 
     };
@@ -85,7 +86,7 @@ const SignIn = (props) => {
                             type="password"
                             id="password"
                         />
-                        <Typography id={"invalidCredentials"} fontSize={12} color={"red"} paddingTop={1.5} textAlign={"center"} hidden={true}>
+                        <Typography id={"invalidCredentialsLogin"} fontSize={12} color={"red"} paddingTop={1.5} textAlign={"center"} hidden={true}>
                             Invalid Username or Password
                         </Typography>
                         <Button

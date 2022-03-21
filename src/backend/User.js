@@ -11,7 +11,9 @@ export const createUserAcc = async (entEmail, entUser, entPass) => {
             },
             body: JSON.stringify({entEmail, entUser, entPass})
         }
-    ).then(() => true).catch((err) => err);
+    ).then((res) => {
+        return res.status === 201
+    }).catch((err) => err);
 }
 
 export const login = async (entUser, entPass) => {
