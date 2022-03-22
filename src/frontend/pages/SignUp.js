@@ -10,7 +10,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
-import { createUserAcc } from "../../backend/User"
+import { createUserAcc, registrationCheck } from "../../backend/User"
 import { validateEmail, removeWhiteSpace } from "../../backend/Util"
 
 
@@ -49,16 +49,27 @@ const SignUp = (props) => {
             errDialog.textContent = "Invalid email address"
         }
         else {
-            let isSuccess = await createUserAcc(entEmail, entUser, entPass);
-            if (isSuccess){
-                history.push("/Home")
+            let regCheckRes = await registrationCheck(entEmail, entUser)
+            let isEmailTaken = regCheckRes.emailTaken
+            let isUsernameTaken = regCheckRes.usernameTaken
+            if (isEmailTaken){
+                errDialog.hidden = false
+                errDialog.textContent = "Email already in use. Please reset password."
+            }
+            else if (isUsernameTaken){
+                errDialog.hidden = false
+                errDialog.textContent = "Username already taken"
             }
             else {
-                console.log("Something went wrong!")
+                let isSuccess = await createUserAcc(entEmail, entUser, entPass);
+                if (isSuccess){
+                    history.push("/Home")
+                }
+                else {
+                    console.log("Something went wrong!")
+                }
             }
-
         }
-
     };
 
     return (
