@@ -1,21 +1,6 @@
 
-//import { hashString, compareStringToHash } from "../Util";
 const Util = require("../Util")
 const DBConn = require("../Database")
-
-// Controller function for GET request to '/users/all'
-// exports.getUserData = async (req, res) => {
-//   //res.json(users)
-//   const query = "SELECT * FROM User"
-//   DBConn.query(query, (err, result) => {
-//     if (err != null){
-//       console.log(err)
-//     }
-//     else {
-//       res.send(result)
-//     }
-// })
-// }
 
 // Controller function for PUT request to '/users/add'
 exports.addUserData = async (req, res) => {
@@ -83,22 +68,8 @@ exports.checkRegUserData = async (req, res) => {
 exports.verifyUserData = async (req, res) => {
   let username = req.body.entUser
   let password = req.body.entPass
-  // doesn't work. creates different hash
-  //let hashedPassword = await Util.hashString(req.body.entPass)
-  /*const query = "SELECT UserID " +
-                "FROM User " +
-                "WHERE Username = '" + username + "' AND Password = '" + hashedPassword + "';"*/
   const query = "SELECT * FROM User;"
   console.log(query)
-  // DBConn.query(query, (err, result) => {
-  //   if (err != null){
-  //     console.log(err)
-  //     res.status(500).send("Unsuccessful account verification!")
-  //   }
-  //   else {
-  //     res.status(201).json(result)
-  //   }
-  // })
   DBConn.query(query, async (err, allUsers) => {
     if (err != null) {
       console.log(err)
@@ -107,15 +78,11 @@ exports.verifyUserData = async (req, res) => {
       let result = []
       for (let i = 0; i < allUsers.length; i++) {
         let curUser = allUsers[i]
-        console.log("curUser.Username = " + curUser.Username)
-        console.log("entered username = " + username)
         let checkHash = await Util.compareStringToHash(password, curUser.Password)
         console.log("checkHash = " + checkHash)
         if (curUser.Username === username && checkHash) {
-          //result = curUser.UserID
           result.push(curUser)
           console.log(result)
-          console.log("curUser.UserID = " + curUser.UserID)
         }
       }
       res.status(201).json(result)

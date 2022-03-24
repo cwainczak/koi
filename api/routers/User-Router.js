@@ -7,9 +7,6 @@ const usersController = require('../controllers/User-Controller')
 // Create express router
 const router = express.Router()
 
-// Endpoint for fetching all users from database
-//router.get('/all', usersController.getUserData)
-
 // Endpoint for checking user credentials
 router.put("/verify", usersController.verifyUserData)
 

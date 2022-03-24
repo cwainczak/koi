@@ -1,6 +1,4 @@
 
-// email and username need to be unique
-
 export const createUserAcc = async (entEmail, entUser, entPass) => {
     return await fetch("http://localhost:4000/users/add",
         {
