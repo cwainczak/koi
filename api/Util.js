@@ -1,6 +1,7 @@
-//import bcrypt from 'bcrypt'
+
 const bcrypt = require("bcrypt")
-const ROUNDS = 10
+// the higher the rounds, the more secure, but the longer it takes to generate
+const ROUNDS = 5
 
 const hashString = async (someString) => {
     return await bcrypt.hash(someString, ROUNDS)
