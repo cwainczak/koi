@@ -10,6 +10,7 @@
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
+    "bcrypt": "^5.0.1",
     "body-parser": "^1.19.1",
     "compression": "^1.7.4",
     "concurrently": "^7.0.0",
@@ -31,7 +32,7 @@
   "scripts": {
     "start": "concurrently \"npm run start-server\" \"npm run start-front\" --kill-others",
     "build": "node ./buildScript",
-    "start-server": "cross-env NODE_ENV=development nodemon ./api/server.js --watch server/*",
+    "start-server": "cross-env NODE_ENV=development nodemon api/Server.js --watch server/*",
     "start-front": "react-scripts start",
     "build-front": "react-scripts build",
     "test": "react-scripts test",

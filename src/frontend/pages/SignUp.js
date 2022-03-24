@@ -10,22 +10,66 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
+import { createUserAcc, registrationCheck } from "../../backend/User"
+import { validateEmail, removeWhiteSpace } from "../../backend/Util"
 
 
 const SignUp = (props) => {
     const {history} = props;
 
-    const handleButtonClick = (event) => {
+    const handleButtonClick = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        // eslint-disable-next-line no-console
+
+        let entEmail = removeWhiteSpace(data.get("email"))
+        let entUser = removeWhiteSpace(data.get("username"))
+        let entPass = removeWhiteSpace(data.get("password"))
+        let entConfPass = removeWhiteSpace(data.get("confirm password"))
+
         console.log({
-            email: data.get('email'),
-            username: data.get('username'),
-            password: data.get('password'),
+            email: entEmail,
+            username: entUser,
+            password: entPass,
+            confirmpassword: entConfPass
         });
 
-        history.push("/Home");
+        let errDialog = document.getElementById("invalidCredentialsRegister")
+
+        // if any of the fields are empty/have whitespace
+        if (entEmail === "" || entUser === "" || entPass === "" || entConfPass === ""){
+            errDialog.hidden = false
+            errDialog.textContent = "Please fill in all fields"
+        }
+        else if (entPass !== entConfPass){
+            errDialog.hidden = false
+            errDialog.textContent = "Passwords don't match"
+        }
+        else if (validateEmail(entEmail) === null){
+            errDialog.hidden = false
+            errDialog.textContent = "Invalid email address"
+        }
+        else {
+            let regCheckRes = await registrationCheck(entEmail, entUser)
+            let isEmailTaken = regCheckRes.emailTaken
+            let isUsernameTaken = regCheckRes.usernameTaken
+            if (isEmailTaken){
+                errDialog.hidden = false
+                errDialog.textContent = "Email already in use. Please reset password."
+            }
+            else if (isUsernameTaken){
+                errDialog.hidden = false
+                errDialog.textContent = "Username already taken"
+            }
+            else {
+                let isSuccess = await createUserAcc(entEmail, entUser, entPass);
+                if (isSuccess){
+                    history.push("/Home")
+                }
+                else {
+                    console.log("Something went wrong!")
+                }
+            }
+        }
     };
 
     return (
@@ -88,6 +132,18 @@ const SignUp = (props) => {
                             type="password"
                             id="password"
                         />
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            name="confirm password"
+                            label="Confirm Password"
+                            type="password"
+                            id="password"
+                        />
+                        <Typography id={"invalidCredentialsRegister"} fontSize={12} color={"red"} paddingTop={1.5} textAlign={"center"} hidden={true}>
+                            Invalid Something
+                        </Typography>
                         <Button
                             type="submit"
                             fullWidth

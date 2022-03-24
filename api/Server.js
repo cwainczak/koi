@@ -9,8 +9,7 @@ const helmet = require('helmet')
 const cors = require('cors')
 
 // Import routes
-const homeRouter = require('./routers/home-router')
-const usersRouter = require('./routers/user-router')
+const usersRouter = require('./routers/User-Router')
 
 // Setup default port
 const PORT = process.env.PORT || 4000
@@ -32,9 +31,6 @@ if (process.env.NODE_ENV && process.env.NODE_ENV !== 'development') {
       res.sendFile('build/index.html', { root: __dirname })
   })
 }
-
-// Implement route for '/api' endpoint
-app.use('/api', homeRouter)
 
 // Implement route for '/users' endpoint
 // ! Note:

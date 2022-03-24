@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import NavBar from "./frontend/components/NavBar";
 import Toolbar from "@mui/material/Toolbar";
 import {createTheme, CssBaseline, ThemeProvider} from "@mui/material";
@@ -11,7 +11,6 @@ import Home from "./frontend/pages/Home";
 import Friends from "./frontend/pages/Friends";
 import Chats from "./frontend/pages/Chats";
 import Profile from "./frontend/pages/Profile";
-import {initUsers} from "./backend/Login";
 
 
 const theme = createTheme({
@@ -27,51 +26,6 @@ const theme = createTheme({
 });
 
 const App = () => {
-
-    //API
-
-    initUsers()
-
-    //const URL = "http://localhost:4000"
-
-    // Prepare state hook for welcome message
-    const [welcomeMessage, setWelcomeMessage] = useState("")
-
-    // Prepare state hook for users list
-    // It specifies the shape of usersList state
-    const [usersList, setUsersList] = useState([])
-
-    // Create async function for fetching welcome message
-    const fetchMessage = async () => {
-        // Use Fetch API to fetch '/api' endpoint
-        const message = await fetch("http://localhost:4000/api")
-            .then(res => res.text())
-            .catch(err => console.error(err)) // process incoming data
-
-        // Update welcomeMessage state
-        setWelcomeMessage(message)
-    }
-
-    // Create async function for fetching users list
-    const fetchUsers = async () => {
-        const users = await fetch("http://localhost:4000/users/all")
-            .then(res => {
-                const JSONData = res.json().then(data => data)
-                return JSONData
-            }).catch(err => console.error(err)) // Process the incoming data
-
-        // Update usersList state
-        setUsersList(users)
-    }
-
-    // Use useEffect to call fetchMessage() on initial render
-    useEffect(() => {
-        fetchMessage()
-        fetchUsers()
-    }, [])
-
-    //console.log("Message: " + welcomeMessage)
-    //console.log("User List: " + JSON.stringify(usersList))
 
     return (
         <ThemeProvider theme={theme}>
