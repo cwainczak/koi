@@ -1,4 +1,6 @@
 
+//import { hashString, compareStringToHash } from "../Util";
+const Util = require("../Util")
 const DBConn = require("../Database")
 
 // Controller function for GET request to '/users/all'
@@ -17,8 +19,10 @@ const DBConn = require("../Database")
 
 // Controller function for PUT request to '/users/add'
 exports.addUserData = async (req, res) => {
+  let hashedPassword = await Util.hashString(req.body.entPass)
+  console.log("Hashed password: " + hashedPassword)
   const query = "INSERT INTO User (Email, Username, Password, FriendIDs) " +
-      "VALUES (\"" + req.body.entEmail + "\", \"" + req.body.entUser + "\", \"" + req.body.entPass + "\", \" \");"
+      "VALUES (\"" + req.body.entEmail + "\", \"" + req.body.entUser + "\", \"" + hashedPassword + "\", \" \");"
   console.log(query)
   DBConn.query(query, (err) => {
     if (err != null) {
@@ -78,10 +82,11 @@ exports.checkRegUserData = async (req, res) => {
 // Controller function for PUT request to '/users/verify'
 exports.verifyUserData = async (req, res) => {
   let username = req.body.entUser
-  let password = req.body.entPass
+  // doesn't work. creates different hash
+  let hashedPassword = await Util.hashString(req.body.entPass)
   const query = "SELECT UserID " +
                 "FROM User " +
-                "WHERE Username = '" + username + "' AND Password = '" + password + "';"
+                "WHERE Username = '" + username + "' AND Password = '" + hashedPassword + "';"
   console.log(query)
   DBConn.query(query, (err, result) => {
     if (err != null){

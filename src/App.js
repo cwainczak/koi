@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from "react";
+import React from "react";
 import NavBar from "./frontend/components/NavBar";
 import Toolbar from "@mui/material/Toolbar";
 import {createTheme, CssBaseline, ThemeProvider} from "@mui/material";
