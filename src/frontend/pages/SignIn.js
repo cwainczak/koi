@@ -25,6 +25,7 @@ const SignIn = (props) => {
         let entPass = removeWhiteSpace(data.get("password"))
         // login returns -1 if user doesn't exist, and UserID if user does exist
         const curUserID = await login(entUser, entPass)
+        console.log(curUserID)
         if (curUserID !== -1){
             history.push("/Home")
         }
