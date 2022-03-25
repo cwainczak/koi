@@ -1,8 +1,9 @@
 
+// add
 export const createUserAcc = async (entEmail, entUser, entPass) => {
     return await fetch("http://localhost:4000/users/add",
         {
-            method: "PUT",
+            method: "POST",
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json"
@@ -14,15 +15,16 @@ export const createUserAcc = async (entEmail, entUser, entPass) => {
     }).catch((err) => err);
 }
 
+// verify
 export const login = async (entUser, entPass) => {
-    const result = await fetch("http://localhost:4000/users/verify",
+    const url = "http://localhost:4000/users/verify?" + new URLSearchParams({entUser, entPass})
+    const result = await fetch(url,
         {
-            method: "PUT",
+            method: "GET",
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({entUser, entPass})
         })
         .then((res) => {
             return res.json().then(data => data)
@@ -40,15 +42,16 @@ export const login = async (entUser, entPass) => {
     }
 }
 
+// regCheck
 export const registrationCheck = async (entEmail, entUser) => {
-    const result = await fetch("http://localhost:4000/users/regcheck",
+    const url = "http://localhost:4000/users/regcheck?" + new URLSearchParams({entEmail, entUser})
+    const result = await fetch(url,
         {
-            method: "PUT",
+            method: "GET",
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({entEmail, entUser})
         })
         .then((res) => {
             return res.json().then(data => data)

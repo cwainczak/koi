@@ -2,12 +2,14 @@
 const Util = require("../Util")
 const DBConn = require("../Database")
 
-// Controller function for PUT request to '/users/add'
+// Controller function for POST request to '/users/add'
 exports.addUserData = async (req, res) => {
+  let email = req.body.entEmail
+  let username = req.body.entUser
   let hashedPassword = await Util.hashString(req.body.entPass)
   console.log("Hashed password: " + hashedPassword)
   const query = "INSERT INTO User (Email, Username, Password, FriendIDs) " +
-      "VALUES (\"" + req.body.entEmail + "\", \"" + req.body.entUser + "\", \"" + hashedPassword + "\", \" \");"
+      "VALUES (\"" + email + "\", \"" + username + "\", \"" + hashedPassword + "\", \" \");"
   console.log(query)
   DBConn.query(query, (err) => {
     if (err != null) {
@@ -20,11 +22,11 @@ exports.addUserData = async (req, res) => {
 
 }
 
-//  Controller function for PUT request to '/users/regcheck'
+//  Controller function for GET request to '/users/regcheck'
 exports.checkRegUserData = async (req, res) => {
   let fullResult = {emailTaken: false, usernameTaken: false}
-  let email = req.body.entEmail
-  let username = req.body.entUser
+  let email = req.query.entEmail
+  let username = req.query.entUser
   // check email
   const emailQuery = "SELECT Email " +
       "FROM User " +
@@ -62,12 +64,10 @@ exports.checkRegUserData = async (req, res) => {
 
 }
 
-
-
-// Controller function for PUT request to '/users/verify'
+// Controller function for GET request to '/users/verify'
 exports.verifyUserData = async (req, res) => {
-  let username = req.body.entUser
-  let password = req.body.entPass
+  let username = req.query.entUser
+  let password = req.query.entPass
   const query = "SELECT * FROM User;"
   console.log(query)
   DBConn.query(query, async (err, allUsers) => {
