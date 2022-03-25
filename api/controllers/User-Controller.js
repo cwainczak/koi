@@ -2,12 +2,14 @@
 const Util = require("../Util")
 const DBConn = require("../Database")
 
-// Controller function for PUT request to '/users/add'
+// Controller function for POST request to '/users/add'
 exports.addUserData = async (req, res) => {
+  let email = req.body.entEmail
+  let username = req.body.entUser
   let hashedPassword = await Util.hashString(req.body.entPass)
   console.log("Hashed password: " + hashedPassword)
   const query = "INSERT INTO User (Email, Username, Password, FriendIDs) " +
-      "VALUES (\"" + req.body.entEmail + "\", \"" + req.body.entUser + "\", \"" + hashedPassword + "\", \" \");"
+      "VALUES (\"" + email + "\", \"" + username + "\", \"" + hashedPassword + "\", \" \");"
   console.log(query)
   DBConn.query(query, (err) => {
     if (err != null) {

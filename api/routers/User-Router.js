@@ -11,7 +11,7 @@ const router = express.Router()
 router.get("/verify", usersController.verifyUserData)
 
 // Endpoint for adding user to database
-router.put('/add', usersController.addUserData);
+router.post('/add', usersController.addUserData);
 
 // Endpoint for checking if registration info is unique
 router.get("/regcheck", usersController.checkRegUserData)

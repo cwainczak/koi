@@ -3,7 +3,7 @@
 export const createUserAcc = async (entEmail, entUser, entPass) => {
     return await fetch("http://localhost:4000/users/add",
         {
-            method: "PUT",
+            method: "POST",
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json"
