@@ -66,8 +66,8 @@ exports.checkRegUserData = async (req, res) => {
 
 // Controller function for PUT request to '/users/verify'
 exports.verifyUserData = async (req, res) => {
-  let username = req.body.entUser
-  let password = req.body.entPass
+  let username = req.query.entUser
+  let password = req.query.entPass
   const query = "SELECT * FROM User;"
   console.log(query)
   DBConn.query(query, async (err, allUsers) => {

@@ -8,7 +8,7 @@ const usersController = require('../controllers/User-Controller')
 const router = express.Router()
 
 // Endpoint for checking user credentials
-router.put("/verify", usersController.verifyUserData)
+router.get("/verify", usersController.verifyUserData)
 
 // Endpoint for adding user to database
 router.put('/add', usersController.addUserData);
