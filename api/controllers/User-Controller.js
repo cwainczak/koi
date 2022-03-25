@@ -20,11 +20,11 @@ exports.addUserData = async (req, res) => {
 
 }
 
-//  Controller function for PUT request to '/users/regcheck'
+//  Controller function for GET request to '/users/regcheck'
 exports.checkRegUserData = async (req, res) => {
   let fullResult = {emailTaken: false, usernameTaken: false}
-  let email = req.body.entEmail
-  let username = req.body.entUser
+  let email = req.query.entEmail
+  let username = req.query.entUser
   // check email
   const emailQuery = "SELECT Email " +
       "FROM User " +
@@ -62,9 +62,7 @@ exports.checkRegUserData = async (req, res) => {
 
 }
 
-
-
-// Controller function for PUT request to '/users/verify'
+// Controller function for GET request to '/users/verify'
 exports.verifyUserData = async (req, res) => {
   let username = req.query.entUser
   let password = req.query.entPass

@@ -17,7 +17,7 @@ export const createUserAcc = async (entEmail, entUser, entPass) => {
 
 // verify
 export const login = async (entUser, entPass) => {
-    const url = "http://localhost:4000/users/verify/?" + new URLSearchParams({entUser, entPass})
+    const url = "http://localhost:4000/users/verify?" + new URLSearchParams({entUser, entPass})
     const result = await fetch(url,
         {
             method: "GET",
@@ -44,14 +44,14 @@ export const login = async (entUser, entPass) => {
 
 // regCheck
 export const registrationCheck = async (entEmail, entUser) => {
-    const result = await fetch("http://localhost:4000/users/regcheck",
+    const url = "http://localhost:4000/users/regcheck?" + new URLSearchParams({entEmail, entUser})
+    const result = await fetch(url,
         {
-            method: "PUT",
+            method: "GET",
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({entEmail, entUser})
         })
         .then((res) => {
             return res.json().then(data => data)
