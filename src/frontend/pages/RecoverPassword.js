@@ -10,6 +10,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
+import {removeWhiteSpace} from "../../backend/Util";
 
 
 const RecoverPassword = (props) => {
@@ -23,7 +24,16 @@ const RecoverPassword = (props) => {
             email: data.get('email'),
         });
 
-        history.push("/ResetPassword");
+        let entEmail = removeWhiteSpace(data.get("email"))
+        let errDialog = document.getElementById("invalidCredentialsRecoverPass")
+        if (entEmail === ""){
+            errDialog.hidden = false
+            errDialog.textContent = "Please enter your email"
+        }
+        else {
+
+            //history.push("/ResetPassword");
+        }
     };
 
     return (
@@ -69,6 +79,9 @@ const RecoverPassword = (props) => {
                             name="email"
                             autoFocus
                         />
+                        <Typography id={"invalidCredentialsRecoverPass"} fontSize={12} color={"red"} paddingTop={1.5} textAlign={"center"} hidden={true}>
+
+                        </Typography>
                         <Button
                             type="submit"
                             fullWidth

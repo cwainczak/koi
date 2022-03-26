@@ -16,5 +16,8 @@ router.put('/add', usersController.addUserData);
 // Endpoint for checking if registraiton info is unique
 router.put("/regcheck", usersController.checkRegUserData)
 
+// Endpoint for sending passcode to reset password (gets the passcode)
+router.get("/sendPassCode", usersController.sendPasswordCode)
+
 // Export router
 module.exports = router

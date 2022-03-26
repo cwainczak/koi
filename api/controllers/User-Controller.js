@@ -20,7 +20,7 @@ exports.addUserData = async (req, res) => {
 
 }
 
-//  Controller function for PUT request to '/users/regcheck'
+//  Controller function for GET request to '/users/regcheck'
 exports.checkRegUserData = async (req, res) => {
   let fullResult = {emailTaken: false, usernameTaken: false}
   let email = req.body.entEmail
@@ -88,5 +88,15 @@ exports.verifyUserData = async (req, res) => {
       res.status(201).json(result)
     }
   })
+}
+
+exports.sendPasswordCode = async (req, res) => {
+  let email = req.query.entEmail
+  // first, make sure email is linked to an account
+  let fullResult = {validEmail: false, sentCode: false}
+  const emailQuery = "SELECT Email " +
+                     "FROM User " +
+                     "WHERE Email = '" + email + "';"
+
 }
 
