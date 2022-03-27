@@ -90,10 +90,9 @@ exports.verifyUserData = async (req, res) => {
 
 exports.sendPasswordCode = async (req, res) => {
   let email = req.query.entEmail
-  console.log(email)
   // first, make sure email is linked to an account
-  let fullResult = {validEmail: false, sentCode: false}
-  const emailQuery = "SELECT Email " +
+  let fullResult = {validEmail: false, emailJSData: {}}
+  const emailQuery = "SELECT Email, Username " +
                      "FROM User " +
                      "WHERE Email = '" + email + "';"
   DBConn.query(emailQuery, async (err, emailQueryRes) => {
@@ -103,17 +102,27 @@ exports.sendPasswordCode = async (req, res) => {
       res.status(500).send("Unsuccessful registration check!")
     }
     else {
-      console.log("length: " + emailQueryRes.length)
       if (emailQueryRes.length >= 1){
         fullResult.validEmail = true
       }
       // if email is valid
       if (fullResult.validEmail){
-        // generate and send passcode
+        // generate and set passcode
         const passcode = await Util.genPassCode()
-        console.log(passcode)
-        const result = await Util.sendEmail(email, "gainczak", passcode)
+        // set emailjs data so it can be sent to frontend
+        fullResult.emailJSData = {
+          serviceID: "service_na87syf",
+          templateID: "template_zokb0jg",
+          templateParams: {
+            to_email: email,
+            to_name: emailQueryRes[0].Username,
+            passcode: passcode
+          },
+          userID: "7MsNA5X-6xHY1DK_m"
+        }
       }
+      console.log("in user-controller")
+      console.log(fullResult)
       res.status(201).json(fullResult)
     }
   })

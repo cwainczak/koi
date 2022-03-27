@@ -14,25 +14,22 @@ export function validateEmail(someEmail){
         );
 }
 
-export const sendEmail = async (email, username, passcode) => {
-    const serviceID = "service_na87syf"
-    const templateID = "template_zokb0jg"
-    const templateParams = {
-        to_email: email,
-        to_name: username,
-        passcode: passcode
-    }
-    const userID = "7MsNA5X-6xHY1DK_m"
+export const sendEmail = async (someEmailJSData) => {
+    console.log(someEmailJSData)
+    const serviceID = someEmailJSData.serviceID
+    const templateID = someEmailJSData.templateID
+    const templateParams = someEmailJSData.templateParams
+    const userID = someEmailJSData.userID
 
-    await emailJS.send(serviceID, templateID, templateParams, userID)
-        .then((res) => {
-            console.log("Email sent successfully!")
-            console.log(res.text)
-            return res
-        })
-        .catch((err) => {
-            console.log("Email failed to send!")
-            console.log(err)
-            return err
-        })
+    // await emailJS.send(serviceID, templateID, templateParams, userID)
+    //     .then((res) => {
+    //         console.log("Email sent successfully!")
+    //         console.log(res.text)
+    //         return res
+    //     })
+    //     .catch((err) => {
+    //         console.log("Email failed to send!")
+    //         console.log(err)
+    //         return err
+    //     })
 }

@@ -13,6 +13,7 @@ import Container from "@mui/material/Container";
 import {removeWhiteSpace} from "../../backend/Util";
 //import { sendPasswordCode } from "../../backend/User";
 import { sendEmail } from "../../backend/Util";
+import {sendPasswordCode} from "../../backend/User";
 
 
 const RecoverPassword = (props) => {
@@ -33,7 +34,10 @@ const RecoverPassword = (props) => {
             errDialog.textContent = "Please enter your email"
         } else {
             //await sendPasswordCode(entEmail)
-            await sendEmail("gainczak@gmail.com", "gainczak", "999999")
+            const result = await sendPasswordCode(entEmail)
+            if (result.validEmail){
+                await sendEmail(result.emailJSData)
+            }
             //history.push("/ResetPassword");
         }
     };
