@@ -60,7 +60,7 @@ export const registrationCheck = async (entEmail, entUser) => {
 }
 
 export const sendPasswordCode = async (entEmail) => {
-    const url = "http://localhost:4000/users/sendPassCode?" + new URLSearchParams({entEmail})
+    const url = "http://localhost:4000/users/verCode?" + new URLSearchParams({entEmail})
     const result = await fetch(url,
         {
             method: "GET",

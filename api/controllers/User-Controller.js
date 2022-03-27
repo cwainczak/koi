@@ -88,7 +88,7 @@ exports.verifyUserData = async (req, res) => {
   })
 }
 
-exports.sendPasswordCode = async (req, res) => {
+exports.getVerificationCodeData = async (req, res) => {
   let email = req.query.entEmail
   // first, make sure email is linked to an account
   let fullResult = {validEmail: false, emailJSData: {}, emailSent: false}
@@ -123,7 +123,7 @@ exports.sendPasswordCode = async (req, res) => {
       }
       console.log("in user-controller")
       console.log(fullResult)
-      res.status(201).json(fullResult)
+      res.status(200).json(fullResult)
     }
   })
 }

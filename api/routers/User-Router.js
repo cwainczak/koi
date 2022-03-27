@@ -17,7 +17,7 @@ router.put('/add', usersController.addUserData);
 router.put("/regcheck", usersController.checkRegUserData)
 
 // Endpoint for sending passcode to reset password (gets the passcode)
-router.get("/sendPassCode", usersController.sendPasswordCode)
+router.get("/verCode", usersController.getVerificationCodeData)
 
 // Export router
 module.exports = router

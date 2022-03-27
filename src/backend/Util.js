@@ -1,7 +1,7 @@
 
-// removes whitespace from beginning and end of string
 import emailJS from "@emailjs/browser";
 
+// removes whitespace from beginning and end of string
 export function removeWhiteSpace(s){
     return s.trim()
 }

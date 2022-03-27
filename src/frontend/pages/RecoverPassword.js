@@ -11,8 +11,6 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
 import {removeWhiteSpace} from "../../backend/Util";
-//import { sendPasswordCode } from "../../backend/User";
-import { sendEmail } from "../../backend/Util";
 import {sendPasswordCode} from "../../backend/User";
 
 
