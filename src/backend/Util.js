@@ -21,7 +21,7 @@ export const sendEmail = async (someEmailJSData) => {
     const templateParams = someEmailJSData.templateParams
     const userID = someEmailJSData.userID
 
-    await emailJS.send(serviceID, templateID, templateParams, userID)
+    return await emailJS.send(serviceID, templateID, templateParams, userID)
         .then((res) => {
             console.log("Email sent successfully!")
             console.log(res.text)

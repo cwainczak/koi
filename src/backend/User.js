@@ -73,10 +73,10 @@ export const sendPasswordCode = async (entEmail) => {
             return res.json().then(data => data)
         })
         .catch((err) => err);
-    console.log("in user: " + result)
     if (result.validEmail){
-        await sendEmail(result.emailJSData)
-        result.emailSent = true
+        const emailResult = await sendEmail(result.emailJSData)
+        result.emailSent = emailResult.status === 200;
     }
+    console.log(result)
     return result
 }
