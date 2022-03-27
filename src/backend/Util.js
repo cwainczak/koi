@@ -21,15 +21,15 @@ export const sendEmail = async (someEmailJSData) => {
     const templateParams = someEmailJSData.templateParams
     const userID = someEmailJSData.userID
 
-    // await emailJS.send(serviceID, templateID, templateParams, userID)
-    //     .then((res) => {
-    //         console.log("Email sent successfully!")
-    //         console.log(res.text)
-    //         return res
-    //     })
-    //     .catch((err) => {
-    //         console.log("Email failed to send!")
-    //         console.log(err)
-    //         return err
-    //     })
+    await emailJS.send(serviceID, templateID, templateParams, userID)
+        .then((res) => {
+            console.log("Email sent successfully!")
+            console.log(res.text)
+            return res
+        })
+        .catch((err) => {
+            console.log("Email failed to send!")
+            console.log(err)
+            return err
+        })
 }

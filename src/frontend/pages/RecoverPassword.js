@@ -33,12 +33,20 @@ const RecoverPassword = (props) => {
             errDialog.hidden = false
             errDialog.textContent = "Please enter your email"
         } else {
-            //await sendPasswordCode(entEmail)
             const result = await sendPasswordCode(entEmail)
-            if (result.validEmail){
-                await sendEmail(result.emailJSData)
+            if (result.emailSent){
+                history.push("/ResetPassword");
             }
-            //history.push("/ResetPassword");
+            else {
+                if (!result.validEmail){
+                    errDialog.hidden = false
+                    errDialog.textContent = "Invalid email!"
+                }
+                else {
+                    errDialog.hidden = false
+                    errDialog.textContent = "Server error. Please try again later."
+                }
+            }
         }
     };
 

@@ -91,7 +91,7 @@ exports.verifyUserData = async (req, res) => {
 exports.sendPasswordCode = async (req, res) => {
   let email = req.query.entEmail
   // first, make sure email is linked to an account
-  let fullResult = {validEmail: false, emailJSData: {}}
+  let fullResult = {validEmail: false, emailJSData: {}, emailSent: false}
   const emailQuery = "SELECT Email, Username " +
                      "FROM User " +
                      "WHERE Email = '" + email + "';"

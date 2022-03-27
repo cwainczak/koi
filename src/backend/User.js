@@ -1,3 +1,4 @@
+import {sendEmail} from "./Util";
 
 export const createUserAcc = async (entEmail, entUser, entPass) => {
     return await fetch("http://localhost:4000/users/add",
@@ -72,6 +73,10 @@ export const sendPasswordCode = async (entEmail) => {
             return res.json().then(data => data)
         })
         .catch((err) => err);
-    console.log(result)
+    console.log("in user: " + result)
+    if (result.validEmail){
+        await sendEmail(result.emailJSData)
+        result.emailSent = true
+    }
     return result
 }
