@@ -11,12 +11,14 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
 import {removeWhiteSpace} from "../../backend/Util";
+//import { sendPasswordCode } from "../../backend/User";
+import { sendEmail } from "../../backend/Util";
 
 
 const RecoverPassword = (props) => {
     const {history} = props;
 
-    const handleButtonClick = (event) => {
+    const handleButtonClick = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         // eslint-disable-next-line no-console
@@ -26,12 +28,12 @@ const RecoverPassword = (props) => {
 
         let entEmail = removeWhiteSpace(data.get("email"))
         let errDialog = document.getElementById("invalidCredentialsRecoverPass")
-        if (entEmail === ""){
+        if (entEmail === "") {
             errDialog.hidden = false
             errDialog.textContent = "Please enter your email"
-        }
-        else {
-
+        } else {
+            //await sendPasswordCode(entEmail)
+            await sendEmail("gainczak@gmail.com", "gainczak", "999999")
             //history.push("/ResetPassword");
         }
     };

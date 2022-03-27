@@ -62,8 +62,6 @@ exports.checkRegUserData = async (req, res) => {
 
 }
 
-
-
 // Controller function for PUT request to '/users/verify'
 exports.verifyUserData = async (req, res) => {
   let username = req.body.entUser
@@ -92,11 +90,32 @@ exports.verifyUserData = async (req, res) => {
 
 exports.sendPasswordCode = async (req, res) => {
   let email = req.query.entEmail
+  console.log(email)
   // first, make sure email is linked to an account
   let fullResult = {validEmail: false, sentCode: false}
   const emailQuery = "SELECT Email " +
                      "FROM User " +
                      "WHERE Email = '" + email + "';"
-
+  DBConn.query(emailQuery, async (err, emailQueryRes) => {
+    console.log(emailQueryRes)
+    if (err != null){
+      console.log(err)
+      res.status(500).send("Unsuccessful registration check!")
+    }
+    else {
+      console.log("length: " + emailQueryRes.length)
+      if (emailQueryRes.length >= 1){
+        fullResult.validEmail = true
+      }
+      // if email is valid
+      if (fullResult.validEmail){
+        // generate and send passcode
+        const passcode = await Util.genPassCode()
+        console.log(passcode)
+        const result = await Util.sendEmail(email, "gainczak", passcode)
+      }
+      res.status(201).json(fullResult)
+    }
+  })
 }
 

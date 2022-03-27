@@ -59,14 +59,14 @@ export const registrationCheck = async (entEmail, entUser) => {
 }
 
 export const sendPasswordCode = async (entEmail) => {
-    const result = await fetch("http://localhost:4000/users/sendPassCode",
+    const url = "http://localhost:4000/users/sendPassCode?" + new URLSearchParams({entEmail})
+    const result = await fetch(url,
         {
-            method: "POST",
+            method: "GET",
             headers: {
                 "Accept": "application/json",
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({entEmail})
         })
         .then((res) => {
             return res.json().then(data => data)
