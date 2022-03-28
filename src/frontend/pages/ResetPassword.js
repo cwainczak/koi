@@ -9,7 +9,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
-
+import { removeWhiteSpace } from "../../backend/Util";
 
 const ResetPassword = (props) => {
     const {history} = props;
@@ -17,14 +17,48 @@ const ResetPassword = (props) => {
     const handleButtonClick = (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
-        // eslint-disable-next-line no-console
-        console.log({
-            code: data.get('code'),
-            password: data.get('password'),
-            confirmPassword: data.get('confirmPassword'),
-        });
 
-        history.push("/SignIn");
+        const entCode = removeWhiteSpace(data.get("code"))
+        const entPass = removeWhiteSpace(data.get("newPassword"))
+        const entConfPass = removeWhiteSpace(data.get("confirmPassword"))
+
+        console.log({
+            code: entCode,
+            password: entPass,
+            confirmPassword: entConfPass,
+        })
+
+        let errDialog = document.getElementById("invalidCredentialsRecoverPass")
+
+        const genPassCode = history.location.state.passcode.toString()
+
+        /*
+
+        console.log("resetpassword.state.passcode: " + genPassCode)
+        console.log("resetpassword.entCode: " + entCode)
+        console.log("genPassCode === entCode: " + genPassCode === entCode)
+
+        */
+
+        if (entCode === "" || entPass === "" || entConfPass === "") {
+            errDialog.hidden = false
+            errDialog.textContent = "Please fill in all fields"
+        }
+        else {
+            if (entCode !== genPassCode) {
+                errDialog.hidden = false
+                errDialog.textContent = "Invalid passcode!"
+            } else {
+                if (entPass !== entConfPass) {
+                    errDialog.hidden = false
+                    errDialog.textContent = "Passwords don't match"
+                } else {
+                    console.log("Correct passcode and passwords match!")
+                    history.push("/SignIn");
+                }
+            }
+        }
+
     };
 
     return (
@@ -87,6 +121,9 @@ const ResetPassword = (props) => {
                             type="confirmPassword"
                             id="confirmPassword"
                         />
+                        <Typography id={"invalidCredentialsRecoverPass"} fontSize={12} color={"red"} paddingTop={1.5} textAlign={"center"} hidden={true}>
+                            Invalid Something
+                        </Typography>
                         <Button
                             type="submit"
                             fullWidth

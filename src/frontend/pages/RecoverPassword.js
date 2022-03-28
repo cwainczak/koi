@@ -33,7 +33,13 @@ const RecoverPassword = (props) => {
         } else {
             const result = await sendPasswordCode(entEmail)
             if (result.emailSent){
-                history.push("/ResetPassword");
+                // pass the generated passcode to the /ResetPassword page
+                const genPassCode = result.emailJSData.templateParams.passcode
+                console.log("RecoverPassword.state.passcode: " + genPassCode)
+                history.push({
+                    pathname: "/ResetPassword",
+                    state: { passcode: genPassCode}
+                })
             }
             else {
                 if (!result.validEmail){
