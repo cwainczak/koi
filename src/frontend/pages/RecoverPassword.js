@@ -10,12 +10,14 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
+import {removeWhiteSpace} from "../../backend/Util";
+import {sendPasswordCode} from "../../backend/User";
 
 
 const RecoverPassword = (props) => {
     const {history} = props;
 
-    const handleButtonClick = (event) => {
+    const handleButtonClick = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         // eslint-disable-next-line no-console
@@ -23,7 +25,36 @@ const RecoverPassword = (props) => {
             email: data.get('email'),
         });
 
-        history.push("/ResetPassword");
+        let entEmail = removeWhiteSpace(data.get("email"))
+        let errDialog = document.getElementById("invalidCredentialsRecoverPass")
+        if (entEmail === "") {
+            errDialog.hidden = false
+            errDialog.textContent = "Please enter your email"
+        } else {
+            const result = await sendPasswordCode(entEmail)
+            if (result.emailSent){
+                // pass the generated passcode to the /ResetPassword page
+                const genPassCode = result.emailJSData.templateParams.passcode
+                console.log("RecoverPassword.state.passcode: " + genPassCode)
+                history.push({
+                    pathname: "/ResetPassword",
+                    state: {
+                        userEmail: entEmail,
+                        passcode: genPassCode
+                    }
+                })
+            }
+            else {
+                if (!result.validEmail){
+                    errDialog.hidden = false
+                    errDialog.textContent = "Invalid email!"
+                }
+                else {
+                    errDialog.hidden = false
+                    errDialog.textContent = "Server error. Please try again later."
+                }
+            }
+        }
     };
 
     return (
@@ -69,6 +100,9 @@ const RecoverPassword = (props) => {
                             name="email"
                             autoFocus
                         />
+                        <Typography id={"invalidCredentialsRecoverPass"} fontSize={12} color={"red"} paddingTop={1.5} textAlign={"center"} hidden={true}>
+
+                        </Typography>
                         <Button
                             type="submit"
                             fullWidth

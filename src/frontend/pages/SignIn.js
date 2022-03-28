@@ -17,20 +17,36 @@ import { removeWhiteSpace } from "../../backend/Util";
 const SignIn = (props) => {
     const {history} = props;
 
+    let sucPassReset = false
+
+    try {
+        sucPassReset = history.location.state.passReset
+    } catch(e) {
+        console.log(e)
+    }
+
     const handleButtonClick = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
         // logic for checking entered credentials
         let entUser = removeWhiteSpace(data.get("username"))
         let entPass = removeWhiteSpace(data.get("password"))
-        // login returns -1 if user doesn't exist, and UserID if user does exist
-        const curUserID = await login(entUser, entPass)
-        console.log(curUserID)
-        if (curUserID !== -1){
-            history.push("/Home")
+        let errDialog = document.getElementById("invalidCredentialsLogin")
+        if (entUser === "" || entPass === ""){
+            errDialog.hidden = false
+            errDialog.textContent = "Please fill in all fields"
         }
         else {
-            document.getElementById("invalidCredentialsLogin").hidden = false
+            // login returns -1 if user doesn't exist, and UserID if user does exist
+            const curUserID = await login(entUser, entPass)
+            console.log(curUserID)
+            if (curUserID !== -1){
+                history.push("/Home")
+            }
+            else {
+                errDialog.hidden = false
+                errDialog.textContent = "Invalid Username or Password"
+            }
         }
 
     };
@@ -69,6 +85,9 @@ const SignIn = (props) => {
                         Sign In
                     </Typography>
                     <Container component="form" noValidate onSubmit={handleButtonClick} sx={{mt: 1}} maxWidth="sm">
+                        <Typography id={"passResetMessage"} fontSize={12} color={"green"} paddingTop={1.5} textAlign={"center"} hidden={!sucPassReset}>
+                            Your password has been reset!
+                        </Typography>
                         <TextField
                             margin="normal"
                             required
@@ -88,7 +107,7 @@ const SignIn = (props) => {
                             id="password"
                         />
                         <Typography id={"invalidCredentialsLogin"} fontSize={12} color={"red"} paddingTop={1.5} textAlign={"center"} hidden={true}>
-                            Invalid Username or Password
+
                         </Typography>
                         <Button
                             type="submit"

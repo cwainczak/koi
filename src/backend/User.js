@@ -1,3 +1,4 @@
+import {sendEmail} from "./Util";
 
 // add
 export const createUserAcc = async (entEmail, entUser, entPass) => {
@@ -55,6 +56,47 @@ export const registrationCheck = async (entEmail, entUser) => {
         })
         .then((res) => {
             return res.json().then(data => data)
+        })
+        .catch((err) => err);
+    console.log(result)
+    return result
+}
+
+export const sendPasswordCode = async (entEmail) => {
+    const url = "http://localhost:4000/users/verCode?" + new URLSearchParams({entEmail})
+    const result = await fetch(url,
+        {
+            method: "GET",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+        })
+        .then((res) => {
+            return res.json().then(data => data)
+        })
+        .catch((err) => err);
+    if (result.validEmail){
+        const emailResult = await sendEmail(result.emailJSData)
+        result.emailSent = emailResult.status === 200;
+    }
+    console.log(result)
+    return result
+}
+
+export const resetPassword = async (userEmail, newPass) => {
+    const result = await fetch("http://localhost:4000/users/resetPass",
+        {
+            method: "PATCH",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({userEmail, newPass})
+        })
+        .then((res) => {
+            console.log(res)
+            return res.status === 200
         })
         .catch((err) => err);
     console.log(result)

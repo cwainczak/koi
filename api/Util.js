@@ -17,9 +17,16 @@ const compareStringToHash = async (someString, someHash) => {
     return await bcrypt.compare(someString, someHash)
 }
 
+const genPassCode = async () => {
+    const min = 100000
+    const max = 999999
+    return Math.floor(Math.random() * (max - min + 1) + min)
+}
+
 module.exports = {
     hashString,
-    compareStringToHash
+    compareStringToHash,
+    genPassCode
 }
 
 
