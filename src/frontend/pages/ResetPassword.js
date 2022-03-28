@@ -56,8 +56,14 @@ const ResetPassword = (props) => {
                     errDialog.textContent = "Passwords don't match"
                 } else {
                     console.log("Correct passcode and passwords match!")
-                    const passReset = await resetPassword(userEmail, entPass)
-                    history.push("/SignIn");
+                    const passResetRes = await resetPassword(userEmail, entPass)
+                    //history.push("/SignIn");
+                    history.push({
+                        pathname: "/SignIn",
+                        state: {
+                            passReset: passResetRes
+                        }
+                    })
                 }
             }
         }

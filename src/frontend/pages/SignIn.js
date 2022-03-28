@@ -17,6 +17,14 @@ import { removeWhiteSpace } from "../../backend/Util";
 const SignIn = (props) => {
     const {history} = props;
 
+    let sucPassReset = false
+
+    try {
+        sucPassReset = history.location.state.passReset
+    } catch(e) {
+        console.log(e)
+    }
+
     const handleButtonClick = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
@@ -77,6 +85,9 @@ const SignIn = (props) => {
                         Sign In
                     </Typography>
                     <Container component="form" noValidate onSubmit={handleButtonClick} sx={{mt: 1}} maxWidth="sm">
+                        <Typography id={"passResetMessage"} fontSize={12} color={"green"} paddingTop={1.5} textAlign={"center"} hidden={!sucPassReset}>
+                            Your password has been reset!
+                        </Typography>
                         <TextField
                             margin="normal"
                             required
