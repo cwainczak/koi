@@ -31,7 +31,9 @@ const ResetPassword = (props) => {
 
         let errDialog = document.getElementById("invalidCredentialsRecoverPass")
 
-        const genPassCode = history.location.state.passcode.toString()
+        const recPassState = history.location.state
+        const userEmail = recPassState.userEmail
+        const genPassCode = recPassState.passcode.toString()
 
         /*
 
@@ -54,7 +56,7 @@ const ResetPassword = (props) => {
                     errDialog.textContent = "Passwords don't match"
                 } else {
                     console.log("Correct passcode and passwords match!")
-                    const resetPassRes = await resetPassword(entPass)
+                    const passReset = await resetPassword(userEmail, entPass)
                     history.push("/SignIn");
                 }
             }

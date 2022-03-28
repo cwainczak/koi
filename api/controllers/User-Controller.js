@@ -129,9 +129,25 @@ exports.getVerificationCodeData = async (req, res) => {
 }
 
 exports.resetPassword = async (req, res) => {
-  let newPassword = req.body.newPass
-  let hashedPassword = await Util.hashString(newPassword)
-  console.log("Hashed (new) password: " + hashedPassword)
-  const query = "SELECT * FROM User;"
+  let fullResult = {passwordReset: false}
+  const userEmail = req.body.userEmail
+  const newPassword = req.body.newPass
+  const hashedNewPassword = await Util.hashString(newPassword)
+  console.log(userEmail)
+  console.log("Hashed (new) password: " + hashedNewPassword)
+  const query = "UPDATE User " +
+      "SET Password = '" + hashedNewPassword + "' " +
+      "WHERE Email = '" + userEmail + "';"
+  console.log(query)
+  DBConn.query(query, async (err, updateQueryRes) => {
+    console.log(updateQueryRes)
+    if (err != null){
+      console.log(err)
+      res.status(500).send("Unsuccessful password reset!")
+    }
+    else {
+      res.status(200).send("Successful password reset!")
+    }
+  })
 }
 

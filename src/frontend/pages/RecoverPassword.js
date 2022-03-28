@@ -38,7 +38,10 @@ const RecoverPassword = (props) => {
                 console.log("RecoverPassword.state.passcode: " + genPassCode)
                 history.push({
                     pathname: "/ResetPassword",
-                    state: { passcode: genPassCode}
+                    state: {
+                        userEmail: entEmail,
+                        passcode: genPassCode
+                    }
                 })
             }
             else {
