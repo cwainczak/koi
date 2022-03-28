@@ -80,3 +80,21 @@ export const sendPasswordCode = async (entEmail) => {
     console.log(result)
     return result
 }
+
+export const resetPassword = async (newPass) => {
+    const result = await fetch("http://localhost:4000/users/resetPass",
+        {
+            method: "PATCH",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({newPass})
+        })
+        .then((res) => {
+            return res.json().then(data => data)
+        })
+        .catch((err) => err);
+    console.log(result)
+    return result
+}

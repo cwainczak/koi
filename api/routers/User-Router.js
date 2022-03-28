@@ -19,5 +19,8 @@ router.put("/regcheck", usersController.checkRegUserData)
 // Endpoint for sending passcode to reset password (gets the passcode)
 router.get("/verCode", usersController.getVerificationCodeData)
 
+// Endpoint for the action of resetting the password
+router.patch("/resetPass", usersController.resetPassword)
+
 // Export router
 module.exports = router

@@ -10,11 +10,12 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
 import { removeWhiteSpace } from "../../backend/Util";
+import { resetPassword } from "../../backend/User";
 
 const ResetPassword = (props) => {
     const {history} = props;
 
-    const handleButtonClick = (event) => {
+    const handleButtonClick = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
 
@@ -43,8 +44,7 @@ const ResetPassword = (props) => {
         if (entCode === "" || entPass === "" || entConfPass === "") {
             errDialog.hidden = false
             errDialog.textContent = "Please fill in all fields"
-        }
-        else {
+        } else {
             if (entCode !== genPassCode) {
                 errDialog.hidden = false
                 errDialog.textContent = "Invalid passcode!"
@@ -54,6 +54,7 @@ const ResetPassword = (props) => {
                     errDialog.textContent = "Passwords don't match"
                 } else {
                     console.log("Correct passcode and passwords match!")
+                    const resetPassRes = await resetPassword(entPass)
                     history.push("/SignIn");
                 }
             }

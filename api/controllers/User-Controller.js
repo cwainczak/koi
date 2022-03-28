@@ -128,3 +128,10 @@ exports.getVerificationCodeData = async (req, res) => {
   })
 }
 
+exports.resetPassword = async (req, res) => {
+  let newPassword = req.body.newPass
+  let hashedPassword = await Util.hashString(newPassword)
+  console.log("Hashed (new) password: " + hashedPassword)
+  const query = "SELECT * FROM User;"
+}
+
