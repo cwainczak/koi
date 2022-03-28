@@ -110,6 +110,7 @@ const ResetPassword = (props) => {
                             fullWidth
                             id="newPassword"
                             label="New Password"
+                            type="password"
                             name="newPassword"
                         />
                         <TextField
@@ -118,7 +119,7 @@ const ResetPassword = (props) => {
                             fullWidth
                             name="confirmPassword"
                             label="Confirm Password"
-                            type="confirmPassword"
+                            type="password"
                             id="confirmPassword"
                         />
                         <Typography id={"invalidCredentialsRecoverPass"} fontSize={12} color={"red"} paddingTop={1.5} textAlign={"center"} hidden={true}>

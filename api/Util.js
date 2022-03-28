@@ -5,8 +5,6 @@ This will yield the same hash if the plain text password is correct.
 TLDR: same salts, same plain text password, same hash
  */
 
-const emailJS = require("@emailjs/browser")
-
 const bcrypt = require("bcrypt")
 // the higher the rounds, the more secure, but the longer it takes to generate
 const ROUNDS = 5
