@@ -34,7 +34,7 @@ const Home = () => {
                 variant="contained"
                 onClick={handelOpenDialog}
             >
-                Click To Create New Post
+                Create New Post
             </Button>
 
             <br/>
