@@ -18,7 +18,7 @@ const RecoverPassword = (props) => {
     const {history} = props;
     const [loading, setLoading] = useState(false);
 
-    function handleLoading() {
+    const handleLoading = () => {
         setLoading(prev => !prev);
     }
 
