@@ -32,6 +32,7 @@ const RecoverPassword = (props) => {
 
         let entEmail = removeWhiteSpace(data.get("email"))
         let errDialog = document.getElementById("invalidCredentialsRecoverPass")
+
         if (entEmail === "") {
             errDialog.hidden = false
             errDialog.textContent = "Please enter your email"
@@ -40,6 +41,7 @@ const RecoverPassword = (props) => {
             handleLoading();
 
             const result = await sendPasswordCode(entEmail)
+
             if (result.emailSent) {
                 // pass the generated passcode to the /ResetPassword page
                 const genPassCode = result.emailJSData.templateParams.passcode
