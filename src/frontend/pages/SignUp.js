@@ -1,6 +1,6 @@
-import React from "react";
+import React, {useState} from "react";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
+import LoadingButton from "@mui/lab/LoadingButton";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
@@ -16,6 +16,11 @@ import { validateEmail, removeWhiteSpace } from "../../backend/Util"
 
 const SignUp = (props) => {
     const {history} = props;
+    const [loading, setLoading] = useState(false);
+
+    const handleLoading = () => {
+        setLoading(prev => !prev);
+    }
 
     const handleButtonClick = async (event) => {
         event.preventDefault();
@@ -63,6 +68,9 @@ const SignUp = (props) => {
             else {
                 let isSuccess = await createUserAcc(entEmail, entUser, entPass);
                 if (isSuccess){
+                    // disabling button
+                    handleLoading();
+
                     history.push("/Home")
                 }
                 else {
@@ -144,14 +152,16 @@ const SignUp = (props) => {
                         <Typography id={"invalidCredentialsRegister"} fontSize={12} color={"red"} paddingTop={1.5} textAlign={"center"} hidden={true}>
                             Invalid Something
                         </Typography>
-                        <Button
+                        <LoadingButton
                             type="submit"
                             fullWidth
+                            loading={loading}
+                            loadingPosition="center"
                             variant="contained"
                             sx={{mt: 3, mb: 2}}
                         >
                             Sign Up
-                        </Button>
+                        </LoadingButton>
                         <Grid container justifyContent="flex-end">
                             <Grid item>
                                 <Link
