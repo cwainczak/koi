@@ -1,6 +1,6 @@
-import React from "react";
+import React, {useState} from "react";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
+import LoadingButton from "@mui/lab/LoadingButton";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
@@ -16,6 +16,11 @@ import { removeWhiteSpace } from "../../backend/Util";
 
 const SignIn = (props) => {
     const {history} = props;
+    const [loading, setLoading] = useState(false);
+
+    const handleLoading = () => {
+        setLoading(prev => !prev);
+    }
 
     let sucPassReset = false
 
@@ -41,6 +46,10 @@ const SignIn = (props) => {
             const curUserID = await login(entUser, entPass)
             console.log(curUserID)
             if (curUserID !== -1){
+                // disable button
+                handleLoading();
+                console.log("it loaded")
+
                 history.push("/Home")
             }
             else {
@@ -109,14 +118,16 @@ const SignIn = (props) => {
                         <Typography id={"invalidCredentialsLogin"} fontSize={12} color={"red"} paddingTop={1.5} textAlign={"center"} hidden={true}>
 
                         </Typography>
-                        <Button
+                        <LoadingButton
                             type="submit"
                             fullWidth
+                            loading={loading}
+                            loadingPosition="center"
                             variant="contained"
                             sx={{mt: 3, mb: 2}}
                         >
                             Sign In
-                        </Button>
+                        </LoadingButton>
                         <Grid container>
                             <Grid item xs>
                                 <Link
