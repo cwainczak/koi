@@ -40,7 +40,7 @@ const RecoverPassword = (props) => {
             handleLoading();
 
             const result = await sendPasswordCode(entEmail)
-            if (result.emailSent){
+            if (result.emailSent) {
                 // pass the generated passcode to the /ResetPassword page
                 const genPassCode = result.emailJSData.templateParams.passcode
                 console.log("RecoverPassword.state.passcode: " + genPassCode)
@@ -51,15 +51,13 @@ const RecoverPassword = (props) => {
                         passcode: genPassCode
                     }
                 })
-            }
-            else {
-                if (!result.validEmail){
+            } else {
+                if (!result.validEmail) {
                     errDialog.hidden = false
                     errDialog.textContent = "Invalid email!"
                     // enable button
                     handleLoading();
-                }
-                else {
+                } else {
                     errDialog.hidden = false
                     errDialog.textContent = "Server error. Please try again later."
                     // enable button
@@ -112,7 +110,8 @@ const RecoverPassword = (props) => {
                             name="email"
                             autoFocus
                         />
-                        <Typography id={"invalidCredentialsRecoverPass"} fontSize={12} color={"red"} paddingTop={1.5} textAlign={"center"} hidden={true}>
+                        <Typography id={"invalidCredentialsRecoverPass"} fontSize={12} color={"red"} paddingTop={1.5}
+                                    textAlign={"center"} hidden={true}>
 
                         </Typography>
                         <LoadingButton
