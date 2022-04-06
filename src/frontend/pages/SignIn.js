@@ -48,7 +48,6 @@ const SignIn = (props) => {
             if (curUserID !== -1){
                 // disable button
                 handleLoading();
-                console.log("it loaded")
 
                 history.push("/Home")
             }
