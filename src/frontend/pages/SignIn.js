@@ -10,7 +10,7 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { login } from "./../../backend/User"
+import { login } from "../../backend/User"
 import { removeWhiteSpace } from "../../backend/Util";
 
 
