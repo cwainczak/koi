@@ -131,7 +131,6 @@ exports.getVerificationCodeData = async (req, res) => {
 }
 
 exports.resetPassword = async (req, res) => {
-  let fullResult = {passwordReset: false}
   const userEmail = req.body.userEmail
   const newPassword = req.body.newPass
   const hashedNewPassword = await Util.hashString(newPassword)

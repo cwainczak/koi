@@ -1,6 +1,6 @@
-import React from "react";
+import React, {useState} from "react";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
+import LoadingButton from "@mui/lab/LoadingButton";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
@@ -10,18 +10,23 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import { login } from "./../../backend/User"
-import { removeWhiteSpace } from "../../backend/Util";
+import {login} from "../../backend/User"
+import {removeWhiteSpace} from "../../backend/Util";
 
 
 const SignIn = (props) => {
     const {history} = props;
+    const [loading, setLoading] = useState(false);
+
+    const handleLoading = () => {
+        setLoading(prev => !prev);
+    }
 
     let sucPassReset = false
 
     try {
         sucPassReset = history.location.state.passReset
-    } catch(e) {
+    } catch (e) {
         console.log(e)
     }
 
@@ -32,23 +37,24 @@ const SignIn = (props) => {
         let entUser = removeWhiteSpace(data.get("username"))
         let entPass = removeWhiteSpace(data.get("password"))
         let errDialog = document.getElementById("invalidCredentialsLogin")
-        if (entUser === "" || entPass === ""){
+
+        if (entUser === "" || entPass === "") {
             errDialog.hidden = false
             errDialog.textContent = "Please fill in all fields"
-        }
-        else {
+        } else {
             // login returns -1 if user doesn't exist, and UserID if user does exist
             const curUserID = await login(entUser, entPass)
             console.log(curUserID)
-            if (curUserID !== -1){
+            if (curUserID !== -1) {
+                // disable button
+                handleLoading();
+
                 history.push("/Home")
-            }
-            else {
+            } else {
                 errDialog.hidden = false
                 errDialog.textContent = "Invalid Username or Password"
             }
         }
-
     };
 
     return (
@@ -85,7 +91,8 @@ const SignIn = (props) => {
                         Sign In
                     </Typography>
                     <Container component="form" noValidate onSubmit={handleButtonClick} sx={{mt: 1}} maxWidth="sm">
-                        <Typography id={"passResetMessage"} fontSize={12} color={"green"} paddingTop={1.5} textAlign={"center"} hidden={!sucPassReset}>
+                        <Typography id={"passResetMessage"} fontSize={12} color={"green"} paddingTop={1.5}
+                                    textAlign={"center"} hidden={!sucPassReset}>
                             Your password has been reset!
                         </Typography>
                         <TextField
@@ -106,17 +113,20 @@ const SignIn = (props) => {
                             type="password"
                             id="password"
                         />
-                        <Typography id={"invalidCredentialsLogin"} fontSize={12} color={"red"} paddingTop={1.5} textAlign={"center"} hidden={true}>
+                        <Typography id={"invalidCredentialsLogin"} fontSize={12} color={"red"} paddingTop={1.5}
+                                    textAlign={"center"} hidden={true}>
 
                         </Typography>
-                        <Button
+                        <LoadingButton
                             type="submit"
                             fullWidth
+                            loading={loading}
+                            loadingPosition="center"
                             variant="contained"
                             sx={{mt: 3, mb: 2}}
                         >
                             Sign In
-                        </Button>
+                        </LoadingButton>
                         <Grid container>
                             <Grid item xs>
                                 <Link

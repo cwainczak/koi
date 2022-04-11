@@ -1,6 +1,6 @@
-import React from "react";
+import React, {useState} from "react";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
+import LoadingButton from "@mui/lab/LoadingButton";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
@@ -10,12 +10,17 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
-import { createUserAcc, registrationCheck } from "../../backend/User"
-import { validateEmail, removeWhiteSpace } from "../../backend/Util"
+import {createUserAcc, registrationCheck} from "../../backend/User"
+import {validateEmail, removeWhiteSpace} from "../../backend/Util"
 
 
 const SignUp = (props) => {
     const {history} = props;
+    const [loading, setLoading] = useState(false);
+
+    const handleLoading = () => {
+        setLoading(prev => !prev);
+    }
 
     const handleButtonClick = async (event) => {
         event.preventDefault();
@@ -36,36 +41,35 @@ const SignUp = (props) => {
         let errDialog = document.getElementById("invalidCredentialsRegister")
 
         // if any of the fields are empty/have whitespace
-        if (entEmail === "" || entUser === "" || entPass === "" || entConfPass === ""){
+        if (entEmail === "" || entUser === "" || entPass === "" || entConfPass === "") {
             errDialog.hidden = false
             errDialog.textContent = "Please fill in all fields"
-        }
-        else if (entPass !== entConfPass){
+        } else if (entPass !== entConfPass) {
             errDialog.hidden = false
             errDialog.textContent = "Passwords don't match"
-        }
-        else if (validateEmail(entEmail) === null){
+        } else if (validateEmail(entEmail) === null) {
             errDialog.hidden = false
             errDialog.textContent = "Invalid email address"
-        }
-        else {
+        } else {
             let regCheckRes = await registrationCheck(entEmail, entUser)
             let isEmailTaken = regCheckRes.emailTaken
             let isUsernameTaken = regCheckRes.usernameTaken
-            if (isEmailTaken){
+
+            if (isEmailTaken) {
                 errDialog.hidden = false
                 errDialog.textContent = "Email already in use. Please reset password."
-            }
-            else if (isUsernameTaken){
+            } else if (isUsernameTaken) {
                 errDialog.hidden = false
                 errDialog.textContent = "Username already taken"
-            }
-            else {
+            } else {
                 let isSuccess = await createUserAcc(entEmail, entUser, entPass);
-                if (isSuccess){
+
+                if (isSuccess) {
+                    // disabling button
+                    handleLoading();
+
                     history.push("/Home")
-                }
-                else {
+                } else {
                     console.log("Something went wrong!")
                 }
             }
@@ -141,17 +145,20 @@ const SignUp = (props) => {
                             type="password"
                             id="password"
                         />
-                        <Typography id={"invalidCredentialsRegister"} fontSize={12} color={"red"} paddingTop={1.5} textAlign={"center"} hidden={true}>
+                        <Typography id={"invalidCredentialsRegister"} fontSize={12} color={"red"} paddingTop={1.5}
+                                    textAlign={"center"} hidden={true}>
                             Invalid Something
                         </Typography>
-                        <Button
+                        <LoadingButton
                             type="submit"
                             fullWidth
+                            loading={loading}
+                            loadingPosition="center"
                             variant="contained"
                             sx={{mt: 3, mb: 2}}
                         >
                             Sign Up
-                        </Button>
+                        </LoadingButton>
                         <Grid container justifyContent="flex-end">
                             <Grid item>
                                 <Link

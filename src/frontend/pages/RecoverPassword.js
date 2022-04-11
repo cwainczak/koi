@@ -1,6 +1,6 @@
-import React from "react";
+import React, {useState} from "react";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
+import LoadingButton from "@mui/lab/LoadingButton";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Link from "@mui/material/Link";
@@ -16,6 +16,11 @@ import {sendPasswordCode} from "../../backend/User";
 
 const RecoverPassword = (props) => {
     const {history} = props;
+    const [loading, setLoading] = useState(false);
+
+    const handleLoading = () => {
+        setLoading(prev => !prev);
+    }
 
     const handleButtonClick = async (event) => {
         event.preventDefault();
@@ -27,12 +32,17 @@ const RecoverPassword = (props) => {
 
         let entEmail = removeWhiteSpace(data.get("email"))
         let errDialog = document.getElementById("invalidCredentialsRecoverPass")
+
         if (entEmail === "") {
             errDialog.hidden = false
             errDialog.textContent = "Please enter your email"
         } else {
+            // disable button
+            handleLoading();
+
             const result = await sendPasswordCode(entEmail)
-            if (result.emailSent){
+
+            if (result.emailSent) {
                 // pass the generated passcode to the /ResetPassword page
                 const genPassCode = result.emailJSData.templateParams.passcode
                 console.log("RecoverPassword.state.passcode: " + genPassCode)
@@ -43,15 +53,17 @@ const RecoverPassword = (props) => {
                         passcode: genPassCode
                     }
                 })
-            }
-            else {
-                if (!result.validEmail){
+            } else {
+                if (!result.validEmail) {
                     errDialog.hidden = false
                     errDialog.textContent = "Invalid email!"
-                }
-                else {
+                    // enable button
+                    handleLoading();
+                } else {
                     errDialog.hidden = false
                     errDialog.textContent = "Server error. Please try again later."
+                    // enable button
+                    handleLoading();
                 }
             }
         }
@@ -100,17 +112,20 @@ const RecoverPassword = (props) => {
                             name="email"
                             autoFocus
                         />
-                        <Typography id={"invalidCredentialsRecoverPass"} fontSize={12} color={"red"} paddingTop={1.5} textAlign={"center"} hidden={true}>
+                        <Typography id={"invalidCredentialsRecoverPass"} fontSize={12} color={"red"} paddingTop={1.5}
+                                    textAlign={"center"} hidden={true}>
 
                         </Typography>
-                        <Button
+                        <LoadingButton
                             type="submit"
                             fullWidth
+                            loading={loading}
+                            loadingPosition="center"
                             variant="contained"
                             sx={{mt: 3, mb: 2}}
                         >
                             Send Code
-                        </Button>
+                        </LoadingButton>
                         <Grid container justifyContent="flex-end">
                             <Grid item>
                                 <Link
