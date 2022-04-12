@@ -13,6 +13,14 @@ import FriendRequest from "../components/FriendRequest";
 import FindFriend from "../components/FindFriend";
 import FriendObj from "../../backend/FriendObj";
 
+// const handleSearch = async (event) => {
+//     event.preventDefault();
+//     document.getElementById("searchField").
+// }
+
+export const handleSearch = async (searchText) => {
+    console.log(searchText)
+}
 
 let currentFriends = [new FriendObj("dellmultiple", 15), new FriendObj("ibmdifference", 20),
     new FriendObj("volkswagonbream", 25), new FriendObj("nikemelt", 30),
@@ -90,7 +98,7 @@ const Friends = () => {
                     </Grid>
                 </TabPanel>
                 <TabPanel>
-                    <SearchField promptText={"Find Friends"}/>
+                    <SearchField id="searchField" promptText={"Find Friends"}/>
                     <br/>
                     {/* find friend */}
                     <Grid container rowSpacing={2} columnSpacing={2}>
