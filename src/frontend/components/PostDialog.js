@@ -5,6 +5,7 @@ import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
 import DialogTitle from "@mui/material/DialogTitle";
+import Typography from "@mui/material/Typography";
 
 
 const PostDialog = (props) => {
@@ -27,6 +28,17 @@ const PostDialog = (props) => {
                     rows={10}
                     fullWidth
                 />
+
+                <Typography
+                    id={"invalidPostEntry"}
+                    fontSize={12}
+                    color={"red"}
+                    paddingTop={1.5}
+                    textAlign={"center"}
+                    hidden={true}
+                >
+                    Title and content are required.
+                </Typography>
             </DialogContent>
             <DialogActions>
                 <Button onClick={props.handleClose}>Cancel</Button>
