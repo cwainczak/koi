@@ -14,15 +14,15 @@ let posts = [new PostObj("operatingoracle", "On it differed", "On it differed re
 const Home = () => {
     const [isOpen, setIsOpen] = React.useState(false);
 
-    const handelOpenDialog = () => {
+    const handleOpenDialog = () => {
         setIsOpen(true);
     }
 
-    const handelCloseDialog = () => {
+    const handleCloseDialog = () => {
         setIsOpen(false);
     }
 
-    const handelDialogAction = () => {
+    const handleDialogAction = () => {
         setIsOpen(false);
         // todo - add new post to database
     }
@@ -32,7 +32,7 @@ const Home = () => {
             <Button
                 fullWidth
                 variant="contained"
-                onClick={handelOpenDialog}
+                onClick={handleOpenDialog}
             >
                 Create New Post
             </Button>
@@ -55,8 +55,8 @@ const Home = () => {
 
             <PostDialog
                 isOpen={isOpen}
-                handleClose={handelCloseDialog}
-                handleAction={handelDialogAction}
+                handleClose={handleCloseDialog}
+                handleAction={handleDialogAction}
             />
         </Container>
     );
