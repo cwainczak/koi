@@ -4,7 +4,6 @@ import {InputBase} from "@mui/material";
 import IconButton from "@mui/material/IconButton";
 import SearchIcon from "@mui/icons-material/Search";
 
-
 const SearchField = (props) => {
 
     const [searchText, setSearchText] = React.useState("")

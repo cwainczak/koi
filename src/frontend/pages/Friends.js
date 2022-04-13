@@ -12,12 +12,6 @@ import CurrentFriend from "../components/CurrentFriend";
 import FriendRequest from "../components/FriendRequest";
 import FindFriend from "../components/FindFriend";
 import FriendObj from "../../backend/FriendObj";
-import searchField from "../components/SearchField";
-
-// const handleSearch = async (event) => {
-//     event.preventDefault();
-//     document.getElementById("searchField").
-// }
 
 let currentFriends = [new FriendObj("dellmultiple", 15), new FriendObj("ibmdifference", 20),
     new FriendObj("volkswagonbream", 25), new FriendObj("nikemelt", 30),
@@ -44,7 +38,7 @@ function TabPanel(props) {
 
 const Friends = () => {
 
-    const handleSearch = async (searchText) => {
+    const handleFindFriends = async (searchText) => {
         console.log(searchText)
     }
 
@@ -100,7 +94,7 @@ const Friends = () => {
                     </Grid>
                 </TabPanel>
                 <TabPanel>
-                    <SearchField id="searchField" promptText={"Find Friends"} onClick={handleSearch}/>
+                    <SearchField id="searchField" promptText={"Find Friends"} onClick={handleFindFriends}/>
                     <br/>
                     {/* find friend */}
                     <Grid container rowSpacing={2} columnSpacing={2}>
