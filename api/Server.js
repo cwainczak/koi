@@ -9,7 +9,7 @@ const helmet = require('helmet')
 const cors = require('cors')
 
 // Import routers
-const usersRouter = require('./routers/User-Router')
+const userLoginRouter = require('./routers/UserLogin-Router')
 const userFriendRouter = require("./routers/UserFriend-Router")
 
 // Setup default port
@@ -37,7 +37,7 @@ if (process.env.NODE_ENV && process.env.NODE_ENV !== 'development') {
 // ! Note:
 // '/users' will prefix all post routes
 // with '/users' => '/all' will become '/users/all'
-app.use('/users', usersRouter)
+app.use('/userLogin', userLoginRouter)
 app.use("/userFriend", userFriendRouter)
 
 // Implement route for errors

@@ -3,7 +3,7 @@ import UserObj, {setCurUser} from "./UserObj";
 
 // add
 export const createUserAcc = async (entEmail, entUser, entPass) => {
-    return await fetch("http://localhost:4000/users/add",
+    return await fetch("http://localhost:4000/userLogin/add",
         {
             method: "POST",
             headers: {
@@ -19,7 +19,7 @@ export const createUserAcc = async (entEmail, entUser, entPass) => {
 
 // verify
 export const login = async (entUser, entPass) => {
-    const url = "http://localhost:4000/users/verify?" + new URLSearchParams({entUser, entPass})
+    const url = "http://localhost:4000/userLogin/verify?" + new URLSearchParams({entUser, entPass})
     const result = await fetch(url,
         {
             method: "GET",
@@ -50,7 +50,7 @@ export const login = async (entUser, entPass) => {
 
 // regCheck
 export const registrationCheck = async (entEmail, entUser) => {
-    const url = "http://localhost:4000/users/regcheck?" + new URLSearchParams({entEmail, entUser})
+    const url = "http://localhost:4000/userLogin/regcheck?" + new URLSearchParams({entEmail, entUser})
     const result = await fetch(url,
         {
             method: "GET",
@@ -68,7 +68,7 @@ export const registrationCheck = async (entEmail, entUser) => {
 }
 
 export const sendPasswordCode = async (entEmail) => {
-    const url = "http://localhost:4000/users/verCode?" + new URLSearchParams({entEmail})
+    const url = "http://localhost:4000/userLogin/verCode?" + new URLSearchParams({entEmail})
     const result = await fetch(url,
         {
             method: "GET",
@@ -90,7 +90,7 @@ export const sendPasswordCode = async (entEmail) => {
 }
 
 export const resetPassword = async (userEmail, newPass) => {
-    const result = await fetch("http://localhost:4000/users/resetPass",
+    const result = await fetch("http://localhost:4000/userLogin/resetPass",
         {
             method: "PATCH",
             headers: {
