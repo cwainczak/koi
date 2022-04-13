@@ -9,6 +9,15 @@ import Typography from "@mui/material/Typography";
 
 
 const PostDialog = (props) => {
+
+    const handleClick = () => {
+        let entTitle = document.getElementById("title").value;
+        let entContent = document.getElementById("content").value;
+        let errDialog = document.getElementById("invalidPostEntry");
+
+        props.handleAction(entTitle, entContent, errDialog);
+    }
+
     return (
         <Dialog open={props.isOpen} onClose={props.handleClose}>
             <DialogTitle>Create Post</DialogTitle>
@@ -42,7 +51,7 @@ const PostDialog = (props) => {
             </DialogContent>
             <DialogActions>
                 <Button onClick={props.handleClose}>Cancel</Button>
-                <Button onClick={props.handleAction}>Post</Button>
+                <Button onClick={handleClick}>Post</Button>
             </DialogActions>
         </Dialog>
     );

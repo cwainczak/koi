@@ -22,7 +22,7 @@ const Home = () => {
         setIsOpen(false);
     }
 
-    const handleDialogAction = () => {
+    const handleDialogAction = async (title, content, errDialog) => {
         setIsOpen(false);
         // todo - add new post to database
     }
