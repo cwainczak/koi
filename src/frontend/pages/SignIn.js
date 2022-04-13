@@ -10,8 +10,9 @@ import Grid from "@mui/material/Grid";
 import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-import {login} from "../../backend/User"
+import {login} from "../../backend/UserLogin"
 import {removeWhiteSpace} from "../../backend/Util";
+import {curUser} from "../../backend/UserObj";
 
 
 const SignIn = (props) => {
@@ -24,11 +25,8 @@ const SignIn = (props) => {
 
     let sucPassReset = false
 
-    try {
+    if (history.location.state !== undefined)
         sucPassReset = history.location.state.passReset
-    } catch (e) {
-        console.log(e)
-    }
 
     const handleButtonClick = async (event) => {
         event.preventDefault();
@@ -48,7 +46,8 @@ const SignIn = (props) => {
             if (curUserID !== -1) {
                 // disable button
                 handleLoading();
-
+                if (curUser)
+                    console.log("the current user is: " + curUser.toString())
                 history.push("/Home")
             } else {
                 errDialog.hidden = false
