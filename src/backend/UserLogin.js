@@ -1,4 +1,5 @@
 import {sendEmail} from "./Util";
+import UserObj, {setCurUser} from "./UserObj";
 
 // add
 export const createUserAcc = async (entEmail, entUser, entPass) => {
@@ -33,7 +34,11 @@ export const login = async (entUser, entPass) => {
         .catch((err) => err);
     console.log(result)
     if (result.length === 1){
-        let curUserID = result[0].UserID
+        // update current user in UserObj
+        let someCurUser = result[0]
+        setCurUser(new UserObj(someCurUser.UserID, someCurUser.Email, someCurUser.Username, someCurUser.Password, someCurUser.FriendIDs, someCurUser.FriendReqIDs))
+        // return ID
+        let curUserID = someCurUser.UserID
         console.log("curUserID: " + curUserID)
         return curUserID
     }
