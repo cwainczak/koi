@@ -10,6 +10,8 @@ const cors = require('cors')
 
 // Import routes
 const usersRouter = require('./routers/User-Router')
+const userPostRouter = require('./routers/UserPost-Router')
+
 
 // Setup default port
 const PORT = process.env.PORT || 4000
@@ -37,6 +39,7 @@ if (process.env.NODE_ENV && process.env.NODE_ENV !== 'development') {
 // '/users' will prefix all post routes
 // with '/users' => '/all' will become '/users/all'
 app.use('/users', usersRouter)
+app.use('/userPost', userPostRouter)
 
 // Implement route for errors
 app.use((err, req, res, next) => {
