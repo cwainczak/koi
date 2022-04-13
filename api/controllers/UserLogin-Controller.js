@@ -83,6 +83,7 @@ exports.verifyUserData = async (req, res) => {
         if (curUser.Username === username && checkHash) {
           result.push(curUser)
           console.log(result)
+          break
         }
       }
       res.status(201).json(result)

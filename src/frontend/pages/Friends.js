@@ -12,7 +12,8 @@ import CurrentFriend from "../components/CurrentFriend";
 import FriendRequest from "../components/FriendRequest";
 import FindFriend from "../components/FindFriend";
 import FriendObj from "../../backend/FriendObj";
-
+import { getUserSearchRes } from "../../backend/UserFriends"
+import {curUser} from "../../backend/UserObj";
 
 let currentFriends = [new FriendObj("dellmultiple", 15), new FriendObj("ibmdifference", 20),
     new FriendObj("volkswagonbream", 25), new FriendObj("nikemelt", 30),
@@ -38,6 +39,13 @@ function TabPanel(props) {
 }
 
 const Friends = () => {
+
+    const handleFindFriends = async (searchText) => {
+        console.log("User entered: " + searchText)
+        const isNewFriend = true
+        await getUserSearchRes(searchText, isNewFriend, curUser)
+    }
+
     const [value, setValue] = useState(0);
 
     const handleChange = (event, newValue) => {
@@ -90,7 +98,7 @@ const Friends = () => {
                     </Grid>
                 </TabPanel>
                 <TabPanel>
-                    <SearchField promptText={"Find Friends"}/>
+                    <SearchField id="searchField" promptText={"Find Friends"} onClick={handleFindFriends}/>
                     <br/>
                     {/* find friend */}
                     <Grid container rowSpacing={2} columnSpacing={2}>
