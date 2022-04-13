@@ -8,8 +8,9 @@ const compression = require('compression')
 const helmet = require('helmet')
 const cors = require('cors')
 
-// Import routes
+// Import routers
 const usersRouter = require('./routers/User-Router')
+const userFriendRouter = require("./routers/UserFriend-Router")
 
 // Setup default port
 const PORT = process.env.PORT || 4000
@@ -37,6 +38,7 @@ if (process.env.NODE_ENV && process.env.NODE_ENV !== 'development') {
 // '/users' will prefix all post routes
 // with '/users' => '/all' will become '/users/all'
 app.use('/users', usersRouter)
+app.use("/userFriend", userFriendRouter)
 
 // Implement route for errors
 app.use((err, req, res, next) => {

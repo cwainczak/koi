@@ -1,8 +1,8 @@
 
 // gets user search results
 // newFriend -> boolean that determines if we are searching for new friend or current friends
-export const getUserSearchRes = async (newFriend) => {
-    const url = "http://localhost:4000/userFriend/search?" + new URLSearchParams({newFriend})
+export const getUserSearchRes = async (searchInput, isNewFriend, curUser) => {
+    const url = "http://localhost:4000/userFriend/search?" + new URLSearchParams({searchInput, isNewFriend, curUser})
     return await fetch(url,
         {
             method: "GET",

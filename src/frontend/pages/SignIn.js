@@ -12,6 +12,7 @@ import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
 import {login} from "../../backend/UserLogin"
 import {removeWhiteSpace} from "../../backend/Util";
+import UserObj from "../../backend/UserObj";
 
 
 const SignIn = (props) => {
@@ -48,7 +49,7 @@ const SignIn = (props) => {
             if (curUserID !== -1) {
                 // disable button
                 handleLoading();
-
+                new UserObj()
                 history.push("/Home")
             } else {
                 errDialog.hidden = false
