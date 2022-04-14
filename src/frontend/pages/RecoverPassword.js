@@ -10,7 +10,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
-import {removeWhiteSpace} from "../../backend/Util";
+import {removeWhiteSpace, validateEmail} from "../../backend/Util";
 import {sendPasswordCode} from "../../backend/UserLogin";
 
 
@@ -36,6 +36,10 @@ const RecoverPassword = (props) => {
         if (entEmail === "") {
             errDialog.hidden = false
             errDialog.textContent = "Please enter your email"
+        }
+        else if (validateEmail(entEmail) === null) {
+            errDialog.hidden = false
+            errDialog.textContent = "Invalid email address!"
         } else {
             // disable button
             handleLoading();
@@ -56,7 +60,7 @@ const RecoverPassword = (props) => {
             } else {
                 if (!result.validEmail) {
                     errDialog.hidden = false
-                    errDialog.textContent = "Invalid email!"
+                    errDialog.textContent = "Invalid email address!"
                     // enable button
                     handleLoading();
                 } else {
