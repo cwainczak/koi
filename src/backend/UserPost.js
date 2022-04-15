@@ -1,5 +1,5 @@
 // add
-export const createUserPost = async (entTitle, entContent) => {
+export const createUserPost = async (userID, entTitle, entContent) => {
     return await fetch("http://localhost:4000/userPost/add",
         {
             method: "POST",
@@ -7,7 +7,7 @@ export const createUserPost = async (entTitle, entContent) => {
                 "Accept": "application/json",
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify({entTitle, entContent})
+            body: JSON.stringify({userID, entTitle, entContent})
         }
     ).then((res) => {
         return res.status === 201

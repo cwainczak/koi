@@ -6,6 +6,7 @@ import PostObj from "../../backend/PostObj";
 import PostDialog from "../components/PostDialog";
 import {removeWhiteSpace} from "../../backend/Util";
 import {createUserPost} from "../../backend/UserPost";
+import {curUser} from "../../backend/UserObj";
 
 
 let posts = [new PostObj("operatingoracle", "On it differed", "On it differed repeated wandered required in. Then girl neat why yet knew rose spot. Moreover property we he kindness greatest be oh striking laughter. In me he at collecting affronting principles apartments. Has visitor law attacks pretend you calling own excited painted. Contented attending smallness it oh ye unwilling. Turned favour man two but lovers. Suffer should if waited common person little oh. Improved civility graceful sex few smallest screened settling. Likely active her warmly has.", 18, [["username1", "comment1 - Use securing confined his shutters. Delightful as he it acceptance an solicitude discretion reasonably. Carriage we husbands advanced an perceive greatest."], ["username2", "comment2 - Totally dearest expense on demesne ye he. Curiosity excellent commanded in me. Unpleasing impression themselves to at assistance acceptance my or. On consider laughter civility offended oh."]]),
@@ -36,17 +37,13 @@ const Home = () => {
         if (entTitle === "" || entContent === "") {
             errDialog.hidden = false;
         } else {
-            setIsOpen(false);
-
-
-            //
-            // let isSuccess = await creatUserPost(entTitle, entContent);
-            //
-            // if (isSuccess) {
-            //     setIsOpen(false);
-            // } else {
-            //     console.log("Something went wrong!");
-            // }
+            let isSuccess = await createUserPost(curUser.UserID, entTitle, entContent);
+            
+            if (isSuccess) {
+                setIsOpen(false);
+            } else {
+                console.log("Something went wrong!");
+            }
         }
     }
 
