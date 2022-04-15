@@ -17,12 +17,24 @@ export default class UserObj {
     }
 
     toString(){
+        console.log("in the toString")
         return "\nUserID: " + this.UserID +
                "\nEmail: " + this.Email +
                "\nUsername: " + this.Username +
                "\nPassword: " + this.Password +
                "\nFriendIDs: " + this.FriendIDs +
                "\nFriendReqIDs: " + this.FriendReqIDs
+    }
+
+    toJSON(){
+        return {
+            UserID: this.UserID,
+            Email: this.Email,
+            Username: this.Username,
+            Password: this.Password,
+            FriendIDs: this.FriendIDs,
+            FriendReqIDs: this.FriendReqIDs
+        }
     }
 
 }

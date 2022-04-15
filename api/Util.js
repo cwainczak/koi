@@ -23,10 +23,19 @@ const genPassCode = async () => {
     return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
+// checks if an array contains some value, regardless of type
+function doesContain(someArr, someValue){
+    for (let i = 0; i < someArr.length; i++){
+        if (someArr[i] == someValue) return true
+    }
+    return false
+}
+
 module.exports = {
     hashString,
     compareStringToHash,
-    genPassCode
+    genPassCode,
+    doesContain
 }
 
 

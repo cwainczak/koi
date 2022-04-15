@@ -12,7 +12,7 @@ import CurrentFriend from "../components/CurrentFriend";
 import FriendRequest from "../components/FriendRequest";
 import FindFriend from "../components/FindFriend";
 import FriendObj from "../../backend/FriendObj";
-import { getUserSearchRes } from "../../backend/UserFriends"
+import { getUserSearchRes } from "../../backend/UserFriend"
 import {curUser} from "../../backend/UserObj";
 
 let currentFriends = [new FriendObj("dellmultiple", 15), new FriendObj("ibmdifference", 20),
@@ -22,10 +22,11 @@ let currentFriends = [new FriendObj("dellmultiple", 15), new FriendObj("ibmdiffe
 let friendRequests = [new FriendObj("memberebay", 25), new FriendObj("teasefacebook", 20),
     new FriendObj("considerford", 45), new FriendObj("basmatirolex", 50)];
 
-let findFriends = [new FriendObj("groovysprite"), new FriendObj("putridstarbucks"),
-    new FriendObj("surelytoyota"), new FriendObj("waistpepsi"),
-    new FriendObj("atmospheresubway"), new FriendObj("penguinmcdonalds"),
-    new FriendObj("spiritualibm"), new FriendObj("chantchevrolet")];
+// let findFriends = [new FriendObj("groovysprite"), new FriendObj("putridstarbucks"),
+//     new FriendObj("surelytoyota"), new FriendObj("waistpepsi"),
+//     new FriendObj("atmospheresubway"), new FriendObj("penguinmcdonalds"),
+//     new FriendObj("spiritualibm"), new FriendObj("chantchevrolet")];
+
 
 
 function TabPanel(props) {
@@ -40,10 +41,21 @@ function TabPanel(props) {
 
 const Friends = () => {
 
+    const [findFriends, setFindFriends] = useState([]);
+
     const handleFindFriends = async (searchText) => {
         console.log("User entered: " + searchText)
         const isNewFriend = true
-        await getUserSearchRes(searchText, isNewFriend, curUser)
+        console.log(JSON.stringify(curUser.toJSON()))
+        const searchRes = await getUserSearchRes(searchText, isNewFriend, JSON.stringify(curUser.toJSON()))
+        console.log(searchRes)
+        // This array holds the search-result FriendObj objects so we can change the state of findFriends array
+        let stateUpdateArr = []
+        for (let i = 0; i < searchRes.length; i++){
+            let curFriend = searchRes[i]
+            stateUpdateArr.push(new FriendObj(curFriend.Username))
+        }
+        setFindFriends(stateUpdateArr)
     }
 
     const [value, setValue] = useState(0);
