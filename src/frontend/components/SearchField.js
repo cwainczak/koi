@@ -9,7 +9,6 @@ const SearchField = (props) => {
     const [searchText, setSearchText] = React.useState("")
 
     const onChange = (event) => {
-        //console.log("in onChange: " + event.target.value)
         setSearchText(event.target.value);
     };
 

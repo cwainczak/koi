@@ -25,32 +25,41 @@ exports.searchUserData = async (req, res) => {
             for (let i = 0; i < currentUserFriends.length; i++){
                 console.log(currentUserFriends[i])
             }
-            if (isNewFriend){
+            if (JSON.parse(isNewFriend) === true){
                 // filter through query results and only send array with friends who ARE NOT currently added
                 for (let i = 0; i < searchQueryRes.length; i++){
                     let curRes = searchQueryRes[i]
-                    // console.log(curRes)
-                    //console.log("currentUserFriends: " + currentUserFriends)
-                    //console.log("curRes.UserID: " + curRes.UserID)
-                    //console.log("Result of includes: " + doesContain(currentUserFriends, curRes.UserID))
-                    //if (!currentUserFriends.includes(curRes.UserID)){
-                    if (!doesContain(currentUserFriends, curRes.UserID)){
-                        searchRes.push(curRes)
-                    }
+                    if (!doesContain(currentUserFriends, curRes.UserID)) searchRes.push(curRes)
                 }
             }
             else {
-                // filter through query results and only send json with friends who ARE NOT currently added
+                console.log("got in here")
+                // filter through query results and only send json with friends who ARE currently added
                 for (let i = 0; i < searchQueryRes.length; i++){
                     let curRes = searchQueryRes[i]
-                    //if (currentUserFriends.includes(curRes.UserID)){
-                    if (doesContain(currentUserFriends, curRes.UserID)){
-                        searchRes.push(curRes)
-                    }
+                    if (doesContain(currentUserFriends, curRes.UserID)) searchRes.push(curRes)
                 }
             }
-            //console.log("finished")
             res.status(201).send(searchRes)
+        }
+    })
+
+}
+
+// Controller function for GET request to '/userFriend/getUserFriends'
+exports.getAllFriendsOfUser = async (req, res) => {
+    const currentUser = JSON.parse(req.query.curUser)
+    console.log("currentUser UserID: " + currentUser.UserID)
+    const query = "SELECT * " +
+                  "FROM User " +
+                  "WHERE UserID IN (" + currentUser.FriendIDs + ");"
+    console.log(query)
+    DBConn.query(query, (err, queryRes) => {
+        if (err != null) {
+            console.log(err)
+            res.status(500).send("Unsuccessful retrieval of user's friends!")
+        } else {
+            res.status(201).send(queryRes)
         }
     })
 

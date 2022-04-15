@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import SwipeableViews from "react-swipeable-views";
 import Container from "@mui/material/Container";
 import Box from "@mui/material/Box";
@@ -12,12 +12,12 @@ import CurrentFriend from "../components/CurrentFriend";
 import FriendRequest from "../components/FriendRequest";
 import FindFriend from "../components/FindFriend";
 import FriendObj from "../../backend/FriendObj";
-import { getUserSearchRes } from "../../backend/UserFriend"
+import { getUserSearchRes, getAllUserFriends } from "../../backend/UserFriend"
 import {curUser} from "../../backend/UserObj";
 
-let currentFriends = [new FriendObj("dellmultiple", 15), new FriendObj("ibmdifference", 20),
-    new FriendObj("volkswagonbream", 25), new FriendObj("nikemelt", 30),
-    new FriendObj("ebayclassic", 35), new FriendObj("googlewillow", 40)];
+// let currentFriends = [new FriendObj("dellmultiple", 15), new FriendObj("ibmdifference", 20),
+//     new FriendObj("volkswagonbream", 25), new FriendObj("nikemelt", 30),
+//     new FriendObj("ebayclassic", 35), new FriendObj("googlewillow", 40)];
 
 let friendRequests = [new FriendObj("memberebay", 25), new FriendObj("teasefacebook", 20),
     new FriendObj("considerford", 45), new FriendObj("basmatirolex", 50)];
@@ -43,7 +43,22 @@ const Friends = () => {
 
     const [findFriends, setFindFriends] = useState([]);
 
+    // initialize to all current friends with useEffect hook
+    const [currentFriends, setCurrentFriends] = useState([])
+
+    useEffect (async () => {
+        const allFriends = await getAllUserFriends(JSON.stringify(curUser.toJSON()))
+        let stateUpdateArr = []
+        for (let i = 0; i < allFriends.length; i++){
+            let curFriend = allFriends[i]
+            stateUpdateArr.push(new FriendObj(curFriend.Username))
+        }
+        console.log(allFriends)
+        setCurrentFriends(stateUpdateArr)
+    }, [])
+
     const handleFindFriends = async (searchText) => {
+        console.log("in FIND FRIENDS")
         console.log("User entered: " + searchText)
         const isNewFriend = true
         console.log(JSON.stringify(curUser.toJSON()))
@@ -56,6 +71,21 @@ const Friends = () => {
             stateUpdateArr.push(new FriendObj(curFriend.Username))
         }
         setFindFriends(stateUpdateArr)
+    }
+
+    const handleSearchFriends = async (searchText) => {
+        console.log("in SEARCH FRIENDS")
+        console.log("User entered: " + searchText)
+        const isNewFriend = false
+        const searchRes = await getUserSearchRes(searchText, isNewFriend, JSON.stringify(curUser.toJSON()))
+        console.log(searchRes)
+        // This array holds the search-result FriendObj objects so we can change the state of searchFriends array
+        let stateUpdateArr = []
+        for (let i = 0; i < searchRes.length; i++){
+            let curFriend = searchRes[i]
+            stateUpdateArr.push(new FriendObj(curFriend.Username))
+        }
+        setCurrentFriends(stateUpdateArr)
     }
 
     const [value, setValue] = useState(0);
@@ -88,7 +118,7 @@ const Friends = () => {
                 onChangeIndex={handleChangeIndex}
             >
                 <TabPanel>
-                    <SearchField promptText={"Search Friends"}/>
+                    <SearchField promptText={"Search Friends"} onClick={handleSearchFriends}/>
                     <br/>
                     {/* my friends */}
                     <Grid container rowSpacing={2} columnSpacing={2}>
