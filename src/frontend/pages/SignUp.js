@@ -51,6 +51,9 @@ const SignUp = (props) => {
             errDialog.hidden = false
             errDialog.textContent = "Invalid email address"
         } else {
+            // disabling button
+            handleLoading();
+
             let regCheckRes = await registrationCheck(entEmail, entUser)
             let isEmailTaken = regCheckRes.emailTaken
             let isUsernameTaken = regCheckRes.usernameTaken
@@ -65,12 +68,11 @@ const SignUp = (props) => {
                 let isSuccess = await createUserAcc(entEmail, entUser, entPass);
 
                 if (isSuccess) {
-                    // disabling button
-                    handleLoading();
-
                     history.push("/Home")
                 } else {
                     console.log("Something went wrong!")
+                    // enable button
+                    handleLoading();
                 }
             }
         }
