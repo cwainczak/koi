@@ -5,6 +5,9 @@ const {doesContain} = require("../Util");
 // Controller function for GET request to '/userFriend/search'
 exports.searchUserData = async (req, res) => {
     const searchInput = req.query.searchInput
+    // JSON.parse will parse a JSON String to a data type based on the value fed in
+    // "true" (JSON String) -> true (boolean)
+    // "hello" (JSON String) -> "hello" (String; symbolized by the beginning and ending quotation marks)
     const isNewFriend = JSON.parse(req.query.isNewFriend)
     // curUser holds a User object with properties pertaining to the user who is currently signed in
     // use this for the queries below
