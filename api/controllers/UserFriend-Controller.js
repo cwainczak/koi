@@ -5,7 +5,7 @@ const {doesContain} = require("../Util");
 // Controller function for GET request to '/userFriend/search'
 exports.searchUserData = async (req, res) => {
     const searchInput = req.query.searchInput
-    const isNewFriend = req.query.isNewFriend
+    const isNewFriend = JSON.parse(req.query.isNewFriend)
     // curUser holds a User object with properties pertaining to the user who is currently signed in
     // use this for the queries below
     const currentUser = JSON.parse(req.query.curUser)
@@ -25,7 +25,7 @@ exports.searchUserData = async (req, res) => {
             for (let i = 0; i < currentUserFriends.length; i++){
                 console.log(currentUserFriends[i])
             }
-            if (JSON.parse(isNewFriend) === true){
+            if (isNewFriend === true){
                 // filter through query results and only send array with friends who ARE NOT currently added
                 for (let i = 0; i < searchQueryRes.length; i++){
                     let curRes = searchQueryRes[i]
