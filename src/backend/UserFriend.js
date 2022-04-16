@@ -14,7 +14,10 @@ export const getUserSearchRes = async (searchInput, isNewFriend, curUser) => {
         }
     ).then((res) => {
         return res.json().then(data => data)
-    }).catch((err) => err);
+    }).catch((err) => {
+        console.log(err)
+        return -1
+    });
 
 }
 
@@ -31,6 +34,9 @@ export const getAllUserFriends = async (curUser) => {
         }
     ).then((res) => {
         return res.json().then(data => data)
-    }).catch((err) => err);
+    }).catch((err) => {
+        console.log(err)
+        return -1
+    });
 
 }

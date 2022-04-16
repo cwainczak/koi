@@ -41,6 +41,8 @@ function TabPanel(props) {
 
 const Friends = () => {
 
+    const [errHidden, setErrHidden] = useState(true)
+
     const [findFriends, setFindFriends] = useState([]);
 
     // initialize to all current friends with useEffect hook
@@ -63,6 +65,10 @@ const Friends = () => {
         const isNewFriend = true
         console.log(JSON.stringify(curUser.toJSON()))
         const searchRes = await getUserSearchRes(searchText, isNewFriend, JSON.stringify(curUser.toJSON()))
+        if (searchRes === -1) {
+            setErrHidden(false)
+            return
+        }
         console.log(searchRes)
         // This array holds the search-result FriendObj objects so we can change the state of findFriends array
         let stateUpdateArr = []
@@ -78,6 +84,11 @@ const Friends = () => {
         console.log("User entered: " + searchText)
         const isNewFriend = false
         const searchRes = await getUserSearchRes(searchText, isNewFriend, JSON.stringify(curUser.toJSON()))
+        // if there is an error
+        if (searchRes === -1) {
+            setErrHidden(false)
+            return
+        }
         console.log(searchRes)
         // This array holds the search-result FriendObj objects so we can change the state of searchFriends array
         let stateUpdateArr = []
@@ -100,6 +111,10 @@ const Friends = () => {
 
     return (
         <Container>
+            <Typography id={"friendErrMessage"} fontSize={12} color={"red"}
+                        textAlign={"center"} hidden={errHidden}>
+                Failed to retrieve friends!
+            </Typography>
             <AppBar position="static">
                 <Tabs
                     value={value}
