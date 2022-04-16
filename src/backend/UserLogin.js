@@ -14,7 +14,10 @@ export const createUserAcc = async (entEmail, entUser, entPass) => {
         }
     ).then((res) => {
         return res.status === 201
-    }).catch((err) => err);
+    }).catch((err) => {
+        console.log(err)
+        return false
+    });
 }
 
 // verify
@@ -31,8 +34,12 @@ export const login = async (entUser, entPass) => {
         .then((res) => {
             return res.json().then(data => data)
         })
-        .catch((err) => err);
+        .catch((err) => {
+            console.log(err)
+            return -2
+        });
     console.log(result)
+    if (result === -2) return -2
     if (result.length === 1){
         // update current user in UserObj
         let someCurUser = result[0]
@@ -62,7 +69,10 @@ export const registrationCheck = async (entEmail, entUser) => {
         .then((res) => {
             return res.json().then(data => data)
         })
-        .catch((err) => err);
+        .catch((err) => {
+            console.log(err)
+            return -1
+        });
     console.log(result)
     return result
 }
@@ -80,7 +90,10 @@ export const sendPasswordCode = async (entEmail) => {
         .then((res) => {
             return res.json().then(data => data)
         })
-        .catch((err) => err);
+        .catch((err) => {
+            console.log(err)
+            return -1
+        });
     if (result.validEmail){
         const emailResult = await sendEmail(result.emailJSData)
         result.emailSent = emailResult.status === 200;
@@ -103,7 +116,10 @@ export const resetPassword = async (userEmail, newPass) => {
             console.log(res)
             return res.status === 200
         })
-        .catch((err) => err);
+        .catch((err) => {
+            console.log(err)
+            return false
+        });
     console.log(result)
     return result
 }

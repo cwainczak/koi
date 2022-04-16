@@ -40,12 +40,19 @@ const SignIn = (props) => {
             errDialog.hidden = false
             errDialog.textContent = "Please fill in all fields"
         } else {
-            // disable button
+            // enable button
             handleLoading();
 
             // login returns -1 if user doesn't exist, and UserID if user does exist
             const curUserID = await login(entUser, entPass)
             console.log(curUserID)
+            if (curUserID === -2){
+                errDialog.hidden = false
+                errDialog.textContent = "Server error. Please try again later!"
+                // disable button
+                handleLoading();
+                return
+            }
             if (curUserID !== -1) {
                 if (curUser)
                     console.log("the current user is: " + curUser.toString())
@@ -53,7 +60,7 @@ const SignIn = (props) => {
             } else {
                 errDialog.hidden = false
                 errDialog.textContent = "Invalid Username or Password"
-                // enable button
+                // disable button
                 handleLoading();
             }
         }

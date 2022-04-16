@@ -40,14 +40,6 @@ const ResetPassword = (props) => {
         const userEmail = recPassState.userEmail
         const genPassCode = recPassState.passcode.toString()
 
-        /*
-
-        console.log("resetpassword.state.passcode: " + genPassCode)
-        console.log("resetpassword.entCode: " + entCode)
-        console.log("genPassCode === entCode: " + genPassCode === entCode)
-
-        */
-
         if (entCode === "" || entPass === "" || entConfPass === "") {
             errDialog.hidden = false
             errDialog.textContent = "Please fill in all fields"
@@ -65,7 +57,12 @@ const ResetPassword = (props) => {
 
                     console.log("Correct passcode and passwords match!")
                     const passResetRes = await resetPassword(userEmail, entPass)
-                    //history.push("/SignIn");
+                    // if there is an error fetching, display error message and immediately return
+                    if (!passResetRes){
+                        errDialog.hidden = false
+                        errDialog.textContent = "Server error. Please try again later!"
+                        return
+                    }
                     history.push({
                         pathname: "/SignIn",
                         state: {

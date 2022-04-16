@@ -42,6 +42,12 @@ const RecoverPassword = (props) => {
 
             const result = await sendPasswordCode(entEmail)
 
+            if (result === -1){
+                errDialog.hidden = false
+                errDialog.textContent = "Server error. Please try again later."
+                handleLoading()
+                return
+            }
             if (result.emailSent) {
                 // pass the generated passcode to the /ResetPassword page
                 const genPassCode = result.emailJSData.templateParams.passcode

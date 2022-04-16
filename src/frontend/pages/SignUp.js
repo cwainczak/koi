@@ -58,15 +58,23 @@ const SignUp = (props) => {
             let isEmailTaken = regCheckRes.emailTaken
             let isUsernameTaken = regCheckRes.usernameTaken
 
+            // if regCheckRes is an error, print error dialog and return immediately
+            if (regCheckRes === -1) {
+                errDialog.hidden = false
+                errDialog.textContent = "Something went wrong!"
+                handleLoading()
+                return
+            }
             if (isEmailTaken) {
                 errDialog.hidden = false
                 errDialog.textContent = "Email already in use. Please reset password."
+                handleLoading()
             } else if (isUsernameTaken) {
                 errDialog.hidden = false
                 errDialog.textContent = "Username already taken"
+                handleLoading()
             } else {
                 let isSuccess = await createUserAcc(entEmail, entUser, entPass);
-
                 if (isSuccess) {
                     history.push("/Home")
                 } else {
