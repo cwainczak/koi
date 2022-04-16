@@ -11,5 +11,8 @@ export const createUserPost = async (userID, entTitle, entContent) => {
         }
     ).then((res) => {
         return res.status === 201
-    }).catch((err) => err);
+    }).catch((err) => {
+        console.log(err)
+        return false
+    });
 }
