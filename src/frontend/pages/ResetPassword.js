@@ -1,6 +1,6 @@
-import React from "react";
+import React, {useState} from "react";
 import Avatar from "@mui/material/Avatar";
-import Button from "@mui/material/Button";
+import LoadingButton from "@mui/lab/LoadingButton";
 import CssBaseline from "@mui/material/CssBaseline";
 import TextField from "@mui/material/TextField";
 import Grid from "@mui/material/Grid";
@@ -9,11 +9,16 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
-import { removeWhiteSpace } from "../../backend/Util";
-import { resetPassword } from "../../backend/UserLogin";
+import {removeWhiteSpace} from "../../backend/Util";
+import {resetPassword} from "../../backend/UserLogin";
 
 const ResetPassword = (props) => {
     const {history} = props;
+    const [loading, setLoading] = useState(false);
+
+    const handleLoading = () => {
+        setLoading(prev => !prev);
+    }
 
     const handleButtonClick = async (event) => {
         event.preventDefault();
@@ -35,14 +40,6 @@ const ResetPassword = (props) => {
         const userEmail = recPassState.userEmail
         const genPassCode = recPassState.passcode.toString()
 
-        /*
-
-        console.log("resetpassword.state.passcode: " + genPassCode)
-        console.log("resetpassword.entCode: " + entCode)
-        console.log("genPassCode === entCode: " + genPassCode === entCode)
-
-        */
-
         if (entCode === "" || entPass === "" || entConfPass === "") {
             errDialog.hidden = false
             errDialog.textContent = "Please fill in all fields"
@@ -55,9 +52,17 @@ const ResetPassword = (props) => {
                     errDialog.hidden = false
                     errDialog.textContent = "Passwords don't match"
                 } else {
+                    // disable button
+                    handleLoading();
+
                     console.log("Correct passcode and passwords match!")
                     const passResetRes = await resetPassword(userEmail, entPass)
-                    //history.push("/SignIn");
+                    // if there is an error fetching, display error message and immediately return
+                    if (!passResetRes){
+                        errDialog.hidden = false
+                        errDialog.textContent = "Server error. Please try again later!"
+                        return
+                    }
                     history.push({
                         pathname: "/SignIn",
                         state: {
@@ -67,7 +72,6 @@ const ResetPassword = (props) => {
                 }
             }
         }
-
     };
 
     return (
@@ -131,17 +135,20 @@ const ResetPassword = (props) => {
                             type="password"
                             id="confirmPassword"
                         />
-                        <Typography id={"invalidCredentialsRecoverPass"} fontSize={12} color={"red"} paddingTop={1.5} textAlign={"center"} hidden={true}>
+                        <Typography id={"invalidCredentialsRecoverPass"} fontSize={12} color={"red"} paddingTop={1.5}
+                                    textAlign={"center"} hidden={true}>
                             Invalid Something
                         </Typography>
-                        <Button
+                        <LoadingButton
                             type="submit"
                             fullWidth
+                            loading={loading}
+                            loadingPosition="center"
                             variant="contained"
                             sx={{mt: 3, mb: 2}}
                         >
                             Reset Password
-                        </Button>
+                        </LoadingButton>
                     </Container>
                 </Box>
             </Grid>
