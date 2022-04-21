@@ -35,10 +35,17 @@ const Home = () => {
         });
 
         if (entTitle === "" || entContent === "") {
+            errDialog.textContent = "Title and content are required.";
+            errDialog.hidden = false;
+        } else if (entTitle.length > 45) {
+            errDialog.textContent = "Title is too long. (max: 45 characters)";
+            errDialog.hidden = false;
+        } else if (entContent.length > 1000) {
+            errDialog.textContent = "Content is too long. (max: 1000 characters)";
             errDialog.hidden = false;
         } else {
             let isSuccess = await createUserPost(curUser.UserID, entTitle, entContent);
-            
+
             if (isSuccess) {
                 setIsOpen(false);
             } else {
