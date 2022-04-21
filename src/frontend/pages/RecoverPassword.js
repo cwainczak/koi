@@ -10,7 +10,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
-import {removeWhiteSpace} from "../../backend/Util";
+import {removeWhiteSpace, validateEmail} from "../../backend/Util";
 import {sendPasswordCode} from "../../backend/UserLogin";
 
 
@@ -36,7 +36,12 @@ const RecoverPassword = (props) => {
         if (entEmail === "") {
             errDialog.hidden = false
             errDialog.textContent = "Please enter your email"
-        } else {
+        }
+        else if (!validateEmail(entEmail)){
+            errDialog.hidden = false
+            errDialog.textContent = "Invalid email!"
+        }
+        else {
             // disable button
             handleLoading();
 
@@ -46,9 +51,8 @@ const RecoverPassword = (props) => {
                 errDialog.hidden = false
                 errDialog.textContent = "Server error. Please try again later."
                 handleLoading()
-                return
             }
-            if (result.emailSent) {
+            else if (result.emailSent) {
                 // pass the generated passcode to the /ResetPassword page
                 const genPassCode = result.emailJSData.templateParams.passcode
                 console.log("RecoverPassword.state.passcode: " + genPassCode)
@@ -59,18 +63,18 @@ const RecoverPassword = (props) => {
                         passcode: genPassCode
                     }
                 })
-            } else {
-                if (!result.validEmail) {
+            }
+            else if (!result.validEmail) {
                     errDialog.hidden = false
-                    errDialog.textContent = "Invalid email!"
+                    errDialog.textContent = "Email is not associated with any account!"
                     // enable button
                     handleLoading();
-                } else {
+            }
+            else {
                     errDialog.hidden = false
                     errDialog.textContent = "Server error. Please try again later."
                     // enable button
                     handleLoading();
-                }
             }
         }
     };
