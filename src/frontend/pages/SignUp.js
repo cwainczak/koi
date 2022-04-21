@@ -49,7 +49,7 @@ const SignUp = (props) => {
             errDialog.hidden = false
             errDialog.textContent = "Passwords don't match"
         }
-        else if (validateEmail(entEmail) === null) {
+        else if (!validateEmail(entEmail)) {
             errDialog.hidden = false
             errDialog.textContent = "Invalid email address"
         }
