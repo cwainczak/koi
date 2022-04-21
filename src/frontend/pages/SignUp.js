@@ -44,13 +44,16 @@ const SignUp = (props) => {
         if (entEmail === "" || entUser === "" || entPass === "" || entConfPass === "") {
             errDialog.hidden = false
             errDialog.textContent = "Please fill in all fields"
-        } else if (entPass !== entConfPass) {
+        }
+        else if (entPass !== entConfPass) {
             errDialog.hidden = false
             errDialog.textContent = "Passwords don't match"
-        } else if (validateEmail(entEmail) === null) {
+        }
+        else if (validateEmail(entEmail) === null) {
             errDialog.hidden = false
             errDialog.textContent = "Invalid email address"
-        } else {
+        }
+        else {
             // disabling button
             handleLoading();
 
@@ -58,18 +61,17 @@ const SignUp = (props) => {
             let isEmailTaken = regCheckRes.emailTaken
             let isUsernameTaken = regCheckRes.usernameTaken
 
-            // if regCheckRes is an error, print error dialog and return immediately
             if (regCheckRes === -1) {
                 errDialog.hidden = false
-                errDialog.textContent = "Something went wrong!"
+                errDialog.textContent = "Server error. Please try again later."
                 handleLoading()
-                return
             }
-            if (isEmailTaken) {
+            else if (isEmailTaken) {
                 errDialog.hidden = false
                 errDialog.textContent = "Email already in use. Please reset password."
                 handleLoading()
-            } else if (isUsernameTaken) {
+            }
+            else if (isUsernameTaken) {
                 errDialog.hidden = false
                 errDialog.textContent = "Username already taken"
                 handleLoading()
@@ -77,9 +79,11 @@ const SignUp = (props) => {
                 let isSuccess = await createUserAcc(entEmail, entUser, entPass);
                 if (isSuccess) {
                     history.push("/Home")
-                } else {
-                    console.log("Something went wrong!")
-                    // enable button
+                }
+                else {
+                    errDialog.hidden = false
+                    errDialog.textContent = "Email already in use. Please reset password."
+                    // disable button
                     handleLoading();
                 }
             }

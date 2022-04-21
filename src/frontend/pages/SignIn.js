@@ -48,16 +48,16 @@ const SignIn = (props) => {
             console.log(curUserID)
             if (curUserID === -2){
                 errDialog.hidden = false
-                errDialog.textContent = "Server error. Please try again later!"
+                errDialog.textContent = "Server error. Please try again later."
                 // disable button
                 handleLoading();
-                return
             }
-            if (curUserID !== -1) {
+            else if (curUserID !== -1) {
                 if (curUser)
                     console.log("the current user is: " + curUser.toString())
                 history.push("/Home")
-            } else {
+            }
+            else {
                 errDialog.hidden = false
                 errDialog.textContent = "Invalid Username or Password"
                 // disable button
