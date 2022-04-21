@@ -11,6 +11,7 @@ const cors = require('cors')
 // Import routers
 const userLoginRouter = require('./routers/UserLogin-Router')
 const userFriendRouter = require("./routers/UserFriend-Router")
+const userPostRouter = require('./routers/UserPost-Router')
 
 // Setup default port
 const PORT = process.env.PORT || 4000
@@ -39,6 +40,7 @@ if (process.env.NODE_ENV && process.env.NODE_ENV !== 'development') {
 // with '/users' => '/all' will become '/users/all'
 app.use('/userLogin', userLoginRouter)
 app.use("/userFriend", userFriendRouter)
+app.use('/userPost', userPostRouter)
 
 // Implement route for errors
 app.use((err, req, res, next) => {
