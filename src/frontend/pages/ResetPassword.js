@@ -12,6 +12,7 @@ import Container from "@mui/material/Container";
 import {removeWhiteSpace} from "../../backend/Util";
 import {resetPassword} from "../../backend/UserLogin";
 
+
 const ResetPassword = (props) => {
     const {history} = props;
     const [loading, setLoading] = useState(false);
@@ -43,34 +44,31 @@ const ResetPassword = (props) => {
         if (entCode === "" || entPass === "" || entConfPass === "") {
             errDialog.hidden = false
             errDialog.textContent = "Please fill in all fields"
+        } else if (entCode !== genPassCode) {
+            errDialog.hidden = false
+            errDialog.textContent = "Invalid passcode!"
+        } else if (entPass !== entConfPass) {
+            errDialog.hidden = false
+            errDialog.textContent = "Passwords don't match"
         } else {
-            if (entCode !== genPassCode) {
-                errDialog.hidden = false
-                errDialog.textContent = "Invalid passcode!"
-            } else {
-                if (entPass !== entConfPass) {
-                    errDialog.hidden = false
-                    errDialog.textContent = "Passwords don't match"
-                } else {
-                    // disable button
-                    handleLoading();
+            // disable button
+            handleLoading();
 
-                    console.log("Correct passcode and passwords match!")
-                    const passResetRes = await resetPassword(userEmail, entPass)
-                    // if there is an error fetching, display error message and immediately return
-                    if (!passResetRes){
-                        errDialog.hidden = false
-                        errDialog.textContent = "Server error. Please try again later!"
-                        return
-                    }
-                    history.push({
-                        pathname: "/SignIn",
-                        state: {
-                            passReset: passResetRes
-                        }
-                    })
-                }
+            console.log("Correct passcode and passwords match!")
+            const passResetRes = await resetPassword(userEmail, entPass)
+
+            // if there is an error fetching, display error message and immediately return
+            if (!passResetRes) {
+                errDialog.hidden = false
+                errDialog.textContent = "Server error. Please try again later!"
+                return
             }
+            history.push({
+                pathname: "/SignIn",
+                state: {
+                    passReset: passResetRes
+                }
+            })
         }
     };
 
