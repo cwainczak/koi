@@ -47,7 +47,7 @@ const SignUp = (props) => {
         } else if (entPass !== entConfPass) {
             errDialog.hidden = false
             errDialog.textContent = "Passwords don't match"
-        } else if (validateEmail(entEmail) === null) {
+        } else if (!validateEmail(entEmail)) {
             errDialog.hidden = false
             errDialog.textContent = "Invalid email address"
         } else {
@@ -58,14 +58,11 @@ const SignUp = (props) => {
             let isEmailTaken = regCheckRes.emailTaken
             let isUsernameTaken = regCheckRes.usernameTaken
 
-            // if regCheckRes is an error, print error dialog and return immediately
             if (regCheckRes === -1) {
                 errDialog.hidden = false
-                errDialog.textContent = "Something went wrong!"
+                errDialog.textContent = "Server error. Please try again later."
                 handleLoading()
-                return
-            }
-            if (isEmailTaken) {
+            } else if (isEmailTaken) {
                 errDialog.hidden = false
                 errDialog.textContent = "Email already in use. Please reset password."
                 handleLoading()
@@ -75,11 +72,13 @@ const SignUp = (props) => {
                 handleLoading()
             } else {
                 let isSuccess = await createUserAcc(entEmail, entUser, entPass);
+
                 if (isSuccess) {
                     history.push("/Home")
                 } else {
-                    console.log("Something went wrong!")
-                    // enable button
+                    errDialog.hidden = false
+                    errDialog.textContent = "Email already in use. Please reset password."
+                    // disable button
                     handleLoading();
                 }
             }
