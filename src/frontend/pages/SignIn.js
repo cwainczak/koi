@@ -31,6 +31,7 @@ const SignIn = (props) => {
     const handleButtonClick = async (event) => {
         event.preventDefault();
         const data = new FormData(event.currentTarget);
+
         // logic for checking entered credentials
         let entUser = removeWhiteSpace(data.get("username"))
         let entPass = removeWhiteSpace(data.get("password"))
@@ -46,18 +47,17 @@ const SignIn = (props) => {
             // login returns -1 if user doesn't exist, and UserID if user does exist
             const curUserID = await login(entUser, entPass)
             console.log(curUserID)
-            if (curUserID === -2){
+
+            if (curUserID === -2) {
                 errDialog.hidden = false
                 errDialog.textContent = "Server error. Please try again later."
                 // disable button
                 handleLoading();
-            }
-            else if (curUserID !== -1) {
+            } else if (curUserID !== -1) {
                 if (curUser)
                     console.log("the current user is: " + curUser.toString())
                 history.push("/Home")
-            }
-            else {
+            } else {
                 errDialog.hidden = false
                 errDialog.textContent = "Invalid Username or Password"
                 // disable button

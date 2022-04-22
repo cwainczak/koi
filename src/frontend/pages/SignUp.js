@@ -44,16 +44,13 @@ const SignUp = (props) => {
         if (entEmail === "" || entUser === "" || entPass === "" || entConfPass === "") {
             errDialog.hidden = false
             errDialog.textContent = "Please fill in all fields"
-        }
-        else if (entPass !== entConfPass) {
+        } else if (entPass !== entConfPass) {
             errDialog.hidden = false
             errDialog.textContent = "Passwords don't match"
-        }
-        else if (!validateEmail(entEmail)) {
+        } else if (!validateEmail(entEmail)) {
             errDialog.hidden = false
             errDialog.textContent = "Invalid email address"
-        }
-        else {
+        } else {
             // disabling button
             handleLoading();
 
@@ -65,22 +62,20 @@ const SignUp = (props) => {
                 errDialog.hidden = false
                 errDialog.textContent = "Server error. Please try again later."
                 handleLoading()
-            }
-            else if (isEmailTaken) {
+            } else if (isEmailTaken) {
                 errDialog.hidden = false
                 errDialog.textContent = "Email already in use. Please reset password."
                 handleLoading()
-            }
-            else if (isUsernameTaken) {
+            } else if (isUsernameTaken) {
                 errDialog.hidden = false
                 errDialog.textContent = "Username already taken"
                 handleLoading()
             } else {
                 let isSuccess = await createUserAcc(entEmail, entUser, entPass);
+
                 if (isSuccess) {
                     history.push("/Home")
-                }
-                else {
+                } else {
                     errDialog.hidden = false
                     errDialog.textContent = "Email already in use. Please reset password."
                     // disable button
