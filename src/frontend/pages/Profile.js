@@ -36,7 +36,7 @@ const Profile = () => {
     return (
         <div>
             <Container>
-                <Box sx={{display: 'flex', flexDirection: 'column', margin: "auto", alignItems: "center"}}>
+                <Box sx={{display: "flex", flexDirection: "column", margin: "auto", alignItems: "center"}}>
                     <CardContent>
                         <Avatar
                             {...shrinkUsername("Username")}
@@ -46,7 +46,7 @@ const Profile = () => {
 
                     <Typography variant="h3">Username</Typography>
 
-                    <Box sx={{display: 'flex', flexDirection: 'column', margin: "auto", alignItems: "center"}}>
+                    <Box sx={{display: "flex", flexDirection: "column", margin: "auto", alignItems: "center"}}>
                         <Grid container spacing={{xs: 2, md: 3}} columns={{xs: 4, sm: 8, md: 12}}>
                             <Grid item xs="auto">
                                 <Typography variant="subtitle1">x friends</Typography>
