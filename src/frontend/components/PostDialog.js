@@ -20,7 +20,7 @@ const PostDialog = (props) => {
 
     return (
         <Dialog open={props.isOpen} onClose={props.handleClose}>
-            <DialogTitle>Create Post</DialogTitle>
+            <DialogTitle>{props.title}</DialogTitle>
             <DialogContent>
                 <TextField
                     autoFocus
@@ -28,6 +28,7 @@ const PostDialog = (props) => {
                     id="title"
                     label="Title"
                     fullWidth
+                    defaultValue={props.postTitle}
                 />
 
                 <TextField
@@ -36,6 +37,7 @@ const PostDialog = (props) => {
                     multiline
                     rows={10}
                     fullWidth
+                    defaultValue={props.postContent}
                 />
 
                 <Typography
@@ -50,8 +52,8 @@ const PostDialog = (props) => {
                 </Typography>
             </DialogContent>
             <DialogActions>
-                <Button onClick={props.handleClose}>Cancel</Button>
-                <Button onClick={handleClick}>Post</Button>
+                <Button onClick={props.handleClose}>{props.button1}</Button>
+                <Button onClick={handleClick}>{props.button2}</Button>
             </DialogActions>
         </Dialog>
     );
