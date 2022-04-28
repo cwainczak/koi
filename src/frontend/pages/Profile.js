@@ -23,20 +23,18 @@ function shrinkUsername(name) {
 }
 
 const Profile = () => {
-    const [anchorElOptions, setAnchorElOptions] = React.useState(null);
-    const [isOpen, setIsOpen] = React.useState(false);
+    const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] = React.useState(false);
 
-    const handelOpenDialog = () => {
-        setAnchorElOptions(null);
-        setIsOpen(true);
+    const handelOpenConfirmationDialog = () => {
+        setIsConfirmationDialogOpen(true);
     }
 
-    const handelCloseDialog = () => {
-        setIsOpen(false);
+    const handelCloseConfirmationDialog = () => {
+        setIsConfirmationDialogOpen(false);
     }
 
-    const handelDialogAction = () => {
-        setIsOpen(false);
+    const handelConfirmationDialogAction = () => {
+        setIsConfirmationDialogOpen(false);
         // todo - delete account
     }
 
@@ -78,7 +76,7 @@ const Profile = () => {
                     <Button
                         variant="outlined"
                         color="error"
-                        onClick={handelOpenDialog}
+                        onClick={handelOpenConfirmationDialog}
                     >
                         Delete Account
                     </Button>
@@ -103,9 +101,9 @@ const Profile = () => {
             </Container>
 
             <ConfirmationDialog
-                isOpen={isOpen}
-                handleClose={handelCloseDialog}
-                handleAction={handelDialogAction}
+                isOpen={isConfirmationDialogOpen}
+                handleClose={handelCloseConfirmationDialog}
+                handleAction={handelConfirmationDialogAction}
                 title="Delete Account?"
                 message={"Are you sure you want to delete your account? All your data such as posts, comments, and likes will be permanently removed."}
                 button1={"Cancel"}
