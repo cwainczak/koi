@@ -65,6 +65,16 @@ exports.getAllFriendsOfUser = async (req, res) => {
             res.status(201).send(queryRes)
         }
     })
+}
 
+// Controller function for PATCH request to '/userFriend/addFriend'
+exports.addNewFriend = async (req, res) => {
+    const curUserID = req.body.curUserID
+    console.log("in api")
+    const newFriendUsername = req.body.newFriendUsername
+    console.log("in api")
+    const query = `UPDATE User SET FriendReqIDs = CONCAT(FriendReqIDs, ${curUserID}) WHERE Username = \"${newFriendUsername}\";`
+    console.log(query)
+    res.status(200).send("yes")
 }
 

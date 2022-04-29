@@ -28,6 +28,8 @@ const theme = createTheme({
 const CurrentFriend = (props) => {
     const handleAddFriend = () => {
         // todo - add friend to user
+        console.log(props.username)
+        props.onClick(props.username)
     };
 
     return (

@@ -38,5 +38,25 @@ export const getAllUserFriends = async (curUser) => {
         console.log(err)
         return -1
     });
+}
 
+// add user as friend from current account
+export const addNewFriend = async (curUserID, newFriendUsername) => {
+    console.log("in backend of project")
+    const result = await fetch("http://localhost:4000/userFriend/addFriend",
+        {
+            method: "PATCH",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({curUserID, newFriendUsername})
+        })
+        .then((res) => {
+            console.log(res)
+            return res.status === 200
+        })
+        .catch((err) => err);
+    console.log(result)
+    return result
 }
