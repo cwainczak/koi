@@ -53,6 +53,7 @@ const Profile = () => {
 
     const handlePostDialogAction = async (title, content, errDialog) => {
         setIsPostDialogOpen(false);
+        // todo - create post
     }
 
     return (

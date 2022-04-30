@@ -55,7 +55,7 @@ const MyPost = (props) => {
     }
 
     const handleSubmitCommentClick = () => {
-        // todo - add comment to the post
+        // todo - add comment to post
     }
 
     // options menu (update/delete post)
@@ -92,7 +92,6 @@ const MyPost = (props) => {
     const handleOpenPostDialog = () => {
         setAnchorElOptions(false);
         setIsPostDialogOpen(true);
-
         // todo - fill post dialog with data from the post (ie. title and content)
     }
 
@@ -103,10 +102,8 @@ const MyPost = (props) => {
     const handlePostDialogAction = async (title, content, errDialog) => {
         let entTitle = removeWhiteSpace(title);
         let entContent = removeWhiteSpace(content);
-
-        // todo - update post
-
         setIsPostDialogOpen(false);
+        // todo - update post
     }
 
     return (
