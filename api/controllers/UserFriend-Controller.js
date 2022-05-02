@@ -67,14 +67,19 @@ exports.getAllFriendsOfUser = async (req, res) => {
     })
 }
 
-// Controller function for PATCH request to '/userFriend/addFriend'
-exports.addNewFriend = async (req, res) => {
+// Controller function for PATCH request to '/userFriend/sentFrdReq'
+exports.sendFriendReq = async (req, res) => {
     const curUserID = req.body.curUserID
-    console.log("in api")
     const newFriendUsername = req.body.newFriendUsername
-    console.log("in api")
-    const query = `UPDATE User SET FriendReqIDs = CONCAT(FriendReqIDs, ${curUserID}) WHERE Username = \"${newFriendUsername}\";`
+    const query = `UPDATE User SET FriendReqIDs = CONCAT(CONCAT(FriendReqIDs, \",\"), ${curUserID}) WHERE Username = \"${newFriendUsername}\";`
     console.log(query)
-    res.status(200).send("yes")
+    DBConn.query(query, (err) => {
+        if (err != null) {
+            console.log(err)
+            res.status(500).send("Unsuccessful friend request!")
+        } else {
+            res.status(201).send()
+        }
+    })
 }
 

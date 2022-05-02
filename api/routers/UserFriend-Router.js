@@ -13,7 +13,7 @@ router.get("/search", userFriendController.searchUserData)
 // Endpoint for getting a user's current friends
 router.get("/getUserFriends", userFriendController.getAllFriendsOfUser)
 
-router.patch("/addFriend", userFriendController.addNewFriend)
+router.patch("/sentFrdReq", userFriendController.sendFriendReq)
 
 // Export router
 module.exports = router

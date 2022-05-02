@@ -41,9 +41,9 @@ export const getAllUserFriends = async (curUser) => {
 }
 
 // add user as friend from current account
-export const addNewFriend = async (curUserID, newFriendUsername) => {
+export const sendFriendReq = async (curUserID, newFriendUsername) => {
     console.log("in backend of project")
-    const result = await fetch("http://localhost:4000/userFriend/addFriend",
+    const result = await fetch("http://localhost:4000/userFriend/sentFrdReq",
         {
             method: "PATCH",
             headers: {
@@ -54,7 +54,7 @@ export const addNewFriend = async (curUserID, newFriendUsername) => {
         })
         .then((res) => {
             console.log(res)
-            return res.status === 200
+            return res.status === 201
         })
         .catch((err) => err);
     console.log(result)

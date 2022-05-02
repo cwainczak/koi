@@ -12,7 +12,7 @@ import CurrentFriend from "../components/CurrentFriend";
 import FriendRequest from "../components/FriendRequest";
 import FindFriend from "../components/FindFriend";
 import FriendObj from "../../backend/FriendObj";
-import {getUserSearchRes, getAllUserFriends, addNewFriend} from "../../backend/UserFriend"
+import {getUserSearchRes, getAllUserFriends, sendFriendReq} from "../../backend/UserFriend"
 import {curUser} from "../../backend/UserObj";
 
 // let currentFriends = [new FriendObj("dellmultiple", 15), new FriendObj("ibmdifference", 20),
@@ -101,7 +101,8 @@ const Friends = () => {
 
     const addFriend = async (username) => {
         console.log("in add friend")
-        const addRes = await addNewFriend(curUser.UserID, username)
+        const addRes = await sendFriendReq(curUser.UserID, username)
+        console.log(addRes ? "Succeeded" : "Didn't succeed")
     }
 
     const [value, setValue] = useState(0);
