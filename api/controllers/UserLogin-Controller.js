@@ -153,3 +153,91 @@ exports.resetPassword = async (req, res) => {
   })
 }
 
+
+exports.deleteUser = async (req, res) => {
+    let fullResult = {
+      commentsDeleted: true,
+      conversation1Deleted: true,
+      conversation2Deleted: true,
+      postsDeleted: true,
+      userDeleted: true
+    }
+
+    let userID = req.body.userID;
+
+    // delete user comments
+    const commentQuery = "DELETE FROM Comment WHERE CommenterID = " + userID + ";"
+
+    console.log(commentQuery)
+    DBConn.query(commentQuery, (err, commentQueryRes) => {
+        if (err != null) {
+            console.log(err)
+            res.status(500).send("Unsuccessful user comments deletion!")
+        } else {
+          if (commentQueryRes.length >= 1) {
+              fullResult.commentsDeleted = true
+          }
+        }
+    })
+
+    // delete user conversation 1
+    const conversationQuery1 = "DELETE FROM Conversation WHERE UserID1 = " + userID + ";"
+
+    console.log(conversationQuery1)
+    DBConn.query(conversationQuery1, (err, conversationQuery1Res) => {
+        if (err != null) {
+            console.log(err)
+            res.status(500).send("Unsuccessful user conversation1 deletion!")
+        } else {
+            if (conversationQuery1Res.length >= 1) {
+                fullResult.conversation1Deleted = true
+            }
+        }
+    })
+
+    // delete user conversation 2
+    const conversationQuery2 = "DELETE FROM Conversation WHERE UserID2 = " + userID + ";"
+
+    console.log(conversationQuery2)
+    DBConn.query(conversationQuery2, (err, conversationQuery2Res) => {
+        if (err != null) {
+            console.log(err)
+            res.status(500).send("Unsuccessful user conversation2 deletion!")
+        } else {
+            if (conversationQuery2Res.length >= 1) {
+                fullResult.conversation2Deleted = true
+            }
+        }
+    })
+
+    // delete user posts
+    const postQuery = "DELETE FROM Post WHERE UserID = " + userID + ";"
+
+    console.log(postQuery)
+    DBConn.query(postQuery, (err, postQueryRes) => {
+        if (err != null) {
+            console.log(err)
+            res.status(500).send("Unsuccessful user posts deletion!")
+        } else {
+            if (postQueryRes.length >= 1) {
+                fullResult.postsDeleted = true
+            }
+        }
+    })
+
+    // delete user account
+    const userQuery = "DELETE FROM User WHERE UserID = " + userID + ";"
+
+    console.log(userQuery)
+    DBConn.query(userQuery, (err2, userQueryRes) => {
+        if (err2 != null) {
+            console.log(err2)
+            res.status(500).send("Unsuccessful user account deletion!")
+        } else {
+            if (userQueryRes.length >= 1) {
+                fullResult.userDeleted = true
+            }
+            res.status(201).json(fullResult)
+        }
+    })
+}

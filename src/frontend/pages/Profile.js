@@ -12,6 +12,7 @@ import MyPost from "../components/MyPost";
 import PostDialog from "../components/PostDialog";
 import {removeWhiteSpace} from "../../backend/Util";
 import {createUserPost} from "../../backend/UserPost";
+import {deleteUser} from "../../backend/UserLogin";
 import {curUser} from "../../backend/UserObj";
 
 
@@ -26,7 +27,9 @@ function shrinkUsername(name) {
     };
 }
 
-const Profile = () => {
+const Profile = (props) => {
+    const {history} = props;
+
     // confirmation dialog to delete account
     const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] = React.useState(false);
 
@@ -38,9 +41,15 @@ const Profile = () => {
         setIsConfirmationDialogOpen(false);
     }
 
-    const handelConfirmationDialogAction = () => {
-        setIsConfirmationDialogOpen(false);
-        // todo - delete account
+    const handelConfirmationDialogAction = async () => {
+        let isSuccess = await deleteUser(curUser.UserID);
+
+        if (isSuccess) {
+            setIsConfirmationDialogOpen(false);
+            history.push("/SignIn")
+        } else {
+            console.log("Something went wrong!");
+        }
     }
 
     // post dialog to create post

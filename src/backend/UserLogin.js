@@ -123,3 +123,22 @@ export const resetPassword = async (userEmail, newPass) => {
     console.log(result)
     return result
 }
+
+// delete
+export const deleteUser = async (userID) => {
+    return await fetch("http://localhost:4000/userLogin/delete",
+        {
+            method: "DELETE",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({userID})
+        }
+    ).then((res) => {
+        return res.json().then(data => data)
+    }).catch((err) => {
+        console.log(err);
+        return false;
+    });
+}

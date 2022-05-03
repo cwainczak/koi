@@ -22,5 +22,8 @@ router.get("/verCode", usersController.getVerificationCodeData)
 // Endpoint for the action of resetting the password
 router.patch("/resetPass", usersController.resetPassword)
 
+// Endpoint for the action of deleting the user
+router.delete("/delete", usersController.deleteUser);
+
 // Export router
 module.exports = router
