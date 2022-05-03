@@ -3,7 +3,7 @@ import UserObj, {setCurUser} from "./UserObj";
 
 // add
 export const createUserAcc = async (entEmail, entUser, entPass) => {
-    return await fetch("http://localhost:4000/userLogin/add",
+    return await fetch("http://localhost:4000/userAccount/add",
         {
             method: "POST",
             headers: {
@@ -22,7 +22,7 @@ export const createUserAcc = async (entEmail, entUser, entPass) => {
 
 // verify
 export const login = async (entUser, entPass) => {
-    const url = "http://localhost:4000/userLogin/verify?" + new URLSearchParams({entUser, entPass})
+    const url = "http://localhost:4000/userAccount/verify?" + new URLSearchParams({entUser, entPass})
     const result = await fetch(url,
         {
             method: "GET",
@@ -57,7 +57,7 @@ export const login = async (entUser, entPass) => {
 
 // regCheck
 export const registrationCheck = async (entEmail, entUser) => {
-    const url = "http://localhost:4000/userLogin/regcheck?" + new URLSearchParams({entEmail, entUser})
+    const url = "http://localhost:4000/userAccount/regcheck?" + new URLSearchParams({entEmail, entUser})
     const result = await fetch(url,
         {
             method: "GET",
@@ -78,7 +78,7 @@ export const registrationCheck = async (entEmail, entUser) => {
 }
 
 export const sendPasswordCode = async (entEmail) => {
-    const url = "http://localhost:4000/userLogin/verCode?" + new URLSearchParams({entEmail})
+    const url = "http://localhost:4000/userAccount/verCode?" + new URLSearchParams({entEmail})
     const result = await fetch(url,
         {
             method: "GET",
@@ -103,7 +103,7 @@ export const sendPasswordCode = async (entEmail) => {
 }
 
 export const resetPassword = async (userEmail, newPass) => {
-    const result = await fetch("http://localhost:4000/userLogin/resetPass",
+    const result = await fetch("http://localhost:4000/userAccount/resetPass",
         {
             method: "PATCH",
             headers: {
@@ -126,7 +126,7 @@ export const resetPassword = async (userEmail, newPass) => {
 
 // delete
 export const deleteUser = async (userID) => {
-    return await fetch("http://localhost:4000/userLogin/delete",
+    return await fetch("http://localhost:4000/userAccount/delete",
         {
             method: "DELETE",
             headers: {

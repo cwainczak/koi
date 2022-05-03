@@ -12,7 +12,7 @@ import MyPost from "../components/MyPost";
 import PostDialog from "../components/PostDialog";
 import {removeWhiteSpace} from "../../backend/Util";
 import {createUserPost} from "../../backend/UserPost";
-import {deleteUser} from "../../backend/UserLogin";
+import {deleteUser} from "../../backend/UserAccount";
 import {curUser} from "../../backend/UserObj";
 
 

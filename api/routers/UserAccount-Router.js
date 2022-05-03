@@ -2,7 +2,7 @@
 const express = require('express')
 
 // Import users controller
-const usersController = require('../controllers/UserLogin-Controller')
+const usersController = require('../controllers/UserAccount-Controller')
 
 // Create express router
 const router = express.Router()

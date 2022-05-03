@@ -159,7 +159,7 @@ exports.resetPassword = async (req, res) => {
     })
 }
 
-// controller function for DELETE request to '/userLogin/delete'
+// controller function for DELETE request to '/userAccount/delete'
 exports.deleteUser = async (req, res) => {
     let fullResult = {
         commentsDeleted: true,
