@@ -12,7 +12,7 @@ import MyPost from "../components/MyPost";
 import PostDialog from "../components/PostDialog";
 import {removeWhiteSpace} from "../../backend/Util";
 import {createUserPost} from "../../backend/UserPost";
-import {deleteUser} from "../../backend/UserAccount";
+import {deleteUserAcc} from "../../backend/UserAccount";
 import {curUser} from "../../backend/UserObj";
 
 
@@ -42,7 +42,7 @@ const Profile = (props) => {
     }
 
     const handelConfirmationDialogAction = async () => {
-        let isSuccess = await deleteUser(curUser.UserID);
+        let isSuccess = await deleteUserAcc(curUser.UserID);
 
         if (isSuccess) {
             setIsConfirmationDialogOpen(false);

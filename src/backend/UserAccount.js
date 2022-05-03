@@ -125,7 +125,7 @@ export const resetPassword = async (userEmail, newPass) => {
 }
 
 // delete
-export const deleteUser = async (userID) => {
+export const deleteUserAcc = async (userID) => {
     return await fetch("http://localhost:4000/userAccount/delete",
         {
             method: "DELETE",
