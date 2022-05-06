@@ -25,5 +25,8 @@ router.patch("/resetPass", usersController.resetPassword)
 // Endpoint for the action of deleting the user
 router.delete("/delete", usersController.deleteUser);
 
+// Endpoint for the action of getting user's posts
+router.get("/getPosts", usersController.getPosts);
+
 // Export router
 module.exports = router

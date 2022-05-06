@@ -68,7 +68,7 @@ exports.checkRegUserData = async (req, res) => {
 exports.verifyUserData = async (req, res) => {
     let username = req.query.entUser;
     let password = req.query.entPass;
-    const query = "SELECT * FROM User;";
+    const query = "SELECT * FROM User;"
 
     console.log(query);
     DBConn.query(query, async (err, allUsers) => {
@@ -244,6 +244,29 @@ exports.deleteUser = async (req, res) => {
                 fullResult.userDeleted = true;
             }
             res.status(201).json(fullResult);
+        }
+    })
+}
+
+// controller function for GET request to '/userAccount/getPosts'
+exports.getPosts = async (req, res) => {
+    let userID = req.query.userID;
+
+    const query = "SELECT * FROM Post Where UserID = " + userID + ";"
+
+    console.log(query);
+    DBConn.query(query, async (err, allPosts) => {
+        if (err != null) {
+            console.log(err);
+            res.status(500).send("Unsuccessful retrieval of posts!");
+        } else {
+            let result = [];
+
+            for (let i = 0; i < allPosts.length; i++) {
+                let curPost = allPosts[i];
+                result.push(curPost);
+            }
+            res.status(201).json(result);
         }
     })
 }

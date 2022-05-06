@@ -40,7 +40,7 @@ export const login = async (entUser, entPass) => {
         });
     console.log(result)
     if (result === -2) return -2
-    if (result.length === 1){
+    if (result.length === 1) {
         // update current user in UserObj
         let someCurUser = result[0]
         setCurUser(new UserObj(someCurUser.UserID, someCurUser.Email, someCurUser.Username, someCurUser.Password, someCurUser.FriendIDs, someCurUser.FriendReqIDs))
@@ -48,8 +48,7 @@ export const login = async (entUser, entPass) => {
         let curUserID = someCurUser.UserID
         console.log("curUserID: " + curUserID)
         return curUserID
-    }
-    else {
+    } else {
         console.log("Wrong Login Credentials!")
         return -1
     }
@@ -94,7 +93,7 @@ export const sendPasswordCode = async (entEmail) => {
             console.log(err)
             return -1
         });
-    if (result.validEmail){
+    if (result.validEmail) {
         const emailResult = await sendEmail(result.emailJSData)
         result.emailSent = emailResult.status === 200;
     }
@@ -141,4 +140,24 @@ export const deleteUserAcc = async (userID) => {
         console.log(err);
         return false;
     });
+}
+
+// getPosts
+export const getUserPosts = async (userID) => {
+    const url = "http://localhost:4000/userAccount/getPosts?" + new URLSearchParams({userID});
+
+    return await fetch(url,
+        {
+            method: "GET",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+        })
+        .then((res) => {
+            return res.json().then(data => data)
+        })
+        .catch((err) => {
+            console.log(err)
+        });
 }
