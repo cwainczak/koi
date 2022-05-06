@@ -81,6 +81,9 @@ const Home = () => {
             ))}
 
             <PostDialog
+                title="Create Post"
+                button1="Cancel"
+                button2="Post"
                 isOpen={isOpen}
                 handleClose={handleCloseDialog}
                 handleAction={handleDialogAction}

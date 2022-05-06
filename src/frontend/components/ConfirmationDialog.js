@@ -5,6 +5,7 @@ import DialogContent from "@mui/material/DialogContent";
 import DialogContentText from "@mui/material/DialogContentText";
 import DialogActions from "@mui/material/DialogActions";
 import Button from "@mui/material/Button";
+import {red} from "@mui/material/colors";
 
 
 const ConfirmationDialog = (props) => {
@@ -16,7 +17,7 @@ const ConfirmationDialog = (props) => {
             </DialogContent>
             <DialogActions>
                 <Button onClick={props.handleClose}>{props.button1}</Button>
-                <Button onClick={props.handleAction}>{props.button2}</Button>
+                <Button sx={{color: red[500]}} onClick={props.handleAction}>{props.button2}</Button>
             </DialogActions>
         </Dialog>
     );
