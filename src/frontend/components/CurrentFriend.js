@@ -67,7 +67,6 @@ const CurrentFriend = (props) => {
                         </IconButton>
                     }
                     title={props.username}
-                    subheader={props.friends + " mutual friends"}
                 />
                 <Menu
                     id="options-menu"

@@ -1,7 +1,8 @@
 
 export default class FriendObj {
-    constructor(username, mutualFriends) {
+    constructor(username, disabled) {
         this.username = username;
-        this.mutualFriends = mutualFriends;
+
+        this.disabled = disabled;
     }
 }

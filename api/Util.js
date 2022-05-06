@@ -26,6 +26,8 @@ const genPassCode = async () => {
 // checks if an array contains some value, regardless of type
 function doesContain(someArr, someValue){
     for (let i = 0; i < someArr.length; i++){
+        //console.log("someArr[${i}]: " + someArr[i] + " and is of type " + typeof(someArr))
+        //console.log("someValue[${i}]: " + someValue + " and is of type " + typeof(someValue))
         if (someArr[i] == someValue) return true
     }
     return false

@@ -19,8 +19,8 @@ import {curUser} from "../../backend/UserObj";
 //     new FriendObj("volkswagonbream", 25), new FriendObj("nikemelt", 30),
 //     new FriendObj("ebayclassic", 35), new FriendObj("googlewillow", 40)];
 
-let friendRequests = [new FriendObj("memberebay", 25), new FriendObj("teasefacebook", 20),
-    new FriendObj("considerford", 45), new FriendObj("basmatirolex", 50)];
+let friendRequests = [new FriendObj("memberebay", false), new FriendObj("teasefacebook", false),
+    new FriendObj("considerford", false), new FriendObj("basmatirolex", false)];
 
 // let findFriends = [new FriendObj("groovysprite"), new FriendObj("putridstarbucks"),
 //     new FriendObj("surelytoyota"), new FriendObj("waistpepsi"),
@@ -48,16 +48,20 @@ const Friends = () => {
     // initialize to all current friends with useEffect hook
     const [currentFriends, setCurrentFriends] = useState([])
 
-    useEffect (async () => {
+    async function fetchFriends() {
+        console.log("in fetch friends: " + curUser)
+        if (curUser === undefined) return
         const allFriends = await getAllUserFriends(JSON.stringify(curUser.toJSON()))
         let stateUpdateArr = []
-        for (let i = 0; i < allFriends.length; i++){
+        for (let i = 0; i < allFriends.length; i++) {
             let curFriend = allFriends[i]
-            stateUpdateArr.push(new FriendObj(curFriend.Username))
+            stateUpdateArr.push(new FriendObj(curFriend.Username, false))
         }
         console.log(allFriends)
         setCurrentFriends(stateUpdateArr)
-    }, [])
+    }
+
+    useEffect (fetchFriends, [])
 
     const handleFindFriends = async (searchText) => {
         console.log("in FIND FRIENDS")
@@ -74,7 +78,8 @@ const Friends = () => {
         let stateUpdateArr = []
         for (let i = 0; i < searchRes.length; i++){
             let curFriend = searchRes[i]
-            stateUpdateArr.push(new FriendObj(curFriend.Username))
+            console.log(curFriend.Username, curFriend.disabled)
+            stateUpdateArr.push(new FriendObj(curFriend.Username, curFriend.disabled))
         }
         setFindFriends(stateUpdateArr)
     }
@@ -94,7 +99,7 @@ const Friends = () => {
         let stateUpdateArr = []
         for (let i = 0; i < searchRes.length; i++){
             let curFriend = searchRes[i]
-            stateUpdateArr.push(new FriendObj(curFriend.Username))
+            stateUpdateArr.push(new FriendObj(curFriend.Username, false))
         }
         setCurrentFriends(stateUpdateArr)
     }
@@ -103,6 +108,19 @@ const Friends = () => {
         console.log("in add friend")
         const addRes = await sendFriendReq(curUser.UserID, username)
         console.log(addRes ? "Succeeded" : "Didn't succeed")
+        // if FR succeeded, disable add button
+        if (addRes){
+            // This array holds the search-result FriendObj objects so we can change the state of searchFriends array
+            let stateUpdateArr = []
+            for (let i = 0; i < findFriends.length; i++){
+                let curFriend = findFriends[i]
+                if (curFriend.username === username){
+                    curFriend.disabled = true
+                }
+                stateUpdateArr.push(curFriend)
+            }
+            setFindFriends(stateUpdateArr)
+        }
     }
 
     const [value, setValue] = useState(0);
@@ -139,13 +157,13 @@ const Friends = () => {
                 onChangeIndex={handleChangeIndex}
             >
                 <TabPanel>
-                    <SearchField promptText={"Search Friends"} onClick={handleSearchFriends}/>
+                    <SearchField promptText={"Search your friends!"} onClick={handleSearchFriends}/>
                     <br/>
                     {/* my friends */}
                     <Grid container rowSpacing={2} columnSpacing={2}>
                         {currentFriends.map((friend) => (
                             <Grid item xs={12} sm={6}>
-                                <CurrentFriend username={friend.username} friends={friend.mutualFriends}/>
+                                <CurrentFriend username={friend.username}/>
                             </Grid>
                         ))}
                     </Grid>
@@ -155,19 +173,19 @@ const Friends = () => {
                     <Grid container rowSpacing={2} columnSpacing={2}>
                         {friendRequests.map((friend) => (
                             <Grid item xs={12} sm={6}>
-                                <FriendRequest username={friend.username} friends={friend.mutualFriends}/>
+                                <FriendRequest username={friend.username}/>
                             </Grid>
                         ))}
                     </Grid>
                 </TabPanel>
                 <TabPanel>
-                    <SearchField id="searchField" promptText={"Find Friends"} onClick={handleFindFriends}/>
+                    <SearchField id="searchField" promptText={"Search to find new friends!"} onClick={handleFindFriends}/>
                     <br/>
                     {/* find friend */}
                     <Grid container rowSpacing={2} columnSpacing={2}>
                         {findFriends.map((friend) => (
                             <Grid item xs={12} sm={6}>
-                                <FindFriend username={friend.username} onClick={addFriend}/>
+                                <FindFriend username={friend.username} onClick={addFriend} disabled={friend.disabled}/>
                             </Grid>
                         ))}
                     </Grid>

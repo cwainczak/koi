@@ -32,7 +32,14 @@ exports.searchUserData = async (req, res) => {
                 // filter through query results and only send array with friends who ARE NOT currently added
                 for (let i = 0; i < searchQueryRes.length; i++){
                     let curRes = searchQueryRes[i]
-                    if (!doesContain(currentUserFriends, curRes.UserID)) searchRes.push(curRes)
+                    let isCurFriend = doesContain(currentUserFriends, curRes.UserID)
+                    let isRequested = doesContain(curRes.FriendReqIDs.split(','), currentUser.UserID)
+                    console.log("isRequested: " + isRequested)
+                    if (!isCurFriend) {
+                        // if user isRequested by current user, disable add button
+                        curRes.disabled = isRequested
+                        searchRes.push(curRes)
+                    }
                 }
             }
             else {
@@ -40,7 +47,8 @@ exports.searchUserData = async (req, res) => {
                 // filter through query results and only send json with friends who ARE currently added
                 for (let i = 0; i < searchQueryRes.length; i++){
                     let curRes = searchQueryRes[i]
-                    if (doesContain(currentUserFriends, curRes.UserID)) searchRes.push(curRes)
+                    let isCurFriend = doesContain(currentUserFriends, curRes.UserID)
+                    if (isCurFriend) searchRes.push(curRes)
                 }
             }
             res.status(201).send(searchRes)

@@ -40,7 +40,7 @@ const CurrentFriend = (props) => {
                         <Avatar {...shrinkUsername(props.username)}/>
                     }
                     action={
-                        <IconButton>
+                        <IconButton disabled={props.disabled}>
                             <AddIcon onClick={handleAddFriend}/>
                         </IconButton>
                     }
