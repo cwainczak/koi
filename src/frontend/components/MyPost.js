@@ -222,7 +222,7 @@ const MyPost = (props) => {
                 handleClose={handelCloseConfirmationDialog}
                 handleAction={handelConfirmationDialogAction}
                 title="Delete Post?"
-                message="Are you sure you want to delete this post? Comments and likes related to tis post will also be deleted."
+                message="Are you sure you want to delete this post? Comments and likes related to this post will also be deleted."
                 button1="Cancel"
                 button2="Delete"
             />
