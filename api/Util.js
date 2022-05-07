@@ -39,7 +39,7 @@ function removeElementByVal(someArr, someValue){
     let newArr = []
     for (let i = 0; i < someArr.length; i++){
         console.log(someArr[i])
-        if (someArr[i] !== someValue) newArr.push(someArr[i])
+        if (someArr[i] != someValue) newArr.push(someArr[i])
     }
     console.log("newArr: " + newArr)
     return newArr

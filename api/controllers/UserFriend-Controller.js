@@ -119,9 +119,9 @@ exports.acceptFriendReq = async (req, res) => {
     console.log("in acceptFriendReq")
     let success = true
     const curUserID = req.body.curUserID
-    const newFriendUserID = req.body.friendUserID
+    const friendUserID = req.body.friendUserID
     // query1 to add curUserID to newFriendOfUser
-    const query1 = `UPDATE User SET FriendIDs = CONCAT(CONCAT(FriendIDs, \",\"), ${curUserID}) WHERE Username = \"${newFriendUserID}\";`
+    const query1 = `UPDATE User SET FriendIDs = CONCAT(CONCAT(FriendIDs, \",\"), ${curUserID}) WHERE Username = \"${friendUserID}\";`
     console.log(query1)
     DBConn.query(query1, (err) => {
         if (err != null) {
@@ -132,7 +132,7 @@ exports.acceptFriendReq = async (req, res) => {
     })
     if (success === false) return
     // query2 to add newFriendUserID to curUser
-    const query2 = `UPDATE User SET FriendIDs = CONCAT(CONCAT(FriendIDs, \",\"), ${newFriendUserID}) WHERE Username = \"${curUserID}\";`
+    const query2 = `UPDATE User SET FriendIDs = CONCAT(CONCAT(FriendIDs, \",\"), ${friendUserID}) WHERE Username = \"${curUserID}\";`
     console.log(query2)
     DBConn.query(query2, (err) => {
         if (err != null) {
@@ -142,34 +142,15 @@ exports.acceptFriendReq = async (req, res) => {
         }
     })
     if (success === false) return
-    // remove friend requests
-
-    // const url = "http://localhost:4000/userFriend/removeFrdReq"
-    // success = await fetch(url,
-    //     {
-    //         method: "PATCH",
-    //         headers: {
-    //             "Accept": "application/json",
-    //             "Content-Type": "application/json"
-    //         },
-    //         body: JSON.stringify({curUserID, newFriendUserID})
-    //     })
-    //     .then((res) => {
-    //         console.log(res)
-    //         return res.status === 201
-    //     })
-    //     .catch((err) => err);
-    // if (success) res.status(201).send()
-    // res.status(500).send("Unsuccessful removal of friend request!")
 }
 
 // Controller function for PATCH request to '/userFriend/removeFrdReq'
 exports.denyFriendReq = async (req, res) => {
     console.log("in denyFriendReq")
-    let success = true
     const curUserID = req.body.curUserID
-    const newFriendUserID = req.body.friendUserID
-    await removeFriendRequest(curUserID, newFriendUserID)
+    const friendUserID = req.body.friendUserID
+    const success = await updateFriendStatus(curUserID, friendUserID, true, true)
+    success ? (res.status(201).send()) : (res.status(500).send())
 }
 
 function getUserFromID(userID) {
@@ -183,14 +164,25 @@ function getUserFromID(userID) {
     })
 }
 
-async function removeFriendRequest(IDToRemoveFrom, IDToRemove) {
-    console.log("in local removeFriendRequest")
-    const user = await getUserFromID(IDToRemoveFrom)
-    let userFriends = friendStrToArr(user.FriendReqIDs)
-    userFriends = removeElementByVal(userFriends, IDToRemove)
-    const newFriendStr = friendArrToStr(userFriends)
-    const query = `UPDATE User SET FriendReqIDs = ${newFriendStr} WHERE Username = ${IDToRemoveFrom}`
+/**
+ *
+ * @param updateFromID -> The UserID of the entry we are updating
+ * @param updateID -> The UserID we are using in the update of the entry
+ * @param isRemoval -> Is this update a removal of a friend property? Or an addition?
+ * @param isFrdReq -> Is this update friend-request oriented? Or friend-oriented?
+ * @returns boolean -> Did this function succeed? Or fail?
+ */
+async function updateFriendStatus(updateFromID, updateID, isRemoval, isFrdReq) {
+    console.log("in local updateFriendStatus")
+    const user = await getUserFromID(updateFromID)
+    let userField = friendStrToArr(isFrdReq ? (user.FriendReqIDs) : (user.FriendIDs))
+    userField = isRemoval ? (removeElementByVal(userField, updateID)) : userField.push(updateID)
+    const newUserFieldStr = friendArrToStr(userField)
+    const query = `UPDATE User SET ${isFrdReq ? ("FriendReqIDs") : ("FriendIDs")} = \"${newUserFieldStr}\" WHERE UserID = ${updateFromID}`
     console.log(query)
+    DBConn.query(query, (err) => {
+        return err == null;
+    })
 }
 
 // Helper method to cast Friend Array to Friend String
