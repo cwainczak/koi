@@ -43,3 +43,26 @@ exports.getPosts = async (req, res) => {
         }
     })
 }
+
+// controller function for GET request to '/userPost/getPostComments'
+exports.getPostComments = async (req, res) => {
+    let postID = req.query.postID;
+
+    const query = "SELECT * FROM Comment WHERE PostID = " + postID + ";"
+
+    console.log(query);
+    DBConn.query(query, async (err, allComments) => {
+        if (err != null) {
+            console.log(err);
+            res.status(500).send("Unsuccessful retrieval of post comments!");
+        } else {
+            let result = [];
+
+            for (let i = 0; i < allComments.length; i++) {
+                let curComment = allComments[i];
+                result.push(curComment);
+            }
+            res.status(201).json(result);
+        }
+    })
+}

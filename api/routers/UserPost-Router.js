@@ -13,5 +13,8 @@ router.post("/add", userPostController.addUserPost);
 // endpoint for the action of getting user's posts
 router.get("/getPosts", userPostController.getPosts);
 
+// endpoint for the action of getting post's comments
+router.get("/getPostComments", userPostController.getPostComments);
+
 // export router
 module.exports = router

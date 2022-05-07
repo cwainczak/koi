@@ -180,14 +180,14 @@ const MyPost = (props) => {
                             </Grid>
                         </Grid>
                         {/* comments */}
-                        {props.comments.map((comment) => (
-                            <Grid>
+                        {props.comments.map((comment, index) => (
+                            <Grid key = {index}>
                                 <br/>
                                 <Typography variant="body1" component="h1">
-                                    {comment[0]}
+                                    {comment.CommenterID}
                                 </Typography>
                                 <Typography variant="body2" component="h1">
-                                    {comment[1]}
+                                    {comment.Content}
                                 </Typography>
                             </Grid>
                         ))}

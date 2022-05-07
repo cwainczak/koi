@@ -36,3 +36,23 @@ export const getUserPosts = async (userID) => {
             console.log(err)
         });
 }
+
+// get post comments
+export const getPostComments = async (postID) => {
+    const url = "http://localhost:4000/userPost/getPostComments?" + new URLSearchParams({postID});
+
+    return await fetch(url,
+        {
+            method: "GET",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+        })
+        .then((res) => {
+            return res.json().then(data => data)
+        })
+        .catch((err) => {
+            console.log(err)
+        });
+}
