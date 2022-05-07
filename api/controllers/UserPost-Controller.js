@@ -1,6 +1,6 @@
 const DBConn = require("../Database")
 
-// controller function for POST request to '/userPosts/add'
+// controller function for POST request to '/userPost/add'
 exports.addUserPost = async (req, res) => {
     let userID = req.body.userID;
     let title = req.body.entTitle;
@@ -17,6 +17,29 @@ exports.addUserPost = async (req, res) => {
             res.status(500).send("Unsuccessful post creation!");
         } else {
             res.status(201).send("Successfully added post!")
+        }
+    })
+}
+
+// controller function for GET request to '/userPost/getPosts'
+exports.getPosts = async (req, res) => {
+    let userID = req.query.userID;
+
+    const query = "SELECT * FROM Post Where UserID = " + userID + ";"
+
+    console.log(query);
+    DBConn.query(query, async (err, allPosts) => {
+        if (err != null) {
+            console.log(err);
+            res.status(500).send("Unsuccessful retrieval of posts!");
+        } else {
+            let result = [];
+
+            for (let i = 0; i < allPosts.length; i++) {
+                let curPost = allPosts[i];
+                result.push(curPost);
+            }
+            res.status(201).json(result);
         }
     })
 }

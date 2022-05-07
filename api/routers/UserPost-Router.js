@@ -10,5 +10,8 @@ const router = express.Router()
 // endpoint for adding a new post to the database
 router.post("/add", userPostController.addUserPost);
 
+// endpoint for the action of getting user's posts
+router.get("/getPosts", userPostController.getPosts);
+
 // export router
 module.exports = router

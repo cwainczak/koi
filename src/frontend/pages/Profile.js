@@ -11,8 +11,8 @@ import PostObj from "../../backend/PostObj";
 import MyPost from "../components/MyPost";
 import PostDialog from "../components/PostDialog";
 import {removeWhiteSpace} from "../../backend/Util";
-import {createUserPost} from "../../backend/UserPost";
-import {deleteUserAcc, getUserPosts} from "../../backend/UserAccount";
+import {createUserPost, getUserPosts} from "../../backend/UserPost";
+import {deleteUserAcc} from "../../backend/UserAccount";
 import {curUser} from "../../backend/UserObj";
 
 

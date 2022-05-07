@@ -247,26 +247,3 @@ exports.deleteUser = async (req, res) => {
         }
     })
 }
-
-// controller function for GET request to '/userAccount/getPosts'
-exports.getPosts = async (req, res) => {
-    let userID = req.query.userID;
-
-    const query = "SELECT * FROM Post Where UserID = " + userID + ";"
-
-    console.log(query);
-    DBConn.query(query, async (err, allPosts) => {
-        if (err != null) {
-            console.log(err);
-            res.status(500).send("Unsuccessful retrieval of posts!");
-        } else {
-            let result = [];
-
-            for (let i = 0; i < allPosts.length; i++) {
-                let curPost = allPosts[i];
-                result.push(curPost);
-            }
-            res.status(201).json(result);
-        }
-    })
-}
