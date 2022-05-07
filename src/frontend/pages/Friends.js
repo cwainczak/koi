@@ -67,6 +67,7 @@ const Friends = () => {
     const [friendRequests, setFriendRequests] = useState([])
 
     async function init(){
+        await curUser.refreshInstance()
         await fetchCurrentFriends()
         await fetchFriendRequests()
     }
@@ -176,8 +177,7 @@ const Friends = () => {
             setDialogMsg(accFRDialogMsg)
         }
         else setDialogMsg(errDialogMsg)
-        // await forceDBRefresh()
-        // await init()
+        await init()
     }
 
     const onDenyFR = async (username) => {
@@ -194,8 +194,7 @@ const Friends = () => {
             setDialogMsg(denFRDialogMsg)
         }
         else setDialogMsg(errDialogMsg)
-        // await forceDBRefresh()
-        // await init()
+        await init()
     }
 
     const [value, setValue] = useState(0);

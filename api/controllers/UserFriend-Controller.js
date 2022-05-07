@@ -1,5 +1,6 @@
 
 const DBConn = require("../Database")
+const User = require("../User")
 const {doesContain, removeElementByVal} = require("../Util");
 
 // Controller function for GET request to '/userFriend/search'
@@ -129,6 +130,8 @@ exports.acceptFriendReq = async (req, res) => {
     if (!success) res.status(500).send()
     success = await updateFriendStatus(curUserID, friendUserID, true, true)
     if (!success) res.status(500).send()
+    success = await updateFriendStatus(friendUserID, curUserID, true, true)
+    if (!success) res.status(500).send()
     res.status(201).send()
 }
 
@@ -142,17 +145,6 @@ exports.denyFriendReq = async (req, res) => {
     success ? (res.status(201).send()) : (res.status(500).send())
 }
 
-function getUserFromID(userID) {
-    const query = `SELECT * FROM User WHERE UserID = ${userID}`
-    return new Promise((resolve, reject) => {
-        DBConn.query(query, (err, queryRes) => {
-            if (err != null) reject(err)
-            const result = JSON.parse(JSON.stringify(queryRes[0]))
-            resolve(result)
-        });
-    })
-}
-
 /**
  * A generic function to update the User table in regard to their friendships
  * @param updateFromID -> The UserID of the entry we are updating
@@ -163,7 +155,7 @@ function getUserFromID(userID) {
  */
 async function updateFriendStatus(updateFromID, updateID, isRemoval, isFrdReq) {
     console.log("in local updateFriendStatus")
-    const user = await getUserFromID(updateFromID)
+    const user = await User.getUserFromID(updateFromID)
     let userField = friendStrToArr(isFrdReq ? (user.FriendReqIDs) : (user.FriendIDs))
     console.log("userField: " + userField)
     if (isRemoval) userField = removeElementByVal(userField, updateID)
@@ -179,7 +171,6 @@ async function updateFriendStatus(updateFromID, updateID, isRemoval, isFrdReq) {
             else resolve(true)
         })
     })
-
 }
 
 /**
