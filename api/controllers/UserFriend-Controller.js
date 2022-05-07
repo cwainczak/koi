@@ -65,7 +65,7 @@ exports.getAllFriendsOfUser = async (req, res) => {
     console.log("currentUser UserID: " + currentUser.UserID)
     console.log("currentUser Friends: " + currentUser.FriendIDs)
     const curUserFriendIDs = cleanFriendStr(currentUser.FriendIDs)
-    if (curUserFriendIDs === ""){
+    if (curUserFriendIDs.trim() === ""){
         res.status(201).send([])
         return
     }
@@ -100,7 +100,10 @@ exports.sendFriendReq = async (req, res) => {
 // Controller function for GET request to '/userFriend/getUserFriendReqs'
 exports.getFriendReqOfUser = async (req, res) => {
     const currentUser = JSON.parse(req.query.curUser)
-    if (currentUser.FriendReqIDs === "") res.status(201).send([])
+    if (currentUser.FriendReqIDs === ""){
+        res.status(201).send([])
+        return
+    }
     const curUserFriendReqIDs = cleanFriendStr(currentUser.FriendReqIDs)
     const query = `SELECT * FROM User WHERE UserID IN (${curUserFriendReqIDs})`
     console.log("in getFriendReqs: " + query)
@@ -120,11 +123,11 @@ exports.acceptFriendReq = async (req, res) => {
     const curUserID = req.body.curUserID
     const friendUserID = req.body.friendUserID
     let success
-    success = updateFriendStatus(curUserID, friendUserID, false, false)
+    success = await updateFriendStatus(curUserID, friendUserID, false, false)
     if (!success) res.status(500).send()
-    success = updateFriendStatus(friendUserID, curUserID, false, false)
+    success = await updateFriendStatus(friendUserID, curUserID, false, false)
     if (!success) res.status(500).send()
-    success = updateFriendStatus(curUserID, friendUserID, true, true)
+    success = await updateFriendStatus(curUserID, friendUserID, true, true)
     if (!success) res.status(500).send()
     res.status(201).send()
 }
@@ -135,6 +138,7 @@ exports.denyFriendReq = async (req, res) => {
     const curUserID = req.body.curUserID
     const friendUserID = req.body.friendUserID
     const success = await updateFriendStatus(curUserID, friendUserID, true, true)
+    console.log("is success true? -> " + success)
     success ? (res.status(201).send()) : (res.status(500).send())
 }
 
@@ -169,9 +173,13 @@ async function updateFriendStatus(updateFromID, updateID, isRemoval, isFrdReq) {
     console.log("newUserFieldStr: " + newUserFieldStr)
     const query = `UPDATE User SET ${isFrdReq ? ("FriendReqIDs") : ("FriendIDs")} = \"${newUserFieldStr}\" WHERE UserID = ${updateFromID}`
     console.log(query)
-    DBConn.query(query, (err) => {
-        return err == null;
+    return new Promise((resolve, reject) => {
+        DBConn.query(query, (err) => {
+            if (err != null) reject(err)
+            else resolve(true)
+        })
     })
+
 }
 
 /**

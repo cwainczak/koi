@@ -22,20 +22,6 @@ import {
 } from "../../backend/UserFriend"
 import {curUser} from "../../backend/UserObj";
 
-// let currentFriends = [new FriendObj("dellmultiple", 15), new FriendObj("ibmdifference", 20),
-//     new FriendObj("volkswagonbream", 25), new FriendObj("nikemelt", 30),
-//     new FriendObj("ebayclassic", 35), new FriendObj("googlewillow", 40)];
-
-// let friendRequests = [new FriendObj("memberebay", false), new FriendObj("teasefacebook", false),
-//     new FriendObj("considerford", false), new FriendObj("basmatirolex", false)];
-
-// let findFriends = [new FriendObj("groovysprite"), new FriendObj("putridstarbucks"),
-//     new FriendObj("surelytoyota"), new FriendObj("waistpepsi"),
-//     new FriendObj("atmospheresubway"), new FriendObj("penguinmcdonalds"),
-//     new FriendObj("spiritualibm"), new FriendObj("chantchevrolet")];
-
-
-
 function TabPanel(props) {
     const {children, value, index} = props;
 
@@ -48,7 +34,29 @@ function TabPanel(props) {
 
 const Friends = () => {
 
-    const [errHidden, setErrHidden] = useState(true)
+    const errDialogMsg = {
+        text: "Something went wrong!",
+        color: "red"
+    }
+
+    const sentFRDialogMsg = {
+        text: "Sent friend request!",
+        color: "white"
+    }
+
+    const accFRDialogMsg = {
+        text: "Added friend!",
+        color: "white"
+    }
+
+    const denFRDialogMsg = {
+        text: "Declined friend!",
+        color: "white"
+    }
+
+    const [dialogMsgHid, setDialogMsgHid] = useState(true)
+
+    const [dialogMsg, setDialogMsg] = useState(errDialogMsg)
 
     const [findFriends, setFindFriends] = useState([]);
 
@@ -58,8 +66,12 @@ const Friends = () => {
     // initialize all friend requests with useEffect hook
     const [friendRequests, setFriendRequests] = useState([])
 
+    async function init(){
+        await fetchCurrentFriends()
+        await fetchFriendRequests()
+    }
+
     async function fetchCurrentFriends() {
-        console.log("in fetch friends: " + curUser)
         if (curUser === undefined) return
         const allFriends = await getAllUserFriends(JSON.stringify(curUser.toJSON()))
         let stateUpdateArr = []
@@ -83,10 +95,7 @@ const Friends = () => {
         setFriendRequests(stateUpdateArr)
     }
 
-    useEffect (async () => {
-        await fetchCurrentFriends()
-        await fetchFriendRequests()
-    }, [])
+    useEffect (init, [])
 
     const handleFindFriends = async (searchText) => {
         console.log("in FIND FRIENDS")
@@ -95,7 +104,8 @@ const Friends = () => {
         console.log(JSON.stringify(curUser.toJSON()))
         const searchRes = await getUserSearchRes(searchText, isNewFriend, JSON.stringify(curUser.toJSON()))
         if (searchRes === -1) {
-            setErrHidden(false)
+            setDialogMsg(errDialogMsg)
+            setDialogMsgHid(false)
             return
         }
         console.log(searchRes)
@@ -116,7 +126,8 @@ const Friends = () => {
         const searchRes = await getUserSearchRes(searchText, isNewFriend, JSON.stringify(curUser.toJSON()))
         // if there is an error
         if (searchRes === -1) {
-            setErrHidden(false)
+            setDialogMsg(errDialogMsg)
+            setDialogMsgHid(false)
             return
         }
         console.log(searchRes)
@@ -133,6 +144,7 @@ const Friends = () => {
         console.log("in add friend")
         const addRes = await sendFriendReq(curUser.UserID, username)
         console.log(addRes ? "Succeeded" : "Didn't succeed")
+        setDialogMsgHid(false)
         // if FR succeeded, disable add button
         if (addRes){
             // This array holds the search-result FriendObj objects so we can change the state of searchFriends array
@@ -145,7 +157,9 @@ const Friends = () => {
                 stateUpdateArr.push(curFriend)
             }
             setFindFriends(stateUpdateArr)
+            setDialogMsg(sentFRDialogMsg)
         }
+        else setDialogMsg(errDialogMsg)
     }
 
     const onAcceptFR = async (username) => {
@@ -157,6 +171,13 @@ const Friends = () => {
         }
         if (accFriendUserID === -1) return
         const accRes = await acceptFriendRequest(curUser.UserID, accFriendUserID)
+        setDialogMsgHid(false)
+        if (accRes){
+            setDialogMsg(accFRDialogMsg)
+        }
+        else setDialogMsg(errDialogMsg)
+        // await forceDBRefresh()
+        // await init()
     }
 
     const onDenyFR = async (username) => {
@@ -168,6 +189,13 @@ const Friends = () => {
         }
         if (denFriendUserID === -1) return
         const denRes = await denyFriendRequest(curUser.UserID, denFriendUserID)
+        setDialogMsgHid(false)
+        if (denRes){
+            setDialogMsg(denFRDialogMsg)
+        }
+        else setDialogMsg(errDialogMsg)
+        // await forceDBRefresh()
+        // await init()
     }
 
     const [value, setValue] = useState(0);
@@ -182,9 +210,9 @@ const Friends = () => {
 
     return (
         <Container>
-            <Typography id={"friendErrMessage"} fontSize={12} color={"red"}
-                        textAlign={"center"} hidden={errHidden}>
-                Failed to retrieve friends!
+            <Typography id={"friendErrMessage"} fontSize={12} color={dialogMsg.color}
+                        textAlign={"center"} hidden={dialogMsgHid}>
+                {dialogMsg.text}
             </Typography>
             <AppBar position="static">
                 <Tabs
