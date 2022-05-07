@@ -99,6 +99,7 @@ const Friends = () => {
     useEffect (init, [])
 
     const handleFindFriends = async (searchText) => {
+        await init()
         console.log("in FIND FRIENDS")
         console.log("User entered: " + searchText)
         const isNewFriend = true
@@ -121,6 +122,7 @@ const Friends = () => {
     }
 
     const handleSearchFriends = async (searchText) => {
+        await init()
         console.log("in SEARCH FRIENDS")
         console.log("User entered: " + searchText)
         const isNewFriend = false
