@@ -117,31 +117,16 @@ exports.getFriendReqOfUser = async (req, res) => {
 // Controller function for PATCH request to '/userFriend/acceptFrdReq'
 exports.acceptFriendReq = async (req, res) => {
     console.log("in acceptFriendReq")
-    let success = true
     const curUserID = req.body.curUserID
     const friendUserID = req.body.friendUserID
-    // query1 to add curUserID to newFriendOfUser
-    const query1 = `UPDATE User SET FriendIDs = CONCAT(CONCAT(FriendIDs, \",\"), ${curUserID}) WHERE Username = \"${friendUserID}\";`
-    console.log(query1)
-    DBConn.query(query1, (err) => {
-        if (err != null) {
-            console.log(err)
-            res.status(500).send("Unsuccessful acceptance of friend request!")
-            success = false
-        }
-    })
-    if (success === false) return
-    // query2 to add newFriendUserID to curUser
-    const query2 = `UPDATE User SET FriendIDs = CONCAT(CONCAT(FriendIDs, \",\"), ${friendUserID}) WHERE Username = \"${curUserID}\";`
-    console.log(query2)
-    DBConn.query(query2, (err) => {
-        if (err != null) {
-            console.log(err)
-            res.status(500).send("Unsuccessful acceptance of friend request!")
-            success = false
-        }
-    })
-    if (success === false) return
+    let success
+    success = updateFriendStatus(curUserID, friendUserID, false, false)
+    if (!success) res.status(500).send()
+    success = updateFriendStatus(friendUserID, curUserID, false, false)
+    if (!success) res.status(500).send()
+    success = updateFriendStatus(curUserID, friendUserID, true, true)
+    if (!success) res.status(500).send()
+    res.status(201).send()
 }
 
 // Controller function for PATCH request to '/userFriend/removeFrdReq'
@@ -165,7 +150,7 @@ function getUserFromID(userID) {
 }
 
 /**
- *
+ * A generic function to update the User table in regard to their friendships
  * @param updateFromID -> The UserID of the entry we are updating
  * @param updateID -> The UserID we are using in the update of the entry
  * @param isRemoval -> Is this update a removal of a friend property? Or an addition?
@@ -176,8 +161,12 @@ async function updateFriendStatus(updateFromID, updateID, isRemoval, isFrdReq) {
     console.log("in local updateFriendStatus")
     const user = await getUserFromID(updateFromID)
     let userField = friendStrToArr(isFrdReq ? (user.FriendReqIDs) : (user.FriendIDs))
-    userField = isRemoval ? (removeElementByVal(userField, updateID)) : userField.push(updateID)
+    console.log("userField: " + userField)
+    if (isRemoval) userField = removeElementByVal(userField, updateID)
+    else userField.push(updateID)
+    console.log("userField: " + userField.toString())
     const newUserFieldStr = friendArrToStr(userField)
+    console.log("newUserFieldStr: " + newUserFieldStr)
     const query = `UPDATE User SET ${isFrdReq ? ("FriendReqIDs") : ("FriendIDs")} = \"${newUserFieldStr}\" WHERE UserID = ${updateFromID}`
     console.log(query)
     DBConn.query(query, (err) => {
@@ -185,21 +174,35 @@ async function updateFriendStatus(updateFromID, updateID, isRemoval, isFrdReq) {
     })
 }
 
-// Helper method to cast Friend Array to Friend String
+/**
+ * Helper method to cast Friend Array to Friend String
+ * @param friendArr -> An array of FriendIDs
+ * @returns {string} -> A String matching the format of Friends in the User table
+ */
 function friendArrToStr(friendArr){
     let result = ""
     if (friendArr === null || friendArr.length === 0) return result
+    console.log("in friendArrToStr: " + friendArr.toString())
+    console.log("friendArr.length: " + friendArr.length)
     for (let i = 0; i < friendArr.length; i++) result += `,${friendArr[i]}`
     return result
 }
 
-// Helper method to cast Friend String to Friend Array
+/**
+ * Helper method to cast Friend String to Friend Array
+ * @param friendStr -> A String matching the format of Friends in the User table
+ * @returns {*[]|*} -> An array corresponding to the friendStr
+ */
 function friendStrToArr(friendStr){
     if (friendStr === "") return []
     return friendStr.split(",").slice(1)
 }
 
-// Helper method to clean up Friend String input for queries
+/**
+ * Helper method to clean up Friend String input for queries
+ * @param friendStr -> A String matching the format of Friends in the User table
+ * @returns {string|*} -> A cleaned-up version of friendStr for queries that may yield syntax errors from friendStr
+ */
 function cleanFriendStr(friendStr){
     if (friendStr.length < 2) return friendStr
     if (friendStr[0] === ',') return friendStr.substring(1)
