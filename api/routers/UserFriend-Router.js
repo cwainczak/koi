@@ -15,5 +15,11 @@ router.get("/getUserFriends", userFriendController.getAllFriendsOfUser)
 
 router.patch("/sentFrdReq", userFriendController.sendFriendReq)
 
+router.get("/getUserFriendReqs", userFriendController.getFriendReqOfUser)
+
+router.patch("/acceptFrdReq", userFriendController.acceptFriendReq)
+
+router.patch("/denyFrdReq", userFriendController.denyFriendReq)
+
 // Export router
 module.exports = router

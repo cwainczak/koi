@@ -42,7 +42,6 @@ export const getAllUserFriends = async (curUser) => {
 
 // add user as friend from current account
 export const sendFriendReq = async (curUserID, newFriendUsername) => {
-    console.log("in backend of project")
     const result = await fetch("http://localhost:4000/userFriend/sentFrdReq",
         {
             method: "PATCH",
@@ -51,6 +50,67 @@ export const sendFriendReq = async (curUserID, newFriendUsername) => {
                 "Content-Type": "application/json"
             },
             body: JSON.stringify({curUserID, newFriendUsername})
+        })
+        .then((res) => {
+            console.log(res)
+            return res.status === 201
+        })
+        .catch((err) => err);
+    console.log(result)
+    return result
+}
+
+// get all friend requests of user
+export const getFriendReqs = async (curUser) => {
+    const url = "http://localhost:4000/userFriend/getUserFriendReqs?" + new URLSearchParams({curUser})
+    return await fetch(url,
+        {
+            method: "GET",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            }
+        }
+    ).then((res) => {
+        return res.json().then(data => data)
+    }).catch((err) => {
+        console.log(err)
+        return -1
+    });
+}
+
+// accept friend request
+export const acceptFriendRequest = async (curUserID, friendUserID) => {
+    const url = "http://localhost:4000/userFriend/acceptFrdReq"
+    const result = await fetch(url,
+        {
+            method: "PATCH",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({curUserID, friendUserID})
+        })
+        .then((res) => {
+            console.log(res)
+            return res.status === 201
+        })
+        .catch((err) => err);
+    console.log(result)
+    return result
+}
+
+// deny friend request
+export const denyFriendRequest = async (curUserID, friendUserID) => {
+    const url = "http://localhost:4000/userFriend/denyFrdReq"
+    const result = await fetch(url,
+        {
+            method: "PATCH",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({curUserID, friendUserID})
         })
         .then((res) => {
             console.log(res)
