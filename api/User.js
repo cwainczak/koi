@@ -1,4 +1,5 @@
-const DBConn = require("./Database");
+const database = require("./Database");
+const DBConn = database.conn
 
 function getUserFromID(userID) {
     const query = `SELECT * FROM User WHERE UserID = ${userID}`

@@ -1,5 +1,5 @@
 
-const DBConn = require("../Database")
+const DBConn = require("../Database").conn
 const User = require("../User")
 const {doesContain, removeElementByVal} = require("../Util");
 

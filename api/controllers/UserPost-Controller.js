@@ -1,4 +1,7 @@
-const DBConn = require("../Database")
+const database = require("../Database")
+const DBConn = database.conn
+const User = require("../User")
+const Util = require("../Util")
 
 // controller function for POST request to '/userPost/add'
 exports.addUserPost = async (req, res) => {
@@ -116,6 +119,6 @@ exports.likeUserPost = async (req, res) => {
     }
     const postID = req.body.postID
     const curUserID = req.body.curUserID
-
-
+    const databaseValTest = await database.getDatabaseValues("User", ["UserID", "Username", "FriendIDs"], "UserID", 3)
+    console.log(databaseValTest)
 }
