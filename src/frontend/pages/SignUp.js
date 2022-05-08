@@ -74,7 +74,7 @@ const SignUp = (props) => {
                 let isSuccess = await createUserAcc(entEmail, entUser, entPass);
 
                 if (isSuccess) {
-                    history.push("/Home")
+                    history.push("/SignIn")
                 } else {
                     errDialog.hidden = false
                     errDialog.textContent = "Email already in use. Please reset password."
