@@ -30,36 +30,35 @@ function shrinkUsername(name) {
 const Profile = (props) => {
     const {history} = props;
 
-    const [posts, setPosts] = useState([]);
+    const [postOBJs, setPostOBJs] = useState([]);
+
+    async function init() {
+        let stateUpdateArr = [];
+        const posts = await fetchPosts();
+
+        console.log(posts);
+
+        for (let i = 0; i < posts.length; i++) {
+            let curPost = posts[i];
+            let comments = await fetchComments(curPost.PostID);
+            console.log(comments);
+
+            let curPostOBJ = new PostObj(curUser.Username, curPost.Title, curPost.Content, curPost.Likes, comments);
+
+            stateUpdateArr.push(curPostOBJ);
+        }
+        setPostOBJs(stateUpdateArr);
+    }
 
     async function fetchPosts() {
-        let posts = await getUserPosts(curUser.UserID);
-        console.log(posts);
-        setPosts(posts);
-
-        // let comments = await getPostComments(posts[0].PostID);
-        // console.log(comments);
-        // setComments(comments);
-
-        // for (let i = 0; i < posts.length; i++) {
-        //     let comments = await getPostComments(posts[i].PostID);
-        //     console.log(comments);
-        //     setComments(comments);
-        // }
+        return await getUserPosts(curUser.UserID);
     }
-
-    useEffect(fetchPosts, [])
-
-    // const [comments, setComments] = useState([]);
 
     async function fetchComments(postID) {
-        let comments = await getPostComments(postID);
-        console.log(comments);
-        return comments;
-        // setComments(comments);
+        return await getPostComments(postID);
     }
 
-    // useEffect(fetchComments, [])
+    useEffect(init, [])
 
     // confirmation dialog to delete account
     const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] = React.useState(false);
@@ -145,7 +144,7 @@ const Profile = (props) => {
                                 <Typography variant="subtitle1">|</Typography>
                             </Grid>
                             <Grid item xs="auto">
-                                <Typography variant="subtitle1">{posts.length} posts</Typography>
+                                {/*<Typography variant="subtitle1">{posts.length} posts</Typography>*/}
                             </Grid>
                             <Grid item xs="auto">
                                 <Typography variant="subtitle1">|</Typography>
@@ -181,16 +180,15 @@ const Profile = (props) => {
                 <br/>
                 <br/>
 
-                {posts.map((post, index) => (
+                {postOBJs.map((postObj, index) => (
                     <>
                         <MyPost
                             key={index}
-                            username={curUser.Username}
-                            title={post.Title}
-                            content={post.Content}
-                            likes={post.Likes}
-                            // comments={comments}
-                            comments={fetchComments(post.PostID)}
+                            username={postObj.username}
+                            title={postObj.title}
+                            content={postObj.content}
+                            likes={postObj.likes}
+                            comments={postObj.comments}
                         />
                         <br/>
                     </>

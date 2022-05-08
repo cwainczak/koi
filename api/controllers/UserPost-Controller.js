@@ -48,7 +48,7 @@ exports.getPosts = async (req, res) => {
 exports.getPostComments = async (req, res) => {
     let postID = req.query.postID;
 
-    const query = "SELECT * FROM Comment WHERE PostID = " + postID + ";"
+    const query = `SELECT u.Username, c.Content FROM Comment c JOIN User u ON c.CommenterID = u.UserID WHERE c.PostID =  ${postID}`
 
     console.log(query);
     DBConn.query(query, async (err, allComments) => {

@@ -184,7 +184,7 @@ const MyPost = (props) => {
                             <Grid key = {index}>
                                 <br/>
                                 <Typography variant="body1" component="h1">
-                                    {comment.CommenterID}
+                                    {comment.Username}
                                 </Typography>
                                 <Typography variant="body2" component="h1">
                                     {comment.Content}
