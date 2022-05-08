@@ -179,7 +179,7 @@ const Profile = (props) => {
                     <>
                         <MyPost
                             key={index}
-                            id={postObj.postID}
+                            postID={postObj.postID}
                             username={postObj.username}
                             title={postObj.title}
                             content={postObj.content}

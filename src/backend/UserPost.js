@@ -56,3 +56,23 @@ export const getPostComments = async (postID) => {
             console.log(err)
         });
 }
+
+
+// delete post
+export const deletePost = async (postID) => {
+    return await fetch("http://localhost:4000/userPost/delete",
+        {
+            method: "DELETE",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({postID})
+        }
+    ).then((res) => {
+        return res.json().then(data => data)
+    }).catch((err) => {
+        console.log(err);
+        return false;
+    });
+}

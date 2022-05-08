@@ -66,3 +66,44 @@ exports.getPostComments = async (req, res) => {
         }
     })
 }
+
+// controller function for the DELETE request to '/userPost/delete'
+exports.deletePost = async (req, res) => {
+    let fullResult = {
+        commentsDeleted: true,
+        postDeleted: true
+    }
+
+    let postID = req.body.postID;
+
+    // delete post comments
+    const commentQuery = "DELETE FROM Comment WHERE PostID = " + postID + ";"
+
+    console.log(commentQuery);
+    DBConn.query(commentQuery, (err, commentQueryRes) => {
+        if (err != null) {
+            console.log(err);
+            res.status(500).send("Unsuccessful comment deletion!");
+        } else {
+            if (commentQueryRes.length >= 1) {
+                fullResult.commentsDeleted = true;
+            }
+        }
+    })
+
+    // delete post
+    const postQuery = "DELETE FROM Post WHERE PostID = " + postID + ";"
+
+    console.log(postQuery);
+    DBConn.query(postQuery, (err, postQueryRes) => {
+        if (err != null) {
+            console.log(err);
+            res.status(500).send("Unsuccessful post deletion!");
+        } else {
+            if (postQueryRes.length >= 1) {
+                fullResult.userDeleted = true;
+            }
+            res.status(201).json(fullResult);
+        }
+    })
+}

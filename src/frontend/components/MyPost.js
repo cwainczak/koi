@@ -18,6 +18,9 @@ import Menu from "@mui/material/Menu";
 import ConfirmationDialog from "./ConfirmationDialog";
 import PostDialog from "./PostDialog";
 import {removeWhiteSpace} from "../../backend/Util";
+import {deleteUserAcc} from "../../backend/UserAccount";
+import {curUser} from "../../backend/UserObj";
+import {deletePost} from "../../backend/UserPost";
 
 
 function shrinkUsername(name) {
@@ -81,9 +84,14 @@ const MyPost = (props) => {
         setConfirmationDialogIsOpen(false);
     }
 
-    const handelConfirmationDialogAction = () => {
-        setConfirmationDialogIsOpen(false);
-        // todo - delete post
+    const handelConfirmationDialogAction = async () => {
+        let isSuccess = await deletePost(props.postID);
+
+        if (isSuccess) {
+            setConfirmationDialogIsOpen(false);
+        } else {
+            console.log("Something went wrong!");
+        }
     }
 
     // post dialog to update post
@@ -181,7 +189,7 @@ const MyPost = (props) => {
                         </Grid>
                         {/* comments */}
                         {props.comments.map((comment, index) => (
-                            <Grid key = {index}>
+                            <Grid key={index}>
                                 <br/>
                                 <Typography variant="body1" component="h1">
                                     {comment.Username}
