@@ -2,7 +2,6 @@
 const DBConn = require("../Database")
 const User = require("../User")
 const {doesContain, removeElementByVal} = require("../Util");
-const {getUserIDFromUsername} = require("../User");
 
 // Controller function for GET request to '/userFriend/search'
 exports.searchUserData = async (req, res) => {
@@ -24,7 +23,7 @@ exports.searchUserData = async (req, res) => {
             res.status(500).send("Unsuccessful friend search!")
         } else {
             let searchRes = []
-            let currentUserFriends = friendStrToArr(currentUser.FriendIDs)
+            let currentUserFriends = User.UserIDTEXTStrToArr(currentUser.FriendIDs)
             // if (currentUser.FriendIDs !== "")
             ////     currentUserFriends = currentUser.FriendIDs.split(",")
             //     currentUserFriends = friendStrToArr(currentUser.FriendIDs)
@@ -37,7 +36,7 @@ exports.searchUserData = async (req, res) => {
                     let curRes = searchQueryRes[i]
                     let isCurFriend = doesContain(currentUserFriends, curRes.UserID)
                     //let isRequested = doesContain(curRes.FriendReqIDs.split(','), currentUser.UserID)
-                    let isRequested = doesContain(friendStrToArr(curRes.FriendReqIDs), currentUser.UserID)
+                    let isRequested = doesContain(User.UserIDTEXTStrToArr(curRes.FriendReqIDs), currentUser.UserID)
                     console.log("isRequested: " + isRequested)
                     if (!isCurFriend) {
                         // if user isRequested by current user, disable add button
@@ -66,7 +65,7 @@ exports.getAllFriendsOfUser = async (req, res) => {
     const currentUser = JSON.parse(req.query.curUser)
     console.log("currentUser UserID: " + currentUser.UserID)
     console.log("currentUser Friends: " + currentUser.FriendIDs)
-    const curUserFriendIDs = cleanFriendStr(currentUser.FriendIDs)
+    const curUserFriendIDs = User.cleanUserIDsStr(currentUser.FriendIDs)
     if (curUserFriendIDs.trim() === ""){
         res.status(201).send([])
         return
@@ -106,7 +105,7 @@ exports.getFriendReqOfUser = async (req, res) => {
         res.status(201).send([])
         return
     }
-    const curUserFriendReqIDs = cleanFriendStr(currentUser.FriendReqIDs)
+    const curUserFriendReqIDs = User.cleanUserIDsStr(currentUser.FriendReqIDs)
     const query = `SELECT * FROM User WHERE UserID IN (${curUserFriendReqIDs})`
     console.log("in getFriendReqs: " + query)
     DBConn.query(query, (err, queryRes) => {
@@ -164,10 +163,10 @@ exports.removeFriend = async (req, res) => {
 async function updateFriendStatus(updateFromID, updateID, isRemoval, isFrdReq) {
     console.log("in local updateFriendStatus")
     const user = await User.getUserFromID(updateFromID)
-    let userField = friendStrToArr(isFrdReq ? (user.FriendReqIDs) : (user.FriendIDs))
+    let userField = User.UserIDTEXTStrToArr(isFrdReq ? (user.FriendReqIDs) : (user.FriendIDs))
     if (isRemoval) userField = removeElementByVal(userField, updateID)
     else userField.push(updateID)
-    const newUserFieldStr = friendArrToStr(userField)
+    const newUserFieldStr = User.UserIDArrToTEXTStr(userField)
     const query = `UPDATE User SET ${isFrdReq ? ("FriendReqIDs") : ("FriendIDs")} = \"${newUserFieldStr}\" WHERE UserID = ${updateFromID}`
     return new Promise((resolve, reject) => {
         DBConn.query(query, (err) => {
@@ -175,40 +174,5 @@ async function updateFriendStatus(updateFromID, updateID, isRemoval, isFrdReq) {
             else resolve(true)
         })
     })
-}
-
-/**
- * Helper method to cast Friend Array to Friend String
- * @param friendArr -> An array of FriendIDs
- * @returns {string} -> A String matching the format of Friends in the User table
- */
-function friendArrToStr(friendArr){
-    let result = ""
-    if (friendArr === null || friendArr.length === 0) return result
-    console.log("in friendArrToStr: " + friendArr.toString())
-    console.log("friendArr.length: " + friendArr.length)
-    for (let i = 0; i < friendArr.length; i++) result += `,${friendArr[i]}`
-    return result
-}
-
-/**
- * Helper method to cast Friend String to Friend Array
- * @param friendStr -> A String matching the format of Friends in the User table
- * @returns {*[]|*} -> An array corresponding to the friendStr
- */
-function friendStrToArr(friendStr){
-    if (friendStr === "") return []
-    return friendStr.split(",").slice(1)
-}
-
-/**
- * Helper method to clean up Friend String input for queries
- * @param friendStr -> A String matching the format of Friends in the User table
- * @returns {string|*} -> A cleaned-up version of friendStr for queries that may yield syntax errors from friendStr
- */
-function cleanFriendStr(friendStr){
-    if (friendStr.length < 2) return friendStr
-    if (friendStr[0] === ',') return friendStr.substring(1)
-    return friendStr
 }
 
