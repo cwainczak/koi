@@ -1,4 +1,7 @@
-const DBConn = require("../Database")
+const database = require("../Database")
+const DBConn = database.conn
+const User = require("../User")
+const Util = require("../Util")
 
 // controller function for POST request to '/userPost/add'
 exports.addUserPost = async (req, res) => {
@@ -6,8 +9,8 @@ exports.addUserPost = async (req, res) => {
     let title = req.body.entTitle;
     let content = req.body.entContent;
 
-    const query = "INSERT INTO Post (UserID, Title, Content, Likes) " +
-        "VALUES (" + userID + ", \"" + title + "\", \"" + content + "\", \" \");"
+    const query = "INSERT INTO Post (UserID, Title, Content, Likes, LikeIDs) " +
+        "VALUES (" + userID + ", \"" + title + "\", \"" + content + "\", 0, \"\");"
 
     console.log(query);
 
@@ -127,4 +130,16 @@ exports.addUserComment = async (req, res) => {
             res.status(201).send("Successfully added comment!")
         }
     })
+}
+
+// Controller function for PATCH request at endpoint '/userPost/like'
+exports.likeUserPost = async (req, res) => {
+    let fullResult = {
+        likeActionSucceeded: false,
+        likeCount: -1
+    }
+    const postID = req.body.postID
+    const curUserID = req.body.curUserID
+    const databaseValTest = await database.getDatabaseValues("User", ["UserID", "Username", "FriendIDs"], "UserID", 3)
+    console.log(databaseValTest)
 }

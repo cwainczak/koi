@@ -95,3 +95,22 @@ export const createPostComment = async (postID, commenterID, entContent) => {
         return false
     });
 }
+
+// like post
+export const likePost = async (postID, curUserID) => {
+    return await fetch("http://localhost:4000/userPost/like",
+        {
+            method: "PATCH",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({postID, curUserID})
+        }
+    ).then((res) => {
+        return res.json().then(data => data)
+    }).catch((err) => {
+        console.log(err);
+        return false;
+    });
+}

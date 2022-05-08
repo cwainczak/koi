@@ -11,7 +11,7 @@ import PostObj from "../../backend/PostObj";
 import MyPost from "../components/MyPost";
 import PostDialog from "../components/PostDialog";
 import {removeWhiteSpace} from "../../backend/Util";
-import {createUserPost, getUserPosts, getPostComments} from "../../backend/UserPost";
+import {createUserPost, getUserPosts, getPostComments, likePost} from "../../backend/UserPost";
 import {deleteUserAcc} from "../../backend/UserAccount";
 import {curUser} from "../../backend/UserObj";
 
@@ -54,6 +54,10 @@ const Profile = (props) => {
     }
 
     useEffect(init, [])
+
+    async function clickLike(postID){
+        const result = await likePost(postID, curUser.UserID)
+    }
 
     // confirmation dialog to delete account
     const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] = React.useState(false);
@@ -186,6 +190,7 @@ const Profile = (props) => {
                             content={postObj.content}
                             likes={postObj.likes}
                             comments={postObj.comments}
+                            likePost={clickLike}
                             init={init}
                         />
                         <br/>

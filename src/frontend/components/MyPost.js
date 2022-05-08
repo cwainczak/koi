@@ -47,6 +47,7 @@ const MyPost = (props) => {
     const handleLikeClick = () => {
         setIsLiked(!isLiked);
         // todo - increment like count for post
+        props.likePost(props.postID)
     }
 
     // comments

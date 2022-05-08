@@ -23,10 +23,66 @@ const genPassCode = async () => {
     return Math.floor(Math.random() * (max - min + 1) + min)
 }
 
+// checks if an array contains some value, regardless of type
+function doesContain(someArr, someValue){
+    for (let i = 0; i < someArr.length; i++){
+        //console.log("someArr[${i}]: " + someArr[i] + " and is of type " + typeof(someArr))
+        //console.log("someValue[${i}]: " + someValue + " and is of type " + typeof(someValue))
+        if (someArr[i] == someValue) return true
+    }
+    return false
+}
+
+// removes an element from an array by value
+function removeElementByVal(someArr, someValue){
+    if (!doesContain(someArr, someValue)) return someArr
+    let newArr = []
+    for (let i = 0; i < someArr.length; i++){
+        console.log(someArr[i])
+        if (someArr[i] != someValue) newArr.push(someArr[i])
+    }
+    console.log("newArr: " + newArr)
+    return newArr
+}
+
+/**
+ * Returns a value that represents an Array as a String with values separated by a ','
+ * @param someArr -> The Array we are representing as a String
+ */
+function arrToString(someArr){
+    let result = ""
+    for (let i = 0; i < someArr.length; i++){
+        result += `${someArr[i]}`
+        if (i !== someArr.length-1) result += ","
+    }
+    return result
+}
+
+/**
+ * Returns true if value is a number data type, otherwise returns false
+ * @param value -> Any value
+ */
+function isANumber(value){
+    return (typeof 1 === typeof value)
+}
+
+/**
+ * Returns true if value is a String data type, otherwise returns false
+ * @param value -> Any value
+ */
+function isAString(value){
+    return (typeof "someString" === typeof value)
+}
+
 module.exports = {
     hashString,
     compareStringToHash,
-    genPassCode
+    genPassCode,
+    doesContain,
+    removeElementByVal,
+    arrToString,
+    isAString,
+    isANumber
 }
 
 

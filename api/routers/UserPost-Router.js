@@ -21,5 +21,8 @@ router.delete("/delete", userPostController.deletePost);
 
 router.post("/addComment", userPostController.addUserComment);
 
+// endpoint for the action of liking a post
+router.patch("/like", userPostController.likeUserPost)
+
 // export router
 module.exports = router
