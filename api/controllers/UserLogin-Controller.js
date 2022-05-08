@@ -8,8 +8,8 @@ exports.addUserData = async (req, res) => {
   let username = req.body.entUser
   let hashedPassword = await Util.hashString(req.body.entPass)
   console.log("Hashed password: " + hashedPassword)
-  const query = "INSERT INTO User (Email, Username, Password, FriendIDs) " +
-      "VALUES (\"" + email + "\", \"" + username + "\", \"" + hashedPassword + "\", \" \");"
+  const query = "INSERT INTO User (Email, Username, Password, FriendIDs, FriendReqIDs) " +
+      "VALUES (\"" + email + "\", \"" + username + "\", \"" + hashedPassword + "\", \" \", \" \");"
   console.log(query)
   DBConn.query(query, (err) => {
     if (err != null) {

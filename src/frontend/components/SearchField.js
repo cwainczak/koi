@@ -8,8 +8,11 @@ const SearchField = (props) => {
 
     const [searchText, setSearchText] = React.useState("")
 
+    const handleKeyPress = (event) => {
+        if (event.key === 'Enter') handleClick()
+    }
+
     const onChange = (event) => {
-        //console.log("in onChange: " + event.target.value)
         setSearchText(event.target.value);
     };
 
@@ -19,18 +22,20 @@ const SearchField = (props) => {
 
     return (
         <Paper
-            component="form"
+            component="span"
             sx={{p: '2px 4px', display: 'flex', alignItems: 'center'}}
         >
             <InputBase
                 sx={{ml: 1, flex: 1}}
                 placeholder={props.promptText}
                 onChange={onChange}
+                onKeyPress={handleKeyPress}
             />
             <IconButton sx={{p: '10px'}} aria-label="search" onClick={handleClick}>
                 <SearchIcon style={{color: "#b1b3b9"}}/>
             </IconButton>
         </Paper>
+
     );
 }
 

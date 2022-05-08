@@ -59,7 +59,7 @@ const NavBar = (props) => {
                         sx={{mr: 2, display: {xs: 'none', md: 'flex'}}}
                         color="#e4b109"
                     >
-                        App Name |
+                       Koi
                     </Typography>
 
                     <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
@@ -105,7 +105,7 @@ const NavBar = (props) => {
                         sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}
                         color="#e4b109"
                     >
-                        App Name
+                       Koi
                     </Typography>
                     <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
                         {pages.map((page) => (
