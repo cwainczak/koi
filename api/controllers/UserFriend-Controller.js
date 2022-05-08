@@ -2,6 +2,7 @@
 const DBConn = require("../Database")
 const User = require("../User")
 const {doesContain, removeElementByVal} = require("../Util");
+const {getUserIDFromUsername} = require("../User");
 
 // Controller function for GET request to '/userFriend/search'
 exports.searchUserData = async (req, res) => {
@@ -123,16 +124,11 @@ exports.acceptFriendReq = async (req, res) => {
     console.log("in acceptFriendReq")
     const curUserID = req.body.curUserID
     const friendUserID = req.body.friendUserID
-    let success
-    success = await updateFriendStatus(curUserID, friendUserID, false, false)
-    if (!success) res.status(500).send()
-    success = await updateFriendStatus(friendUserID, curUserID, false, false)
-    if (!success) res.status(500).send()
-    success = await updateFriendStatus(curUserID, friendUserID, true, true)
-    if (!success) res.status(500).send()
-    success = await updateFriendStatus(friendUserID, curUserID, true, true)
-    if (!success) res.status(500).send()
-    res.status(201).send()
+    const success = await updateFriendStatus(curUserID, friendUserID, false, false) &&
+                    await updateFriendStatus(friendUserID, curUserID, false, false) &&
+                    await updateFriendStatus(curUserID, friendUserID, true, true) &&
+                    await updateFriendStatus(friendUserID, curUserID, true, true)
+    success ? (res.status(201).send()) : (res.status(500).send())
 }
 
 // Controller function for PATCH request to '/userFriend/removeFrdReq'
@@ -142,6 +138,18 @@ exports.denyFriendReq = async (req, res) => {
     const friendUserID = req.body.friendUserID
     const success = await updateFriendStatus(curUserID, friendUserID, true, true)
     console.log("is success true? -> " + success)
+    success ? (res.status(201).send()) : (res.status(500).send())
+}
+
+// Controller function for PATCH request to '/userFriend/removeFriend'
+exports.removeFriend = async (req, res) => {
+    console.log("in remove friend")
+    const curUserID = req.body.curUserID
+    //const friendUsername = req.friendUsername
+    //const friendID = await getUserIDFromUsername(friendUsername)
+    const friendID = req.body.friendID
+    const success = await updateFriendStatus(curUserID, friendID, true, false) &&
+                    await updateFriendStatus(friendID, curUserID, true, false)
     success ? (res.status(201).send()) : (res.status(500).send())
 }
 
@@ -157,14 +165,10 @@ async function updateFriendStatus(updateFromID, updateID, isRemoval, isFrdReq) {
     console.log("in local updateFriendStatus")
     const user = await User.getUserFromID(updateFromID)
     let userField = friendStrToArr(isFrdReq ? (user.FriendReqIDs) : (user.FriendIDs))
-    console.log("userField: " + userField)
     if (isRemoval) userField = removeElementByVal(userField, updateID)
     else userField.push(updateID)
-    console.log("userField: " + userField.toString())
     const newUserFieldStr = friendArrToStr(userField)
-    console.log("newUserFieldStr: " + newUserFieldStr)
     const query = `UPDATE User SET ${isFrdReq ? ("FriendReqIDs") : ("FriendIDs")} = \"${newUserFieldStr}\" WHERE UserID = ${updateFromID}`
-    console.log(query)
     return new Promise((resolve, reject) => {
         DBConn.query(query, (err) => {
             if (err != null) reject(err)

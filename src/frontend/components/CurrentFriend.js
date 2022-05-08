@@ -40,18 +40,19 @@ const CurrentFriend = (props) => {
         setAnchorElOptions(null);
     };
 
-    const handelOpenDialog = () => {
+    const handleOpenDialog = () => {
         setAnchorElOptions(null);
         setIsOpen(true);
     }
 
-    const handelCloseDialog = () => {
+    const handleCloseDialog = () => {
         setIsOpen(false);
     }
 
-    const handelDialogAction = () => {
+    const handleDialogAction = () => {
         setIsOpen(false);
         // todo - remove friend from user
+        props.removeFriend(props.username)
     }
 
     return (
@@ -74,15 +75,14 @@ const CurrentFriend = (props) => {
                     open={Boolean(anchorElOptions)}
                     onClose={handleCloseOptionsMenu}
                 >
-                    <MenuItem onClick={handleCloseOptionsMenu}>View Profile</MenuItem>
-                    <MenuItem onClick={handelOpenDialog}>Remove Friend</MenuItem>
+                    <MenuItem onClick={handleOpenDialog}>Remove Friend</MenuItem>
                 </Menu>
             </Card>
 
             <ConfirmationDialog
                 isOpen={isOpen}
-                handleClose={handelCloseDialog}
-                handleAction={handelDialogAction}
+                handleClose={handleCloseDialog}
+                handleAction={handleDialogAction}
                 title="Remove Friend?"
                 message={"Are you sure you want to remove " + props.username + " from being your friend?"}
                 button1={"Cancel"}

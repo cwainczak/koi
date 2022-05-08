@@ -120,3 +120,24 @@ export const denyFriendRequest = async (curUserID, friendUserID) => {
     console.log(result)
     return result
 }
+
+// delete current friend
+export const removeFriend = async (curUserID, friendID) => {
+    const url = "http://localhost:4000/userFriend/removeFriend"
+    const result = await fetch(url,
+        {
+            method: "PATCH",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({curUserID, friendID})
+        })
+        .then((res) => {
+            console.log(res)
+            return res.status === 201
+        })
+        .catch((err) => err);
+    console.log(result)
+    return result
+}

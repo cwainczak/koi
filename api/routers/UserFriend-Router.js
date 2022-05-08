@@ -21,5 +21,7 @@ router.patch("/acceptFrdReq", userFriendController.acceptFriendReq)
 
 router.patch("/denyFrdReq", userFriendController.denyFriendReq)
 
+router.patch("/removeFriend", userFriendController.removeFriend)
+
 // Export router
 module.exports = router

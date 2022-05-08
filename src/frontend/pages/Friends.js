@@ -18,7 +18,8 @@ import {
     sendFriendReq,
     getFriendReqs,
     acceptFriendRequest,
-    denyFriendRequest
+    denyFriendRequest,
+    removeFriend
 } from "../../backend/UserFriend"
 import {curUser} from "../../backend/UserObj";
 
@@ -51,6 +52,11 @@ const Friends = () => {
 
     const denFRDialogMsg = {
         text: "Declined friend!",
+        color: "white"
+    }
+
+    const removeFriendDialogMsg = {
+        text: "Removed friend!",
         color: "white"
     }
 
@@ -165,6 +171,23 @@ const Friends = () => {
         else setDialogMsg(errDialogMsg)
     }
 
+    const deleteFriend = async (username) => {
+        console.log("in delete friend")
+        let friendID = -1
+        for (let i = 0; i < currentFriends.length; i++){
+            let curFriend = currentFriends[i]
+            console.log("curFriend username: " + curFriend.username)
+            console.log("entered username: " + username + " and is type " + typeof username)
+            if (curFriend.username === username) friendID = curFriend.userID
+        }
+        console.log(friendID)
+        if (friendID === -1) return
+        const result = await removeFriend(curUser.UserID, friendID)
+        setDialogMsgHid(false)
+        setDialogMsg(result ? (removeFriendDialogMsg) : (errDialogMsg))
+        await init()
+    }
+
     const onAcceptFR = async (username) => {
         console.log("onAcceptFR")
         let accFriendUserID = -1
@@ -239,7 +262,10 @@ const Friends = () => {
                     <Grid container rowSpacing={2} columnSpacing={2}>
                         {currentFriends.map((friend) => (
                             <Grid item xs={12} sm={6}>
-                                <CurrentFriend username={friend.username}/>
+                                <CurrentFriend
+                                    username={friend.username}
+                                    removeFriend={deleteFriend}
+                                />
                             </Grid>
                         ))}
                     </Grid>
