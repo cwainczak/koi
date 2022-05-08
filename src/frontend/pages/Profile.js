@@ -144,8 +144,7 @@ const Profile = (props) => {
                                 <Typography variant="subtitle1">|</Typography>
                             </Grid>
                             <Grid item xs="auto">
-                                {/*todo - get number of posts*/}
-                                {/*<Typography variant="subtitle1">{posts.length} posts</Typography>*/}
+                                <Typography variant="subtitle1">{postOBJs.length} posts</Typography>
                             </Grid>
                             <Grid item xs="auto">
                                 <Typography variant="subtitle1">|</Typography>
