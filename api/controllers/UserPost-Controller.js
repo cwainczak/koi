@@ -144,9 +144,20 @@ exports.likeUserPost = async (req, res) => {
     console.log(databaseValTest)
 }
 
-// controller function for te GET request at endpoint "/userPost/get
+// controller function for te GET request at endpoint "/userPost/numComments"
 exports.getNumComments = async (req, res) => {
     let userID = req.query.userID;
     const result = await database.getDatabaseValues("Comment", ["CommentID"], "CommenterID", userID);
     res.status(200).send(result);
+}
+
+// controller function for te GET request at endpoint "/userPost/numFriends"
+exports.getNumFriends = async (req, res) => {
+    let userID = req.query.userID;
+    const DBRes = await database.getDatabaseValues("User", ["FriendIDs"], "UserID", userID);
+    const userJSON = DBRes[0];
+    const friendIDs = userJSON.FriendIDs;
+    const result = UserIDTEXTStrToArr(friendIDs).length;
+    console.log(result)
+    res.status(200).send({numFriends: result});
 }

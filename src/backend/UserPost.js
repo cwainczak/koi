@@ -115,10 +115,29 @@ export const likePost = async (postID, curUserID) => {
     });
 }
 
-
 // get number of comments
 export const getNumUserComments = async (userID) => {
     const url = "http://localhost:4000/userPost/numComments?" + new URLSearchParams({userID});
+
+    return await fetch(url,
+        {
+            method: "GET",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+        })
+        .then((res) => {
+            return res.json().then(data => data)
+        })
+        .catch((err) => {
+            console.log(err)
+        });
+}
+
+// get number of comments
+export const getNumUserFriends = async (userID) => {
+    const url = "http://localhost:4000/userPost/numFriends?" + new URLSearchParams({userID});
 
     return await fetch(url,
         {

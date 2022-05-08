@@ -28,5 +28,8 @@ router.patch("/like", userPostController.likeUserPost)
 // endpoint for the action for getting number of user comments
 router.get("/numComments", userPostController.getNumComments);
 
+// endpoint for the action for getting the number of friends
+router.get("/numFriends", userPostController.getNumFriends);
+
 // export router
 module.exports = router

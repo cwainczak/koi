@@ -11,7 +11,14 @@ import PostObj from "../../backend/PostObj";
 import MyPost from "../components/MyPost";
 import PostDialog from "../components/PostDialog";
 import {removeWhiteSpace} from "../../backend/Util";
-import {createUserPost, getUserPosts, getPostComments, likePost, getNumUserComments} from "../../backend/UserPost";
+import {
+    createUserPost,
+    getUserPosts,
+    getPostComments,
+    likePost,
+    getNumUserComments,
+    getNumUserFriends
+} from "../../backend/UserPost";
 import {deleteUserAcc} from "../../backend/UserAccount";
 import {curUser} from "../../backend/UserObj";
 
@@ -26,6 +33,7 @@ const Profile = (props) => {
     const {history} = props;
 
     const [postOBJs, setPostOBJs] = useState([]);
+    const [numFriends, setNumFriends] = useState([]);
     const [numComments, setNumComments] = useState([]);
 
     async function init() {
@@ -44,6 +52,9 @@ const Profile = (props) => {
             stateUpdateArr.push(curPostOBJ);
         }
         setPostOBJs(stateUpdateArr);
+
+        let numFriendsRes = await getNumUserFriends(curUser.UserID);
+        setNumFriends(numFriendsRes.numFriends);
 
         let numComments = await getNumUserComments(curUser.UserID);
         setNumComments(numComments);
@@ -142,19 +153,19 @@ const Profile = (props) => {
                     <Box sx={{display: "flex", flexDirection: "column", margin: "auto", alignItems: "center"}}>
                         <Grid container spacing={{xs: 2, md: 3}} columns={{xs: 4, sm: 8, md: 12}}>
                             <Grid item xs="auto">
-                                <Typography variant="subtitle1">x friends</Typography>
+                                <Typography variant="subtitle1">{numFriends} friend(s)</Typography>
                             </Grid>
                             <Grid item xs="auto">
                                 <Typography variant="subtitle1">|</Typography>
                             </Grid>
                             <Grid item xs="auto">
-                                <Typography variant="subtitle1">{postOBJs.length} posts</Typography>
+                                <Typography variant="subtitle1">{postOBJs.length} post(s)</Typography>
                             </Grid>
                             <Grid item xs="auto">
                                 <Typography variant="subtitle1">|</Typography>
                             </Grid>
                             <Grid item xs="auto">
-                                <Typography variant="subtitle1">{numComments.length} comments</Typography>
+                                <Typography variant="subtitle1">{numComments.length} comment(s)</Typography>
                             </Grid>
                         </Grid>
                     </Box>
