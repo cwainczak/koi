@@ -157,7 +157,7 @@ exports.getNumFriends = async (req, res) => {
     const DBRes = await database.getDatabaseValues("User", ["FriendIDs"], "UserID", userID);
     const userJSON = DBRes[0];
     const friendIDs = userJSON.FriendIDs;
-    const result = UserIDTEXTStrToArr(friendIDs).length;
+    const result = User.UserIDTEXTStrToArr(friendIDs).length;
     console.log(result)
     res.status(200).send({numFriends: result});
 }
