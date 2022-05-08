@@ -76,3 +76,8 @@ export const deletePost = async (postID) => {
         return false;
     });
 }
+
+// like post
+export const likePost = async (curUserID) => {
+    
+}

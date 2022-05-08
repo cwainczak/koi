@@ -55,6 +55,10 @@ const Profile = (props) => {
 
     useEffect(init, [])
 
+    async function likePost(){
+
+    }
+
     // confirmation dialog to delete account
     const [isConfirmationDialogOpen, setIsConfirmationDialogOpen] = React.useState(false);
 
@@ -186,6 +190,7 @@ const Profile = (props) => {
                             content={postObj.content}
                             likes={postObj.likes}
                             comments={postObj.comments}
+                            likePost={likePost}
                             init={init}
                         />
                         <br/>

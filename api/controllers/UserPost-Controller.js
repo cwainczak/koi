@@ -6,8 +6,8 @@ exports.addUserPost = async (req, res) => {
     let title = req.body.entTitle;
     let content = req.body.entContent;
 
-    const query = "INSERT INTO Post (UserID, Title, Content, Likes) " +
-        "VALUES (" + userID + ", \"" + title + "\", \"" + content + "\", \" \");"
+    const query = "INSERT INTO Post (UserID, Title, Content, Likes, LikeIDs) " +
+        "VALUES (" + userID + ", \"" + title + "\", \"" + content + "\", 0, \"\");"
 
     console.log(query);
 
