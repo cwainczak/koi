@@ -36,20 +36,17 @@ const RecoverPassword = (props) => {
         if (entEmail === "") {
             errDialog.hidden = false
             errDialog.textContent = "Please enter your email"
-        } else if (!validateEmail(entEmail)) {
+        }
+        else if (validateEmail(entEmail) === null) {
             errDialog.hidden = false
-            errDialog.textContent = "Invalid email!"
+            errDialog.textContent = "Invalid email address!"
         } else {
             // disable button
             handleLoading();
 
             const result = await sendPasswordCode(entEmail)
 
-            if (result === -1) {
-                errDialog.hidden = false
-                errDialog.textContent = "Server error. Please try again later."
-                handleLoading()
-            } else if (result.emailSent) {
+            if (result.emailSent) {
                 // pass the generated passcode to the /ResetPassword page
                 const genPassCode = result.emailJSData.templateParams.passcode
                 console.log("RecoverPassword.state.passcode: " + genPassCode)
@@ -60,16 +57,18 @@ const RecoverPassword = (props) => {
                         passcode: genPassCode
                     }
                 })
-            } else if (!result.validEmail) {
-                errDialog.hidden = false
-                errDialog.textContent = "Email is not associated with any account!"
-                // enable button
-                handleLoading();
             } else {
-                errDialog.hidden = false
-                errDialog.textContent = "Server error. Please try again later."
-                // enable button
-                handleLoading();
+                if (!result.validEmail) {
+                    errDialog.hidden = false
+                    errDialog.textContent = "Invalid email address!"
+                    // enable button
+                    handleLoading();
+                } else {
+                    errDialog.hidden = false
+                    errDialog.textContent = "Server error. Please try again later."
+                    // enable button
+                    handleLoading();
+                }
             }
         }
     };

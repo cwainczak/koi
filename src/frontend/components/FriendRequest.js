@@ -41,11 +41,13 @@ const FriendRequest = (props) => {
     const handleAccept = () => {
         setAnchorElOptions(null);
         // todo - add friend to user and remove from list of requests
+        props.onAcceptFR(props.username)
     };
 
     const handleDeny = () => {
         setAnchorElOptions(null);
         // todo - remove friend from lists of requests
+        props.onDenyFR(props.username)
     };
 
     return (
@@ -61,7 +63,6 @@ const FriendRequest = (props) => {
                         </IconButton>
                     }
                     title={props.username}
-                    subheader={props.friends + " mutual friends"}
                 />
                 <Menu
                     id="options-menu"

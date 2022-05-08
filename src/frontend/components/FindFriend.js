@@ -28,6 +28,8 @@ const theme = createTheme({
 const CurrentFriend = (props) => {
     const handleAddFriend = () => {
         // todo - add friend to user
+        console.log(props.username)
+        props.onClick(props.username)
     };
 
     return (
@@ -38,7 +40,7 @@ const CurrentFriend = (props) => {
                         <Avatar {...shrinkUsername(props.username)}/>
                     }
                     action={
-                        <IconButton>
+                        <IconButton disabled={props.disabled}>
                             <AddIcon onClick={handleAddFriend}/>
                         </IconButton>
                     }
