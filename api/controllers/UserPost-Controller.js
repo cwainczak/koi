@@ -143,3 +143,10 @@ exports.likeUserPost = async (req, res) => {
     const databaseValTest = await database.getDatabaseValues("User", ["UserID", "Username", "FriendIDs"], "UserID", 3)
     console.log(databaseValTest)
 }
+
+// controller function for te GET request at endpoint "/userPost/get
+exports.getNumComments = async (req, res) => {
+    let userID = req.query.userID;
+    const result = await database.getDatabaseValues("Comment", ["CommentID"], "CommenterID", userID);
+    res.status(200).send(result);
+}

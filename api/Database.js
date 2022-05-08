@@ -27,32 +27,31 @@ const conn = mysql.createConnection(DBInfo)
  * @returns {Promise<unknown>} -> If success: JSON with values pertaining to specified columns from specified table
  *                                If unsuccessful: -1
  */
-function getDatabaseValues(tableStr, columnNamesStrArr, whereColumn, whereValue){
+function getDatabaseValues(tableStr, columnNamesStrArr, whereColumn, whereValue) {
     return new Promise((resolve, reject) => {
         const columnString = util.arrToString(columnNamesStrArr)
-        if (columnString === ""){
+        if (columnString === "") {
             console.log("No specified columns")
             reject(-1)
         }
         let isWhereClause = true
         if (whereColumn === null && whereValue === null) isWhereClause = false
-        else if (whereColumn === null || whereValue === null){
+        else if (whereColumn === null || whereValue === null) {
             console.log("WHERE column or WHERE value is null. Invalid arguments.")
             reject(-1)
-        }
-        else if (util.isAString(whereValue)) whereValue = `\"${whereValue}\"`
-        else if (!util.isANumber(whereValue)){
+        } else if (util.isAString(whereValue)) whereValue = `\"${whereValue}\"`
+        else if (!util.isANumber(whereValue)) {
             console.log("WHERE value is not a String nor a Number. Invalid data type.")
             reject(-1)
         }
         let query = `SELECT ${columnString} FROM ${tableStr} `
         isWhereClause ? (query += `WHERE ${whereColumn} = ${whereValue}`) : (console.log("No WHERE clause detected"))
         conn.query(query, (err, queryRes) => {
-            if (err != null){
+            if (err != null) {
                 console.log(err)
                 reject(-1)
             }
-            const result = JSON.parse(JSON.stringify(queryRes[0]))
+            const result = JSON.parse(JSON.stringify(queryRes))
             resolve(result)
         });
     })

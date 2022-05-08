@@ -11,7 +11,7 @@ import PostObj from "../../backend/PostObj";
 import MyPost from "../components/MyPost";
 import PostDialog from "../components/PostDialog";
 import {removeWhiteSpace} from "../../backend/Util";
-import {createUserPost, getUserPosts, getPostComments, likePost} from "../../backend/UserPost";
+import {createUserPost, getUserPosts, getPostComments, likePost, getNumUserComments} from "../../backend/UserPost";
 import {deleteUserAcc} from "../../backend/UserAccount";
 import {curUser} from "../../backend/UserObj";
 
@@ -26,6 +26,7 @@ const Profile = (props) => {
     const {history} = props;
 
     const [postOBJs, setPostOBJs] = useState([]);
+    const [numComments, setNumComments] = useState([]);
 
     async function init() {
         let stateUpdateArr = [];
@@ -43,6 +44,9 @@ const Profile = (props) => {
             stateUpdateArr.push(curPostOBJ);
         }
         setPostOBJs(stateUpdateArr);
+
+        let numComments = await getNumUserComments(curUser.UserID);
+        setNumComments(numComments);
     }
 
     async function fetchPosts() {
@@ -55,7 +59,7 @@ const Profile = (props) => {
 
     useEffect(init, [])
 
-    async function clickLike(postID){
+    async function clickLike(postID) {
         const result = await likePost(postID, curUser.UserID)
     }
 
@@ -150,7 +154,7 @@ const Profile = (props) => {
                                 <Typography variant="subtitle1">|</Typography>
                             </Grid>
                             <Grid item xs="auto">
-                                <Typography variant="subtitle1">x comments</Typography>
+                                <Typography variant="subtitle1">{numComments.length} comments</Typography>
                             </Grid>
                         </Grid>
                     </Box>
