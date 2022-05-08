@@ -43,7 +43,7 @@ const Profile = (props) => {
             let comments = await fetchComments(curPost.PostID);
             console.log(comments);
 
-            let curPostOBJ = new PostObj(curUser.Username, curPost.Title, curPost.Content, curPost.Likes, comments);
+            let curPostOBJ = new PostObj(curPost.PostID, curUser.Username, curPost.Title, curPost.Content, curPost.Likes, comments);
 
             stateUpdateArr.push(curPostOBJ);
         }
@@ -144,6 +144,7 @@ const Profile = (props) => {
                                 <Typography variant="subtitle1">|</Typography>
                             </Grid>
                             <Grid item xs="auto">
+                                {/*todo - get number of posts*/}
                                 {/*<Typography variant="subtitle1">{posts.length} posts</Typography>*/}
                             </Grid>
                             <Grid item xs="auto">
@@ -184,6 +185,7 @@ const Profile = (props) => {
                     <>
                         <MyPost
                             key={index}
+                            id={postObj.postID}
                             username={postObj.username}
                             title={postObj.title}
                             content={postObj.content}
