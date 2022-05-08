@@ -19,5 +19,8 @@ router.get("/getPostComments", userPostController.getPostComments);
 // endpoint for the action of deleting a post
 router.delete("/delete", userPostController.deletePost);
 
+// endpoint for the action of liking a post
+router.patch("/like", userPostController.likeUserPost)
+
 // export router
 module.exports = router

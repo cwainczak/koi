@@ -107,3 +107,15 @@ exports.deletePost = async (req, res) => {
         }
     })
 }
+
+// Controller function for PATCH request at endpoint '/userPost/like'
+exports.likeUserPost = async (req, res) => {
+    let fullResult = {
+        likeActionSucceeded: false,
+        likeCount: -1
+    }
+    const postID = req.body.postID
+    const curUserID = req.body.curUserID
+
+
+}
