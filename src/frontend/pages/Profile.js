@@ -33,7 +33,7 @@ const Profile = (props) => {
 
         console.log(posts);
 
-        for (let i = 0; i < posts.length; i++) {
+        for (let i = posts.length - 1; i >= 0; i--) {
             let curPost = posts[i];
             let comments = await fetchComments(curPost.PostID);
             console.log(comments);
@@ -110,6 +110,7 @@ const Profile = (props) => {
             let isSuccess = await createUserPost(curUser.UserID, entTitle, entContent);
 
             if (isSuccess) {
+                await init();
                 setIsPostDialogOpen(false);
             } else {
                 console.log("Something went wrong!");
@@ -185,6 +186,7 @@ const Profile = (props) => {
                             content={postObj.content}
                             likes={postObj.likes}
                             comments={postObj.comments}
+                            init={init}
                         />
                         <br/>
                     </>

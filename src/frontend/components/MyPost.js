@@ -88,6 +88,7 @@ const MyPost = (props) => {
         let isSuccess = await deletePost(props.postID);
 
         if (isSuccess) {
+            props.init();
             setConfirmationDialogIsOpen(false);
         } else {
             console.log("Something went wrong!");
