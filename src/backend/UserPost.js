@@ -76,3 +76,22 @@ export const deletePost = async (postID) => {
         return false;
     });
 }
+
+// add comment
+export const createPostComment = async (postID, commenterID, entContent) => {
+    return await fetch("http://localhost:4000/userPost/addComment",
+        {
+            method: "POST",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({postID, commenterID, entContent})
+        }
+    ).then((res) => {
+        return res.status === 201
+    }).catch((err) => {
+        console.log(err)
+        return false
+    });
+}

@@ -19,5 +19,7 @@ router.get("/getPostComments", userPostController.getPostComments);
 // endpoint for the action of deleting a post
 router.delete("/delete", userPostController.deletePost);
 
+router.post("/addComment", userPostController.addUserComment);
+
 // export router
 module.exports = router

@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -18,9 +18,8 @@ import Menu from "@mui/material/Menu";
 import ConfirmationDialog from "./ConfirmationDialog";
 import PostDialog from "./PostDialog";
 import {removeWhiteSpace} from "../../backend/Util";
-import {deleteUserAcc} from "../../backend/UserAccount";
 import {curUser} from "../../backend/UserObj";
-import {deletePost} from "../../backend/UserPost";
+import {createPostComment, deletePost} from "../../backend/UserPost";
 
 
 function shrinkUsername(name) {
@@ -57,8 +56,33 @@ const MyPost = (props) => {
         setShowComments(prev => !prev)
     }
 
-    const handleSubmitCommentClick = () => {
-        // todo - add comment to post
+    const handleSubmitCommentClick = async () => {
+        let entContent = removeWhiteSpace(document.getElementById("commentField").value);
+        let errDialog = document.getElementById("invalidCommentEntry");
+
+        console.log({
+            postID: props.postID,
+            commenterID: curUser.UserID,
+            content: entContent
+        });
+
+        if (entContent === "") {
+            errDialog.textContent = "Comment is required.";
+            errDialog.hidden = false;
+        } else if (entContent.length > 1000) {
+            errDialog.textContent = "Comment is too long. (max: 1000 characters)";
+            errDialog.hidden = false;
+        } else {
+            let isSuccess = await createPostComment(props.postID, curUser.UserID, entContent);
+
+            if (isSuccess) {
+                errDialog.hidden = true;
+                document.getElementById("commentField").value = "";
+                props.init();
+            } else {
+                console.log("Something went wrong!")
+            }
+        }
     }
 
     // options menu (update/delete post)
@@ -169,10 +193,22 @@ const MyPost = (props) => {
                 {/* comments section */}
                 {showComments &&
                     <CardContent>
+                        {/* error message */}
+                        <Typography
+                            id={"invalidCommentEntry"}
+                            fontSize={12}
+                            color={"red"}
+                            paddingTop={1.5}
+                            textAlign={"center"}
+                            hidden={true}
+                        >
+                            Comment is required.
+                        </Typography>
                         {/* comment text-field and button */}
                         <Grid container spacing={2}>
                             <Grid item xs>
                                 <TextField
+                                    id="commentField"
                                     fullWidth
                                     size="small"
                                     label="Add a comment!"

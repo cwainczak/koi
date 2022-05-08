@@ -107,3 +107,24 @@ exports.deletePost = async (req, res) => {
         }
     })
 }
+
+// controller function for the POST request to '/userPost/addComment'
+exports.addUserComment = async (req, res) => {
+    let postID = req.body.postID;
+    let commenterID = req.body.commenterID;
+    let content = req.body.entContent;
+
+    const query = "INSERT INTO Comment (PostID, CommenterID, Content, Likes) " +
+        "VALUES (" + postID + ", \"" + commenterID + "\", \"" + content + "\", \" \");"
+
+    console.log(query);
+
+    DBConn.query(query, (err) => {
+        if (err != null) {
+            console.log(err);
+            res.status(500).send("Unsuccessful comment creation!");
+        } else {
+            res.status(201).send("Successfully added comment!")
+        }
+    })
+}
