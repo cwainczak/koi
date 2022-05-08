@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import Post from "../components/Post";
@@ -7,6 +7,7 @@ import PostDialog from "../components/PostDialog";
 import {removeWhiteSpace} from "../../backend/Util";
 import {createUserPost} from "../../backend/UserPost";
 import {curUser} from "../../backend/UserObj";
+import Typography from "@mui/material/Typography";
 
 
 let posts = [new PostObj("operatingoracle", "On it differed", "On it differed repeated wandered required in. Then girl neat why yet knew rose spot. Moreover property we he kindness greatest be oh striking laughter. In me he at collecting affronting principles apartments. Has visitor law attacks pretend you calling own excited painted. Contented attending smallness it oh ye unwilling. Turned favour man two but lovers. Suffer should if waited common person little oh. Improved civility graceful sex few smallest screened settling. Likely active her warmly has.", 18, [["username1", "comment1 - Use securing confined his shutters. Delightful as he it acceptance an solicitude discretion reasonably. Carriage we husbands advanced an perceive greatest."], ["username2", "comment2 - Totally dearest expense on demesne ye he. Curiosity excellent commanded in me. Unpleasing impression themselves to at assistance acceptance my or. On consider laughter civility offended oh."]]),
@@ -16,6 +17,12 @@ let posts = [new PostObj("operatingoracle", "On it differed", "On it differed re
 
 const Home = () => {
     const [isOpen, setIsOpen] = React.useState(false);
+
+    const [successfulPostCreationHidden, setSuccessfulPostCreationHidden] = React.useState(true)
+
+    useEffect(() => {
+        setSuccessfulPostCreationHidden(true)
+    }, [])
 
     const handleOpenDialog = () => {
         setIsOpen(true);
@@ -48,6 +55,7 @@ const Home = () => {
 
             if (isSuccess) {
                 setIsOpen(false);
+                setSuccessfulPostCreationHidden(false)
             } else {
                 console.log("Something went wrong!");
             }
@@ -56,6 +64,12 @@ const Home = () => {
 
     return (
         <Container>
+
+            <Typography id={"newPostMsg"} fontSize={12} color={"darkorange"}
+                        textAlign={"center"} hidden={successfulPostCreationHidden}>
+                Your post has been created!
+            </Typography>
+
             <Button
                 fullWidth
                 variant="contained"
