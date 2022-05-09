@@ -216,6 +216,8 @@ const Profile = (props) => {
                     <>
                         <MyPost
                             key={index}
+                            contentID={`commentContent${index}`}
+                            errDialogID={`errDialog${index}`}
                             postID={postObj.postID}
                             username={postObj.username}
                             title={postObj.title}

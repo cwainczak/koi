@@ -58,8 +58,8 @@ const MyPost = (props) => {
     }
 
     const handleSubmitCommentClick = async () => {
-        let entContent = removeWhiteSpace(document.getElementById("commentField").value);
-        let errDialog = document.getElementById("invalidCommentEntry");
+        let entContent = removeWhiteSpace(document.getElementById(props.contentID).value);
+        let errDialog = document.getElementById(props.errDialogID);
 
         console.log({
             postID: props.postID,
@@ -78,7 +78,7 @@ const MyPost = (props) => {
 
             if (isSuccess) {
                 errDialog.hidden = true;
-                document.getElementById("commentField").value = "";
+                document.getElementById(props.contentID).value = "";
                 props.init();
             } else {
                 console.log("Something went wrong!")
@@ -196,7 +196,7 @@ const MyPost = (props) => {
                     <CardContent>
                         {/* error message */}
                         <Typography
-                            id={"invalidCommentEntry"}
+                            id={props.errDialogID}
                             fontSize={12}
                             color={"red"}
                             paddingTop={1.5}
@@ -209,7 +209,8 @@ const MyPost = (props) => {
                         <Grid container spacing={2}>
                             <Grid item xs>
                                 <TextField
-                                    id="commentField"
+                                    //id="commentField"
+                                    id={props.contentID}
                                     fullWidth
                                     size="small"
                                     label="Add a comment!"
