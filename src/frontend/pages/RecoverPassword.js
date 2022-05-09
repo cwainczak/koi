@@ -100,6 +100,14 @@ const RecoverPassword = (props) => {
                         alignItems: 'center',
                     }}
                 >
+                    <Typography
+                        variant="h3"
+                        color="#e4b109"
+                    >
+                        Koi
+                    </Typography>
+                    <br/>
+                    <br/>
                     <Avatar sx={{m: 1, bgcolor: '#e4b109'}}>
                         <LockOutlinedIcon/>
                     </Avatar>

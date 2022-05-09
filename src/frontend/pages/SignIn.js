@@ -69,19 +69,15 @@ const SignIn = (props) => {
     return (
         <Grid container component="main" sx={{height: '100vh'}}>
             <CssBaseline/>
-            <Grid
-                item
-                xs={false}
-                sm={4}
-                md={7}
-                sx={{
-                    backgroundImage: 'url(https://images.hdqwalls.com/wallpapers/koi-fishes-minimal-4k-vh.jpg)',
-                    backgroundRepeat: 'no-repeat',
-                    backgroundColor: (t) =>
-                        t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                }}
+
+            <Grid item xs={false} sm={4} md={7} sx={{
+                backgroundImage: 'url(https://images.hdqwalls.com/wallpapers/koi-fishes-minimal-4k-vh.jpg)',
+                backgroundRepeat: 'no-repeat',
+                backgroundColor: (t) =>
+                    t.palette.mode === 'light' ? t.palette.grey[50] : t.palette.grey[900],
+                backgroundSize: 'cover',
+                backgroundPosition: 'center',
+            }}
             />
             <Grid item xs={12} sm={8} md={5} component={Paper} elevation={6} square>
                 <Box
@@ -93,6 +89,14 @@ const SignIn = (props) => {
                         alignItems: 'center',
                     }}
                 >
+                    <Typography
+                        variant="h3"
+                        color="#e4b109"
+                    >
+                        Koi
+                    </Typography>
+                    <br/>
+                    <br/>
                     <Avatar sx={{m: 1, bgcolor: '#e4b109'}}>
                         <LockOutlinedIcon/>
                     </Avatar>
