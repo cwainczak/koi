@@ -16,7 +16,7 @@ let posts = [new PostObj("operatingoracle", "On it differed", "On it differed re
 
 
 const Home = () => {
-    const [isOpen, setIsOpen] = React.useState(false);
+    const [isPostDialogOpen, setIsPostDialogOpen] = React.useState(false);
 
     const [successfulPostCreationHidden, setSuccessfulPostCreationHidden] = React.useState(true)
 
@@ -25,11 +25,11 @@ const Home = () => {
     }, [])
 
     const handleOpenDialog = () => {
-        setIsOpen(true);
+        setIsPostDialogOpen(true);
     }
 
     const handleCloseDialog = () => {
-        setIsOpen(false);
+        setIsPostDialogOpen(false);
     }
 
     const handleDialogAction = async (title, content, errDialog) => {
@@ -54,7 +54,7 @@ const Home = () => {
             let isSuccess = await createUserPost(curUser.UserID, entTitle, entContent);
 
             if (isSuccess) {
-                setIsOpen(false);
+                setIsPostDialogOpen(false);
                 setSuccessfulPostCreationHidden(false)
             } else {
                 console.log("Something went wrong!");
@@ -104,7 +104,7 @@ const Home = () => {
                 title="Create Post"
                 button1="Cancel"
                 button2="Post"
-                isOpen={isOpen}
+                isOpen={isPostDialogOpen}
                 handleClose={handleCloseDialog}
                 handleAction={handleDialogAction}
             />
