@@ -35,18 +35,12 @@ async function getPostLikeIDs(postID) {
  *                 -> If unsuccessful: false
  */
 async function likeAction(isLike, postID, userID){
-    console.log("likeAction() isLike: " + isLike)
-    console.log("likeAction() postID: " + postID)
-    console.log("likeAction() userID: " + userID)
     const postLikeIDsStr = await getPostLikeIDs(postID)
-    console.log("likeAction() postLikeIDsStr: " + postLikeIDsStr)
     let newPostLikeIDsStr = (isLike ? (user.performActionOnUserIDsStr(postLikeIDsStr, true, userID)) : (user.performActionOnUserIDsStr(postLikeIDsStr, false, userID)))
-    console.log("likeAction() newPostLikeIDsStr: " + newPostLikeIDsStr)
     if (newPostLikeIDsStr === -1) return false
     const likeCount = await getPostLikeCount(postID)
-    console.log("likeAction() likeCount: " + likeCount)
+    if (likeCount === -1) return false
     const newLikeCount = (isLike ? (likeCount+1) : (likeCount-1))
-    console.log("likeAction() newLikeCount: " + newLikeCount)
     return await database.writeDatabaseValues("Post", "LikeIDs", newPostLikeIDsStr, "PostID", postID) &&
            await database.writeDatabaseValues("Post", "Likes", newLikeCount, "PostID", postID)
 }
@@ -59,6 +53,7 @@ async function likeAction(isLike, postID, userID){
  */
 async function getPostLikeCount(postID){
     const likesRes = await database.readDatabaseValues("Post", ["Likes"], "PostID", postID)
+    if (likesRes === -1) return -1
     const numCountJSON = likesRes[0]
     return numCountJSON.Likes
 }

@@ -123,5 +123,6 @@ exports.likeUserPost = async (req, res) => {
     const userLikedPost = await Post.userLikedPost(postID, curUserID)
     fullResult.likeActionSucceeded = await Post.likeAction(!userLikedPost, postID, curUserID)
     fullResult.likeCount = await Post.getPostLikeCount(postID)
-    console.log(fullResult)
+    const statusCode = (fullResult.likeActionSucceeded === -1 || fullResult.likeCount === -1) ? (500) : (201)
+    res.status(statusCode).send(fullResult)
 }

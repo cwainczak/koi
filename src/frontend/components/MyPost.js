@@ -152,7 +152,7 @@ const MyPost = (props) => {
                 <CardActions>
                     <Button
                         size="small"
-                        color={isLiked ? "primary" : "secondary"}
+                        color={props.isLiked ? "primary" : "secondary"}
                         onClick={handleLikeClick}
                     >
                         Like
