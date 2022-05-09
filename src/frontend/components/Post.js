@@ -172,7 +172,7 @@ const Post = (props) => {
                     <br/>
                     <br/>
                     {/* like counter */}
-                    <Typography variant="body2" component="h1">{props.likes} Likes</Typography>
+                    <Typography variant="body2" component="h1">{props.likes} Like(s)</Typography>
                     <br/>
                     <Divider/>
                 </CardContent>
