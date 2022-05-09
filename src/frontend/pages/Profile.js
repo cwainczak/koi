@@ -21,6 +21,8 @@ import {
 } from "../../backend/UserPost";
 import {deleteUserAcc} from "../../backend/UserAccount";
 import {curUser} from "../../backend/UserObj";
+import {Snackbar} from "@mui/material";
+import {Alert} from "@mui/lab";
 
 
 function shrinkUsername(name) {
@@ -32,16 +34,33 @@ function shrinkUsername(name) {
 const Profile = (props) => {
     const {history} = props;
 
-    const [successfulPostCreationHidden, setSuccessfulPostCreationHidden] = React.useState(true)
+    // popup snackbar alert message
+    const [isSnackbarOpen, setIsSnackbarOpen] = React.useState(false);
+    const [alertSeverity, setAlertSeverity] = React.useState("");
+    const [alertMessage, setAlertMessage] = React.useState("");
+
+    const handleOpenSnackbar = (severity, message) => {
+        setAlertSeverity(severity);
+        setAlertMessage(message);
+        setIsSnackbarOpen(true);
+    };
+
+    const handleCloseSnackbar = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+
+        setIsSnackbarOpen(false);
+    };
+
+
     const [successfulPostDeletionHidden, setSuccessfulPostDeletionHidden] = React.useState(true)
 
     useEffect(() => {
-        setSuccessfulPostCreationHidden(true)
         setSuccessfulPostDeletionHidden(true)
     }, [])
 
     function showDeletionDialog() {
-        setSuccessfulPostCreationHidden(true);
         setSuccessfulPostDeletionHidden(false);
     }
 
@@ -156,14 +175,14 @@ const Profile = (props) => {
             errDialog.textContent = "Content is too long. (max: 1000 characters)";
             errDialog.hidden = false;
         } else {
+            setIsPostDialogOpen(false);
             let isSuccess = await createUserPost(curUser.UserID, entTitle, entContent);
 
             if (isSuccess) {
+                handleOpenSnackbar("success", "Your post has been created!");
                 await init();
-                setIsPostDialogOpen(false);
-                setSuccessfulPostCreationHidden(false);
-                setSuccessfulPostDeletionHidden(true);
             } else {
+                handleOpenSnackbar("warning", "Something went wrong! Your post was not created.");
                 console.log("Something went wrong!");
             }
         }
@@ -215,16 +234,6 @@ const Profile = (props) => {
 
                 <br/>
                 <br/>
-
-                <Typography
-                    id={"newPostMsg"}
-                    fontSize={12}
-                    color={"darkorange"}
-                    textAlign={"center"}
-                    hidden={successfulPostCreationHidden}
-                >
-                    Your post has been created!
-                </Typography>
 
                 <Typography
                     id={"deletePostMsg"}
@@ -289,6 +298,21 @@ const Profile = (props) => {
                 handleClose={handleClosePostDialog}
                 handleAction={handlePostDialogAction}
             />
+
+            <Snackbar
+                open={isSnackbarOpen}
+                autoHideDuration={6000}
+                onClose={handleCloseSnackbar}
+                anchorOrigin={{vertical: 'top', horizontal: "center"}}
+            >
+                <Alert
+                    onClose={handleCloseSnackbar}
+                    severity={alertSeverity}
+                    sx={{width: '100%'}}
+                >
+                    {alertMessage}
+                </Alert>
+            </Snackbar>
         </div>
     );
 };
