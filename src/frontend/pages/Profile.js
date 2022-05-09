@@ -42,14 +42,14 @@ const Profile = (props) => {
         setAlertSeverity(severity);
         setAlertMessage(message);
         setIsSnackbarOpen(true);
-    };
+    }
 
     const handleCloseSnackbar = (event, reason) => {
         if (reason === 'clickaway') {
             return;
         }
         setIsSnackbarOpen(false);
-    };
+    }
 
     const [postOBJs, setPostOBJs] = useState([]);
     const [numFriends, setNumFriends] = useState([]);

@@ -24,14 +24,14 @@ const Home = () => {
         setAlertSeverity(severity);
         setAlertMessage(message);
         setIsSnackbarOpen(true);
-    };
+    }
 
     const handleCloseSnackbar = (event, reason) => {
         if (reason === 'clickaway') {
             return;
         }
         setIsSnackbarOpen(false);
-    };
+    }
 
     // post dialog to create post
     const [isPostDialogOpen, setIsPostDialogOpen] = React.useState(false);
