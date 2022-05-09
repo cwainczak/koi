@@ -149,11 +149,11 @@ const Post = (props) => {
                         <Avatar {...shrinkUsername(props.username)}/>
                     }
                     action={
-                        <IconButton
-                            disabled={props.disableOptionButton}
-                        >
-                            <MoreVertIcon onClick={handleOpenOptionsMenu}/>
-                        </IconButton>
+                        <div hidden={props.disableOptionButton}>
+                            <IconButton>
+                                <MoreVertIcon onClick={handleOpenOptionsMenu}/>
+                            </IconButton>
+                        </div>
                     }
                     title={
                         <Typography gutterBottom variant="body1" component="h1">
