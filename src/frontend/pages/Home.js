@@ -64,9 +64,13 @@ const Home = () => {
 
     return (
         <Container>
-
-            <Typography id={"newPostMsg"} fontSize={12} color={"darkorange"}
-                        textAlign={"center"} hidden={successfulPostCreationHidden}>
+            <Typography
+                id={"newPostMsg"}
+                fontSize={12}
+                color={"darkorange"}
+                textAlign={"center"}
+                hidden={successfulPostCreationHidden}
+            >
                 Your post has been created!
             </Typography>
 
@@ -81,14 +85,16 @@ const Home = () => {
             <br/>
             <br/>
 
-            {posts.map((post) => (
+            {posts.map((post,index) => (
                 <>
                     <Post
+                        key={index}
                         username={post.username}
                         title={post.title}
                         content={post.content}
                         likes={post.likes}
                         comments={post.comments}
+                        disableOptionButton={true}
                     />
                     <br/>
                 </>

@@ -8,7 +8,7 @@ import Grid from "@mui/material/Grid";
 import Button from "@mui/material/Button";
 import ConfirmationDialog from "../components/ConfirmationDialog";
 import PostObj from "../../backend/PostObj";
-import MyPost from "../components/MyPost";
+import Post from "../components/Post";
 import PostDialog from "../components/PostDialog";
 import {removeWhiteSpace, doesContain, UserIDTEXTStrToArr} from "../../backend/Util";
 import {
@@ -249,7 +249,7 @@ const Profile = (props) => {
 
                 {postOBJs.map((postObj, index) => (
                     <>
-                        <MyPost
+                        <Post
                             key={index}
                             contentID={`commentContent${index}`}
                             errDialogID={`errDialog${index}`}
