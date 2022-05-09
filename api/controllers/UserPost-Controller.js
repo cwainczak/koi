@@ -120,7 +120,8 @@ exports.likeUserPost = async (req, res) => {
     }
     const postID = req.body.postID
     const curUserID = req.body.curUserID
-
-    const databaseValTest = await Post.userLikedPost(postID, curUserID)
-    console.log(databaseValTest)
+    const userLikedPost = await Post.userLikedPost(postID, curUserID)
+    fullResult.likeActionSucceeded = await Post.likeAction(!userLikedPost, postID, curUserID)
+    fullResult.likeCount = await Post.getPostLikeCount(postID)
+    console.log(fullResult)
 }

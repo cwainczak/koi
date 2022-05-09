@@ -1,4 +1,5 @@
 const database = require("./Database");
+const {doesContain, removeElementByVal} = require("./Util");
 const DBConn = database.conn
 
 function getUserFromID(userID) {
@@ -63,10 +64,26 @@ function cleanUserIDsStr(UserIDsSTR){
     return UserIDsSTR
 }
 
+/**
+ * Helper method to perform an action, either Add or Remove, on a UserIDs String (e.g. ,1,3,4), such as FriendIDs in the User table
+ * @param userIDsStr -> The String we are performing the Action on
+ * @param isAdd -> True if this action is an addition of the UserIDToUpdate; False if this action is a removal
+ * @param userIDToUpdate -> The UserID value that we are taking the action on (addition: add UserID to UserIDsStr; removal: remove UserID from UserIDsStr)
+ * @returns -> If successful: The new updated String
+ *          -> If unsuccessful: -1
+ */
+function performActionOnUserIDsStr(userIDsStr, isAdd, userIDToUpdate){
+    let userIDsArr = UserIDTEXTStrToArr(userIDsStr)
+    if ((userIDsArr.length === 0 && !isAdd) || (!isAdd && !doesContain(userIDsArr, userIDToUpdate))) return -1
+    isAdd ? (userIDsArr.push(userIDToUpdate)) : (userIDsArr = removeElementByVal(userIDsArr, userIDToUpdate))
+    return UserIDArrToTEXTStr(userIDsArr)
+}
+
 module.exports = {
     getUserFromID,
     getUserIDFromUsername,
     UserIDTEXTStrToArr,
     UserIDArrToTEXTStr,
-    cleanUserIDsStr
+    cleanUserIDsStr,
+    performActionOnUserIDsStr
 }

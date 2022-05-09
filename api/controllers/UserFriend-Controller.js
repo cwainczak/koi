@@ -144,8 +144,6 @@ exports.denyFriendReq = async (req, res) => {
 exports.removeFriend = async (req, res) => {
     console.log("in remove friend")
     const curUserID = req.body.curUserID
-    //const friendUsername = req.friendUsername
-    //const friendID = await getUserIDFromUsername(friendUsername)
     const friendID = req.body.friendID
     const success = await updateFriendStatus(curUserID, friendID, true, false) &&
                     await updateFriendStatus(friendID, curUserID, true, false)
