@@ -58,7 +58,7 @@ exports.checkRegUserData = async (req, res) => {
             if (usernameQueryRes.length >= 1) {
                 fullResult.usernameTaken = true;
             }
-            res.status(201).json(fullResult);
+            res.status(200).json(fullResult);
         }
     })
 }
