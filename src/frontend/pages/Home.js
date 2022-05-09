@@ -143,6 +143,7 @@ const Home = () => {
                         likePost={clickLike}
                         init={init}
                         isLiked={postObj.isLiked}
+                        disableOptionButton={true}
                     />
                     <br/>
                 </>
