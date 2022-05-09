@@ -21,8 +21,7 @@ import {
 } from "../../backend/UserPost";
 import {deleteUserAcc} from "../../backend/UserAccount";
 import {curUser} from "../../backend/UserObj";
-import {Snackbar} from "@mui/material";
-import {Alert} from "@mui/lab";
+import {Snackbar, Alert} from "@mui/material";
 
 
 function shrinkUsername(name) {
