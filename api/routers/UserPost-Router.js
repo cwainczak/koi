@@ -11,7 +11,10 @@ const router = express.Router()
 router.post("/add", userPostController.addUserPost);
 
 // endpoint for the action of getting user's posts
-router.get("/getPosts", userPostController.getPosts);
+router.get("/getUsersPosts", userPostController.getUsersPosts);
+
+// endpoint for the action of getting a user's friend's posts (for the feed)
+router.get("/getUserFrdsPosts", userPostController.getUserFriendsPosts);
 
 // endpoint for the action of getting post's comments
 router.get("/getPostComments", userPostController.getPostComments);

@@ -3,6 +3,21 @@ const database = require("./Database");
 const {doesContain} = require("./Util");
 
 /**
+ * A function to get posts from an array of UserIDs
+ * @param userIDs -> An array of UserIDs, determining what Posts we are returning
+ * @return {Promise<number>} -> If successful: An array of Posts, with each Post represented by a JSON
+ *                           -> If unsuccessful: -1
+ */
+async function getPostsByUserIDs(userIDs){
+    if (userIDs === null || userIDs.length === 0) return -1
+    const userIDsStr = user.cleanUserIDsStr(user.UserIDArrToTEXTStr(userIDs))
+    const query = `SELECT p.PostID, u.Username, p.Title, p.Content, p.Likes, p.LikeIDs FROM Post p JOIN User u ON p.UserID = u.UserID WHERE p.UserID IN (${userIDsStr}) ORDER BY p.PostID DESC`
+    const queryRes = await database.readCustomDatabaseValues(query)
+    if (queryRes === -1) return -1
+    return queryRes
+}
+
+/**
  * A function that returns if a user liked a post or not, based on postID and userID
  * @param postID -> The PostID of the Post that is being checked
  * @param userID -> The UserID of the Post that is being checked
@@ -61,5 +76,6 @@ async function getPostLikeCount(postID){
 module.exports = {
     userLikedPost,
     likeAction,
-    getPostLikeCount
+    getPostLikeCount,
+    getPostsByUserIDs
 }

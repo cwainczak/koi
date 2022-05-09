@@ -54,3 +54,24 @@ export function doesContain(someArr, someValue){
     }
     return false
 }
+
+/**
+ * A function to shuffle an array. Used to populate a shuffled feed.
+ * @param someArr -> The array being shuffled
+ * @returns If successful -> A shuffled array
+ *          If unsuccessful -> -1
+ */
+export function shuffleArray(someArr){
+    if (someArr === null) return -1
+    if (someArr.length <= 1) return someArr
+    let currentIndex = someArr.length,  randomIndex;
+    // While there remain elements to shuffle.
+    while (currentIndex !== 0) {
+        // Pick a remaining element.
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+        // And swap it with the current element.
+        [someArr[currentIndex], someArr[randomIndex]] = [someArr[randomIndex], someArr[currentIndex]];
+    }
+    return someArr;
+}

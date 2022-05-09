@@ -1,8 +1,7 @@
 const database = require("../Database")
 const DBConn = database.conn
-const User = require("../User")
-const Util = require("../Util")
-const Post = require("../Post")
+const user = require("../User")
+const post = require("../Post")
 
 // controller function for POST request to '/userPost/add'
 exports.addUserPost = async (req, res) => {
@@ -25,8 +24,8 @@ exports.addUserPost = async (req, res) => {
     })
 }
 
-// controller function for GET request to '/userPost/getPosts'
-exports.getPosts = async (req, res) => {
+// controller function for GET request to '/userPost/getUsersPosts'
+exports.getUsersPosts = async (req, res) => {
     let userID = req.query.userID;
 
     const query = "SELECT * FROM Post Where UserID = " + userID + ";"
@@ -46,6 +45,23 @@ exports.getPosts = async (req, res) => {
             res.status(201).json(result);
         }
     })
+}
+
+// controller function for GET request to '/userPost/getUserFrdsPosts'
+exports.getUserFriendsPosts = async (req, res) => {
+    const userID = req.query.userID
+    const userFriends = await user.getUserFriendsByUserID(parseInt(userID, 10))
+    if (userFriends === -1){
+        res.status(500).send([])
+        return
+    }
+    const DBRes = await post.getPostsByUserIDs(userFriends)
+    if (DBRes === -1){
+        res.status(500).send([])
+        return
+    }
+    console.log(DBRes)
+    res.status(200).send(DBRes)
 }
 
 // controller function for GET request to '/userPost/getPostComments'
@@ -141,9 +157,9 @@ exports.likeUserPost = async (req, res) => {
     }
     const postID = req.body.postID
     const curUserID = req.body.curUserID
-    const userLikedPost = await Post.userLikedPost(postID, curUserID)
-    fullResult.likeActionSucceeded = await Post.likeAction(!userLikedPost, postID, curUserID)
-    fullResult.likeCount = await Post.getPostLikeCount(postID)
+    const userLikedPost = await post.userLikedPost(postID, curUserID)
+    fullResult.likeActionSucceeded = await post.likeAction(!userLikedPost, postID, curUserID)
+    fullResult.likeCount = await post.getPostLikeCount(postID)
     const statusCode = (fullResult.likeActionSucceeded === -1 || fullResult.likeCount === -1) ? (500) : (201)
     res.status(statusCode).send(fullResult)
 }
@@ -161,7 +177,7 @@ exports.getNumFriends = async (req, res) => {
     const DBRes = await database.readDatabaseValues("User", ["FriendIDs"], "UserID", userID);
     const userJSON = DBRes[0];
     const friendIDs = userJSON.FriendIDs;
-    const result = User.UserIDTEXTStrToArr(friendIDs).length;
+    const result = user.UserIDTEXTStrToArr(friendIDs).length;
     console.log(result)
     res.status(200).send({numFriends: result});
 }
