@@ -49,10 +49,8 @@ const Profile = (props) => {
         if (reason === 'clickaway') {
             return;
         }
-
         setIsSnackbarOpen(false);
     };
-
 
     const [postOBJs, setPostOBJs] = useState([]);
     const [numFriends, setNumFriends] = useState([]);
