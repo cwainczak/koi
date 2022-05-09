@@ -177,86 +177,83 @@ const Profile = (props) => {
     }
 
     return (
-        <div>
-            <Container>
+        <Container>
+            <Box sx={{display: "flex", flexDirection: "column", margin: "auto", alignItems: "center"}}>
+                <CardContent>
+                    <Avatar
+                        {...shrinkUsername(curUser.Username)}
+                        sx={{width: 100, height: 100, bgcolor: "#e4b109", fontSize: "45px"}}
+                    />
+                </CardContent>
+
+                <Typography variant="h3">{curUser.Username}</Typography>
+
                 <Box sx={{display: "flex", flexDirection: "column", margin: "auto", alignItems: "center"}}>
-                    <CardContent>
-                        <Avatar
-                            {...shrinkUsername(curUser.Username)}
-                            sx={{width: 100, height: 100, bgcolor: "#e4b109", fontSize: "45px"}}
-                        />
-                    </CardContent>
-
-                    <Typography variant="h3">{curUser.Username}</Typography>
-
-                    <Box sx={{display: "flex", flexDirection: "column", margin: "auto", alignItems: "center"}}>
-                        <Grid container spacing={{xs: 2, md: 3}} columns={{xs: 4, sm: 8, md: 12}}>
-                            <Grid item xs="auto">
-                                <Typography variant="subtitle1">{numFriends} friend(s)</Typography>
-                            </Grid>
-                            <Grid item xs="auto">
-                                <Typography variant="subtitle1">|</Typography>
-                            </Grid>
-                            <Grid item xs="auto">
-                                <Typography variant="subtitle1">{postOBJs.length} post(s)</Typography>
-                            </Grid>
-                            <Grid item xs="auto">
-                                <Typography variant="subtitle1">|</Typography>
-                            </Grid>
-                            <Grid item xs="auto">
-                                <Typography variant="subtitle1">{numComments.length} comment(s)</Typography>
-                            </Grid>
+                    <Grid container spacing={{xs: 2, md: 3}} columns={{xs: 4, sm: 8, md: 12}}>
+                        <Grid item xs="auto">
+                            <Typography variant="subtitle1">{numFriends} friend(s)</Typography>
                         </Grid>
-                    </Box>
-
-                    <br/>
-
-                    <Button
-                        variant="outlined"
-                        color="error"
-                        onClick={handelOpenConfirmationDialog}
-                    >
-                        Delete Account
-                    </Button>
+                        <Grid item xs="auto">
+                            <Typography variant="subtitle1">|</Typography>
+                        </Grid>
+                        <Grid item xs="auto">
+                            <Typography variant="subtitle1">{postOBJs.length} post(s)</Typography>
+                        </Grid>
+                        <Grid item xs="auto">
+                            <Typography variant="subtitle1">|</Typography>
+                        </Grid>
+                        <Grid item xs="auto">
+                            <Typography variant="subtitle1">{numComments.length} comment(s)</Typography>
+                        </Grid>
+                    </Grid>
                 </Box>
 
                 <br/>
-                <br/>
 
                 <Button
-                    fullWidth
-                    variant="contained"
-                    onClick={handleOpenPostDialog}
+                    variant="outlined"
+                    color="error"
+                    onClick={handelOpenConfirmationDialog}
                 >
-                    Create New Post
+                    Delete Account
                 </Button>
+            </Box>
 
-                <br/>
-                <br/>
+            <br/>
+            <br/>
 
-                {postOBJs.map((postObj, index) => (
-                    <>
-                        <Post
-                            key={index}
-                            contentID={`commentContent${index}`}
-                            errDialogID={`errDialog${index}`}
-                            postID={postObj.postID}
-                            username={postObj.username}
-                            title={postObj.title}
-                            content={postObj.content}
-                            likes={postObj.likes}
-                            comments={postObj.comments}
-                            likePost={clickLike}
-                            init={init}
-                            showDeletionDialog={handleOpenSnackbar}
-                            isLiked={postObj.isLiked}
-                        />
-                        <br/>
-                    </>
-                ))
-                }
+            <Button
+                fullWidth
+                variant="contained"
+                onClick={handleOpenPostDialog}
+            >
+                Create New Post
+            </Button>
 
-            </Container>
+            <br/>
+            <br/>
+
+            {postOBJs.map((postObj, index) => (
+                <>
+                    <Post
+                        key={index}
+                        contentID={`commentContent${index}`}
+                        errDialogID={`errDialog${index}`}
+                        postID={postObj.postID}
+                        username={postObj.username}
+                        title={postObj.title}
+                        content={postObj.content}
+                        likes={postObj.likes}
+                        comments={postObj.comments}
+                        likePost={clickLike}
+                        init={init}
+                        showDeletionDialog={handleOpenSnackbar}
+                        isLiked={postObj.isLiked}
+                    />
+                    <br/>
+                </>
+            ))
+            }
 
             <ConfirmationDialog
                 isOpen={isConfirmationDialogOpen}
@@ -292,7 +289,7 @@ const Profile = (props) => {
                     {alertMessage}
                 </Alert>
             </Snackbar>
-        </div>
+        </Container>
     );
 };
 
