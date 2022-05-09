@@ -77,7 +77,7 @@ const SignUp = (props) => {
                     history.push("/SignIn")
                 } else {
                     errDialog.hidden = false
-                    errDialog.textContent = "Email already in use. Please reset password."
+                    errDialog.textContent = "Something went wrong!"
                     // disable button
                     handleLoading();
                 }
