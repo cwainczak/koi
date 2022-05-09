@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import Post from "../components/Post";
