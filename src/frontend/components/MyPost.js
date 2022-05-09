@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import Button from "@mui/material/Button";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
@@ -18,6 +18,8 @@ import Menu from "@mui/material/Menu";
 import ConfirmationDialog from "./ConfirmationDialog";
 import PostDialog from "./PostDialog";
 import {removeWhiteSpace} from "../../backend/Util";
+import {curUser} from "../../backend/UserObj";
+import {createPostComment, deletePost} from "../../backend/UserPost";
 
 
 function shrinkUsername(name) {
@@ -45,6 +47,7 @@ const MyPost = (props) => {
     const handleLikeClick = () => {
         setIsLiked(!isLiked);
         // todo - increment like count for post
+        props.likePost(props.postID)
     }
 
     // comments
@@ -54,8 +57,33 @@ const MyPost = (props) => {
         setShowComments(prev => !prev)
     }
 
-    const handleSubmitCommentClick = () => {
-        // todo - add comment to post
+    const handleSubmitCommentClick = async () => {
+        let entContent = removeWhiteSpace(document.getElementById(props.contentID).value);
+        let errDialog = document.getElementById(props.errDialogID);
+
+        console.log({
+            postID: props.postID,
+            commenterID: curUser.UserID,
+            content: entContent
+        });
+
+        if (entContent === "") {
+            errDialog.textContent = "Comment is required.";
+            errDialog.hidden = false;
+        } else if (entContent.length > 1000) {
+            errDialog.textContent = "Comment is too long. (max: 1000 characters)";
+            errDialog.hidden = false;
+        } else {
+            let isSuccess = await createPostComment(props.postID, curUser.UserID, entContent);
+
+            if (isSuccess) {
+                errDialog.hidden = true;
+                document.getElementById(props.contentID).value = "";
+                props.init();
+            } else {
+                console.log("Something went wrong!")
+            }
+        }
     }
 
     // options menu (update/delete post)
@@ -81,9 +109,16 @@ const MyPost = (props) => {
         setConfirmationDialogIsOpen(false);
     }
 
-    const handelConfirmationDialogAction = () => {
-        setConfirmationDialogIsOpen(false);
-        // todo - delete post
+    const handelConfirmationDialogAction = async () => {
+        let isSuccess = await deletePost(props.postID);
+
+        if (isSuccess) {
+            props.init();
+            setConfirmationDialogIsOpen(false);
+            props.showDeletionDialog();
+        } else {
+            console.log("Something went wrong!");
+        }
     }
 
     // post dialog to update post
@@ -160,10 +195,23 @@ const MyPost = (props) => {
                 {/* comments section */}
                 {showComments &&
                     <CardContent>
+                        {/* error message */}
+                        <Typography
+                            id={props.errDialogID}
+                            fontSize={12}
+                            color={"red"}
+                            paddingTop={1.5}
+                            textAlign={"center"}
+                            hidden={true}
+                        >
+                            Comment is required.
+                        </Typography>
                         {/* comment text-field and button */}
                         <Grid container spacing={2}>
                             <Grid item xs>
                                 <TextField
+                                    //id="commentField"
+                                    id={props.contentID}
                                     fullWidth
                                     size="small"
                                     label="Add a comment!"
@@ -180,14 +228,14 @@ const MyPost = (props) => {
                             </Grid>
                         </Grid>
                         {/* comments */}
-                        {props.comments.map((comment) => (
-                            <Grid>
+                        {props.comments.map((comment, index) => (
+                            <Grid key={index}>
                                 <br/>
                                 <Typography variant="body1" component="h1">
-                                    {comment[0]}
+                                    {comment.Username}
                                 </Typography>
                                 <Typography variant="body2" component="h1">
-                                    {comment[1]}
+                                    {comment.Content}
                                 </Typography>
                             </Grid>
                         ))}

@@ -9,7 +9,7 @@ const helmet = require('helmet')
 const cors = require('cors')
 
 // Import routers
-const userLoginRouter = require('./routers/UserLogin-Router')
+const userAccountRouter = require('./routers/UserAccount-Router')
 const userFriendRouter = require("./routers/UserFriend-Router")
 const userPostRouter = require('./routers/UserPost-Router')
 const userUtilRouter = require("./routers/UserUtil-Router")
@@ -39,7 +39,7 @@ if (process.env.NODE_ENV && process.env.NODE_ENV !== 'development') {
 // ! Note:
 // '/users' will prefix all post routes
 // with '/users' => '/all' will become '/users/all'
-app.use('/userLogin', userLoginRouter)
+app.use('/userAccount', userAccountRouter)
 app.use("/userFriend", userFriendRouter)
 app.use('/userPost', userPostRouter)
 app.use("/user", userUtilRouter)

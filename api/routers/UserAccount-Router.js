@@ -2,7 +2,7 @@
 const express = require('express')
 
 // Import users controller
-const usersController = require('../controllers/UserLogin-Controller')
+const usersController = require('../controllers/UserAccount-Controller')
 
 // Create express router
 const router = express.Router()
@@ -21,6 +21,9 @@ router.get("/verCode", usersController.getVerificationCodeData)
 
 // Endpoint for the action of resetting the password
 router.patch("/resetPass", usersController.resetPassword)
+
+// Endpoint for the action of deleting the user
+router.delete("/delete", usersController.deleteUser);
 
 // Export router
 module.exports = router

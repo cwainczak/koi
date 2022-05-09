@@ -37,6 +37,7 @@ const Post = (props) => {
     const handleLikeClick = () => {
         setFlag(!flag);
         // todo - increment like count for ths post
+        props.likePost(props.postID)
     };
 
     const handleCommentsClick = () => {

@@ -45,12 +45,44 @@ function removeElementByVal(someArr, someValue){
     return newArr
 }
 
+/**
+ * Returns a value that represents an Array as a String with values separated by a ','
+ * @param someArr -> The Array we are representing as a String
+ */
+function arrToString(someArr){
+    let result = ""
+    for (let i = 0; i < someArr.length; i++){
+        result += `${someArr[i]}`
+        if (i !== someArr.length-1) result += ","
+    }
+    return result
+}
+
+/**
+ * Returns true if value is a number data type, otherwise returns false
+ * @param value -> Any value
+ */
+function isANumber(value){
+    return (typeof 1 === typeof value)
+}
+
+/**
+ * Returns true if value is a String data type, otherwise returns false
+ * @param value -> Any value
+ */
+function isAString(value){
+    return (typeof "someString" === typeof value)
+}
+
 module.exports = {
     hashString,
     compareStringToHash,
     genPassCode,
     doesContain,
-    removeElementByVal
+    removeElementByVal,
+    arrToString,
+    isAString,
+    isANumber
 }
 
 

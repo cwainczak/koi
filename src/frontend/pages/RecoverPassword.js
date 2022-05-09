@@ -11,7 +11,7 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
 import {removeWhiteSpace, validateEmail} from "../../backend/Util";
-import {sendPasswordCode} from "../../backend/UserLogin";
+import {sendPasswordCode} from "../../backend/UserAccount";
 
 
 const RecoverPassword = (props) => {

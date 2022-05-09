@@ -10,7 +10,7 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
 import {removeWhiteSpace} from "../../backend/Util";
-import {resetPassword} from "../../backend/UserLogin";
+import {resetPassword} from "../../backend/UserAccount";
 
 
 const ResetPassword = (props) => {

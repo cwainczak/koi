@@ -1,6 +1,6 @@
 
 const Util = require("../Util")
-const DBConn = require("../Database")
+const DBConn = require("../Database").conn
 
 // Controller function for POST request to '/users/add'
 exports.addUserData = async (req, res) => {
