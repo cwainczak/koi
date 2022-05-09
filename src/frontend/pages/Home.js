@@ -85,14 +85,16 @@ const Home = () => {
             <br/>
             <br/>
 
-            {posts.map((post) => (
+            {posts.map((post,index) => (
                 <>
                     <MyPost
+                        key={index}
                         username={post.username}
                         title={post.title}
                         content={post.content}
                         likes={post.likes}
                         comments={post.comments}
+                        disableOptionButton={true}
                     />
                     <br/>
                 </>

@@ -149,7 +149,9 @@ const MyPost = (props) => {
                         <Avatar {...shrinkUsername(props.username)}/>
                     }
                     action={
-                        <IconButton>
+                        <IconButton
+                            disabled={props.disableOptionButton}
+                        >
                             <MoreVertIcon onClick={handleOpenOptionsMenu}/>
                         </IconButton>
                     }
