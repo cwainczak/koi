@@ -242,7 +242,7 @@ exports.deleteUser = async (req, res) => {
             if (userQueryRes.length >= 1) {
                 fullResult.userDeleted = true;
             }
-            res.status(201).json(fullResult);
+            res.status(200).json(fullResult);
         }
     })
 }
