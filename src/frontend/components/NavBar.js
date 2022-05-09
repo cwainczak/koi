@@ -14,11 +14,10 @@ import MenuItem from "@mui/material/MenuItem";
 import {withRouter} from "react-router-dom";
 import Home from "../pages/Home";
 import Friends from "../pages/Friends";
-import Chats from "../pages/Chats";
 import Profile from "../pages/Profile";
 
 
-const pages = ['Home', 'Friends', 'Chats'];
+const pages = ['Home', 'Friends'];
 const settings = ['Profile', 'Logout'];
 
 const NavBar = (props) => {
@@ -59,7 +58,7 @@ const NavBar = (props) => {
                         sx={{mr: 2, display: {xs: 'none', md: 'flex'}}}
                         color="#e4b109"
                     >
-                       Koi
+                        Koi
                     </Typography>
 
                     <Box sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}>
@@ -105,7 +104,7 @@ const NavBar = (props) => {
                         sx={{flexGrow: 1, display: {xs: 'flex', md: 'none'}}}
                         color="#e4b109"
                     >
-                       Koi
+                        Koi
                     </Typography>
                     <Box sx={{flexGrow: 1, display: {xs: 'none', md: 'flex'}}}>
                         {pages.map((page) => (
