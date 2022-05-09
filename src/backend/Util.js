@@ -33,3 +33,24 @@ export const sendEmail = async (someEmailJSData) => {
             return err
         })
 }
+
+/**
+ * Helper method to cast UserID String to UserID Array
+ * @param UserIDsSTR -> A String matching the format of UserID TEXTs in the User & Post table
+ * @returns {*[]|*} -> An array corresponding to the UserIDStr
+ */
+export function UserIDTEXTStrToArr(UserIDsSTR){
+    console.log(UserIDsSTR)
+    if (UserIDsSTR === "") return []
+    return UserIDsSTR.split(",").slice(1)
+}
+
+// checks if an array contains some value, regardless of type
+export function doesContain(someArr, someValue){
+    for (let i = 0; i < someArr.length; i++){
+        //console.log("someArr[${i}]: " + someArr[i] + " and is of type " + typeof(someArr))
+        //console.log("someValue[${i}]: " + someValue + " and is of type " + typeof(someValue))
+        if (someArr[i] == someValue) return true
+    }
+    return false
+}

@@ -10,7 +10,7 @@ import ConfirmationDialog from "../components/ConfirmationDialog";
 import PostObj from "../../backend/PostObj";
 import MyPost from "../components/MyPost";
 import PostDialog from "../components/PostDialog";
-import {removeWhiteSpace} from "../../backend/Util";
+import {removeWhiteSpace, doesContain, UserIDTEXTStrToArr} from "../../backend/Util";
 import {
     createUserPost,
     getUserPosts,
@@ -49,6 +49,19 @@ const Profile = (props) => {
     const [numFriends, setNumFriends] = useState([]);
     const [numComments, setNumComments] = useState([]);
 
+    function updateLikeCount(postID, likeCount){
+        let stateUpdateArr = []
+        for (let i = 0; i < postOBJs.length; i++){
+            let curPost = postOBJs[i]
+            if (curPost.postID === postID){
+                curPost.likes = likeCount
+                curPost.isLiked = !curPost.isLiked
+            }
+            stateUpdateArr.push(curPost)
+        }
+        setPostOBJs(stateUpdateArr)
+    }
+
     async function init() {
         let stateUpdateArr = [];
         const posts = await fetchPosts();
@@ -60,7 +73,9 @@ const Profile = (props) => {
             let comments = await fetchComments(curPost.PostID);
             console.log(comments);
 
-            let curPostOBJ = new PostObj(curPost.PostID, curUser.Username, curPost.Title, curPost.Content, curPost.Likes, comments);
+            let postIsLiked = doesContain(UserIDTEXTStrToArr(curPost.LikeIDs), curUser.UserID)
+
+            let curPostOBJ = new PostObj(curPost.PostID, curUser.Username, curPost.Title, curPost.Content, curPost.Likes, comments, postIsLiked);
 
             stateUpdateArr.push(curPostOBJ);
         }
@@ -85,6 +100,8 @@ const Profile = (props) => {
 
     async function clickLike(postID) {
         const result = await likePost(postID, curUser.UserID)
+        const finalResult = !result || !result.likeActionSucceeded
+        finalResult ? console.log("Something went wrong!") : updateLikeCount(postID, result.likeCount)
     }
 
     // confirmation dialog to delete account
@@ -245,6 +262,7 @@ const Profile = (props) => {
                             likePost={clickLike}
                             init={init}
                             showDeletionDialog={showDeletionDialog}
+                            isLiked={postObj.isLiked}
                         />
                         <br/>
                     </>

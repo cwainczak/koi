@@ -1,12 +1,13 @@
 
 export default class PostObj {
-    constructor(postID, username, title, content, likes, comments) {
+    constructor(postID, username, title, content, likes, comments, isLiked) {
         this.postID = postID;
         this.username = username;
         this.title = title;
         this.content = content;
         this.likes = likes
         this.comments = comments;
+        this.isLiked = isLiked
     }
 
     toString() {
@@ -15,7 +16,8 @@ export default class PostObj {
             this.title + "\n" +
             this.content + "\n" +
             this.likes + "\n" +
-            this.comments
+            this.comments + "\n" +
+            this.isLiked
     }
 
 }

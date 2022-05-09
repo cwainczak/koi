@@ -2,6 +2,7 @@ const database = require("../Database")
 const DBConn = database.conn
 const User = require("../User")
 const Util = require("../Util")
+const Post = require("../Post")
 
 // controller function for POST request to '/userPost/add'
 exports.addUserPost = async (req, res) => {
@@ -140,8 +141,11 @@ exports.likeUserPost = async (req, res) => {
     }
     const postID = req.body.postID
     const curUserID = req.body.curUserID
-    const databaseValTest = await database.getDatabaseValues("User", ["UserID", "Username", "FriendIDs"], "UserID", 3)
-    console.log(databaseValTest)
+    const userLikedPost = await Post.userLikedPost(postID, curUserID)
+    fullResult.likeActionSucceeded = await Post.likeAction(!userLikedPost, postID, curUserID)
+    fullResult.likeCount = await Post.getPostLikeCount(postID)
+    const statusCode = (fullResult.likeActionSucceeded === -1 || fullResult.likeCount === -1) ? (500) : (201)
+    res.status(statusCode).send(fullResult)
 }
 
 // controller function for the GET request at endpoint "/userPost/numComments"
