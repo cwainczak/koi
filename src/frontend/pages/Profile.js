@@ -33,10 +33,17 @@ const Profile = (props) => {
     const {history} = props;
 
     const [successfulPostCreationHidden, setSuccessfulPostCreationHidden] = React.useState(true)
+    const [successfulPostDeletionHidden, setSuccessfulPostDeletionHidden] = React.useState(true)
 
     useEffect(() => {
         setSuccessfulPostCreationHidden(true)
+        setSuccessfulPostDeletionHidden(true)
     }, [])
+
+    function showDeletionDialog() {
+        setSuccessfulPostCreationHidden(true);
+        setSuccessfulPostDeletionHidden(false);
+    }
 
     const [postOBJs, setPostOBJs] = useState([]);
     const [numFriends, setNumFriends] = useState([]);
@@ -137,7 +144,8 @@ const Profile = (props) => {
             if (isSuccess) {
                 await init();
                 setIsPostDialogOpen(false);
-                setSuccessfulPostCreationHidden(false)
+                setSuccessfulPostCreationHidden(false);
+                setSuccessfulPostDeletionHidden(true);
             } else {
                 console.log("Something went wrong!");
             }
@@ -201,6 +209,16 @@ const Profile = (props) => {
                     Your post has been created!
                 </Typography>
 
+                <Typography
+                    id={"deletePostMsg"}
+                    fontSize={12}
+                    color={"darkorange"}
+                    textAlign={"center"}
+                    hidden={successfulPostDeletionHidden}
+                >
+                    Your post has been deleted!
+                </Typography>
+
                 <Button
                     fullWidth
                     variant="contained"
@@ -226,6 +244,7 @@ const Profile = (props) => {
                             comments={postObj.comments}
                             likePost={clickLike}
                             init={init}
+                            showDeletionDialog={showDeletionDialog}
                         />
                         <br/>
                     </>

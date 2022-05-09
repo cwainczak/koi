@@ -115,6 +115,7 @@ const MyPost = (props) => {
         if (isSuccess) {
             props.init();
             setConfirmationDialogIsOpen(false);
+            props.showDeletionDialog();
         } else {
             console.log("Something went wrong!");
         }
