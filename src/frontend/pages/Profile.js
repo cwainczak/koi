@@ -49,11 +49,11 @@ const Profile = (props) => {
     const [numFriends, setNumFriends] = useState([]);
     const [numComments, setNumComments] = useState([]);
 
-    function updateLikeCount(postID, likeCount){
+    function updateLikeCount(postID, likeCount) {
         let stateUpdateArr = []
-        for (let i = 0; i < postOBJs.length; i++){
+        for (let i = 0; i < postOBJs.length; i++) {
             let curPost = postOBJs[i]
-            if (curPost.postID === postID){
+            if (curPost.postID === postID) {
                 curPost.likes = likeCount
                 curPost.isLiked = !curPost.isLiked
             }
@@ -176,7 +176,7 @@ const Profile = (props) => {
                     <CardContent>
                         <Avatar
                             {...shrinkUsername(curUser.Username)}
-                            sx={{width: 100, height: 100, bgcolor: "#e4b109"}}
+                            sx={{width: 100, height: 100, bgcolor: "#e4b109", fontSize: "45px"}}
                         />
                     </CardContent>
 
