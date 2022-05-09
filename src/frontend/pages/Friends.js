@@ -72,7 +72,7 @@ const Friends = () => {
     // initialize all friend requests with useEffect hook
     const [friendRequests, setFriendRequests] = useState([])
 
-    async function init(){
+    async function init() {
         await curUser.refreshInstance()
         await fetchCurrentFriends()
         await fetchFriendRequests()
@@ -96,13 +96,13 @@ const Friends = () => {
         let stateUpdateArr = []
         for (let i = 0; i < allFriendReqs.length; i++) {
             let curFriendReq = allFriendReqs[i]
-            stateUpdateArr.push(new FriendObj(curFriendReq.UserID ,curFriendReq.Username, false))
+            stateUpdateArr.push(new FriendObj(curFriendReq.UserID, curFriendReq.Username, false))
         }
         console.log(allFriendReqs)
         setFriendRequests(stateUpdateArr)
     }
 
-    useEffect (init, [])
+    useEffect(init, [])
 
     const handleFindFriends = async (searchText) => {
         await init()
@@ -119,7 +119,7 @@ const Friends = () => {
         console.log(searchRes)
         // This array holds the search-result FriendObj objects so we can change the state of findFriends array
         let stateUpdateArr = []
-        for (let i = 0; i < searchRes.length; i++){
+        for (let i = 0; i < searchRes.length; i++) {
             let curFriend = searchRes[i]
             console.log(curFriend.Username, curFriend.disabled)
             stateUpdateArr.push(new FriendObj(curFriend.UserID, curFriend.Username, curFriend.disabled))
@@ -142,7 +142,7 @@ const Friends = () => {
         console.log(searchRes)
         // This array holds the search-result FriendObj objects so we can change the state of searchFriends array
         let stateUpdateArr = []
-        for (let i = 0; i < searchRes.length; i++){
+        for (let i = 0; i < searchRes.length; i++) {
             let curFriend = searchRes[i]
             stateUpdateArr.push(new FriendObj(curFriend.UserID, curFriend.Username, false))
         }
@@ -155,26 +155,25 @@ const Friends = () => {
         console.log(addRes ? "Succeeded" : "Didn't succeed")
         setDialogMsgHid(false)
         // if FR succeeded, disable add button
-        if (addRes){
+        if (addRes) {
             // This array holds the search-result FriendObj objects so we can change the state of searchFriends array
             let stateUpdateArr = []
-            for (let i = 0; i < findFriends.length; i++){
+            for (let i = 0; i < findFriends.length; i++) {
                 let curFriend = findFriends[i]
-                if (curFriend.username === username){
+                if (curFriend.username === username) {
                     curFriend.disabled = true
                 }
                 stateUpdateArr.push(curFriend)
             }
             setFindFriends(stateUpdateArr)
             setDialogMsg(sentFRDialogMsg)
-        }
-        else setDialogMsg(errDialogMsg)
+        } else setDialogMsg(errDialogMsg)
     }
 
     const deleteFriend = async (username) => {
         console.log("in delete friend")
         let friendID = -1
-        for (let i = 0; i < currentFriends.length; i++){
+        for (let i = 0; i < currentFriends.length; i++) {
             let curFriend = currentFriends[i]
             console.log("curFriend username: " + curFriend.username)
             console.log("entered username: " + username + " and is type " + typeof username)
@@ -191,34 +190,32 @@ const Friends = () => {
     const onAcceptFR = async (username) => {
         console.log("onAcceptFR")
         let accFriendUserID = -1
-        for (let i = 0; i < friendRequests.length; i++){
+        for (let i = 0; i < friendRequests.length; i++) {
             let curFriendReq = friendRequests[i]
             if (curFriendReq.username === username) accFriendUserID = curFriendReq.userID
         }
         if (accFriendUserID === -1) return
         const accRes = await acceptFriendRequest(curUser.UserID, accFriendUserID)
         setDialogMsgHid(false)
-        if (accRes){
+        if (accRes) {
             setDialogMsg(accFRDialogMsg)
-        }
-        else setDialogMsg(errDialogMsg)
+        } else setDialogMsg(errDialogMsg)
         await init()
     }
 
     const onDenyFR = async (username) => {
         console.log("onDenyFR")
         let denFriendUserID = -1
-        for (let i = 0; i < friendRequests.length; i++){
+        for (let i = 0; i < friendRequests.length; i++) {
             let curFriendReq = friendRequests[i]
             if (curFriendReq.username === username) denFriendUserID = curFriendReq.userID
         }
         if (denFriendUserID === -1) return
         const denRes = await denyFriendRequest(curUser.UserID, denFriendUserID)
         setDialogMsgHid(false)
-        if (denRes){
+        if (denRes) {
             setDialogMsg(denFRDialogMsg)
-        }
-        else setDialogMsg(errDialogMsg)
+        } else setDialogMsg(errDialogMsg)
         await init()
     }
 
@@ -285,7 +282,8 @@ const Friends = () => {
                     </Grid>
                 </TabPanel>
                 <TabPanel>
-                    <SearchField id="searchField" promptText={"Search to find new friends!"} onClick={handleFindFriends}/>
+                    <SearchField id="searchField" promptText={"Search to find new friends!"}
+                                 onClick={handleFindFriends}/>
                     <br/>
                     {/* find friend */}
                     <Grid container rowSpacing={2} columnSpacing={2}>
