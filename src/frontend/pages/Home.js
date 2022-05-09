@@ -1,11 +1,11 @@
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import Post from "../components/Post";
 import PostObj from "../../backend/PostObj";
 import PostDialog from "../components/PostDialog";
-import {removeWhiteSpace} from "../../backend/Util";
-import {createUserPost} from "../../backend/UserPost";
+import {doesContain, removeWhiteSpace, UserIDTEXTStrToArr, shuffleArray} from "../../backend/Util";
+import {createUserPost, getPostComments, getUserFriendsPosts, likePost} from "../../backend/UserPost";
 import {curUser} from "../../backend/UserObj";
 import Typography from "@mui/material/Typography";
 
@@ -20,9 +20,51 @@ const Home = () => {
 
     const [successfulPostCreationHidden, setSuccessfulPostCreationHidden] = React.useState(true)
 
-    useEffect(() => {
+    const [postOBJs, setPostOBJs] = useState([]);
+
+    useEffect(init, [])
+
+    async function init(){
         setSuccessfulPostCreationHidden(true)
-    }, [])
+        await populateFeed()
+    }
+
+    async function populateFeed(){
+        const posts = await getUserFriendsPosts(curUser.UserID)
+        if (posts === -1) console.log("Something went wrong!") //error
+        else if (posts.length === 0) setPostOBJs([])
+        else {
+            let stateUpdateArr = []
+            for (let i = 0; i < posts.length; i++) {
+                let curPost = posts[i];
+                let comments = await getPostComments(curPost.PostID);
+                let postIsLiked = doesContain(UserIDTEXTStrToArr(curPost.LikeIDs), curUser.UserID)
+                console.log(curPost)
+                let curPostOBJ = new PostObj(curPost.PostID, curPost.Username, curPost.Title, curPost.Content, curPost.Likes, comments, postIsLiked);
+                stateUpdateArr.push(curPostOBJ);
+            }
+            setPostOBJs(stateUpdateArr);
+        }
+    }
+
+    async function clickLike(postID) {
+        const result = await likePost(postID, curUser.UserID)
+        const finalResult = !result || !result.likeActionSucceeded
+        finalResult ? console.log("Something went wrong!") : updateLikeCount(postID, result.likeCount)
+    }
+
+    function updateLikeCount(postID, likeCount){
+        let stateUpdateArr = []
+        for (let i = 0; i < postOBJs.length; i++){
+            let curPost = postOBJs[i]
+            if (curPost.postID === postID){
+                curPost.likes = likeCount
+                curPost.isLiked = !curPost.isLiked
+            }
+            stateUpdateArr.push(curPost)
+        }
+        setPostOBJs(stateUpdateArr)
+    }
 
     const handleOpenDialog = () => {
         setIsOpen(true);
@@ -85,20 +127,26 @@ const Home = () => {
             <br/>
             <br/>
 
-            {posts.map((post,index) => (
+            {postOBJs.map((postObj, index) => (
                 <>
                     <Post
                         key={index}
-                        username={post.username}
-                        title={post.title}
-                        content={post.content}
-                        likes={post.likes}
-                        comments={post.comments}
-                        disableOptionButton={true}
+                        contentID={`commentContent${index}`}
+                        errDialogID={`errDialog${index}`}
+                        postID={postObj.postID}
+                        username={postObj.username}
+                        title={postObj.title}
+                        content={postObj.content}
+                        likes={postObj.likes}
+                        comments={postObj.comments}
+                        likePost={clickLike}
+                        init={init}
+                        isLiked={postObj.isLiked}
                     />
                     <br/>
                 </>
-            ))}
+            ))
+            }
 
             <PostDialog
                 title="Create Post"

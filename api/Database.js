@@ -57,6 +57,26 @@ function readDatabaseValues(tableStr, columnNamesStrArr, whereColumn, whereValue
 }
 
 /**
+ * A generic function to fetch database values based on a passed in query
+ * @param query -> The query we are running to fetch database values
+ * @return {Promise<unknown>} -> If successful: The result returned by the database after running the query
+ *                            -> If unsuccessful: -1
+ */
+function readCustomDatabaseValues(query){
+    return new Promise((resolve, reject) => {
+        if (query === null || query.trim() === "") reject(-1)
+        conn.query(query, (err, queryRes) => {
+            if (err != null) {
+                console.log(err)
+                reject(-1)
+            }
+            const result = JSON.parse(JSON.stringify(queryRes))
+            resolve(result)
+        });
+    })
+}
+
+/**
  * Generic Database function to write values to specified table and column
  * @param tableStr -> Name of the table data is written to as a String
  * @param columnToChangeStr -> A String representing the column name of the column being changed
@@ -102,5 +122,6 @@ function writeDatabaseValues(tableStr, columnToChangeStr, newValue, whereColumn,
 module.exports = {
     conn,
     readDatabaseValues,
+    readCustomDatabaseValues,
     writeDatabaseValues
 }

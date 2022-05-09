@@ -1,5 +1,5 @@
 const database = require("./Database");
-const {doesContain, removeElementByVal} = require("./Util");
+const {doesContain, removeElementByVal, isANumber} = require("./Util");
 const DBConn = database.conn
 
 function getUserFromID(userID) {
@@ -27,6 +27,21 @@ function getUserIDFromUsername(username){
             resolve(queryRes[0])
         });
     })
+}
+
+/**
+ * Gets all friends of a User specified by UserID
+ * @param userID -> The UserID of the User we are looking at
+ * @returns -> If successful -> An array of UserIDs of a User's friends
+ */
+async function getUserFriendsByUserID(userID) {
+    if (userID === null || !isANumber(userID) || userID < 0) {
+        console.log("Invalid UserID!")
+        return -1
+    }
+    const DBRes = await database.readDatabaseValues("User", ["FriendIDs"], "UserID", userID)
+    if (DBRes === -1) return -1
+    return UserIDTEXTStrToArr(DBRes[0].FriendIDs)
 }
 
 /**
@@ -85,5 +100,6 @@ module.exports = {
     UserIDTEXTStrToArr,
     UserIDArrToTEXTStr,
     cleanUserIDsStr,
-    performActionOnUserIDsStr
+    performActionOnUserIDsStr,
+    getUserFriendsByUserID
 }
