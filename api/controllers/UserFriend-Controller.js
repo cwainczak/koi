@@ -46,7 +46,6 @@ exports.searchUserData = async (req, res) => {
                 }
             }
             else {
-                console.log("got in here")
                 // filter through query results and only send json with friends who ARE currently added
                 for (let i = 0; i < searchQueryRes.length; i++){
                     let curRes = searchQueryRes[i]
@@ -54,7 +53,7 @@ exports.searchUserData = async (req, res) => {
                     if (isCurFriend) searchRes.push(curRes)
                 }
             }
-            res.status(201).send(searchRes)
+            res.status(200).send(searchRes)
         }
     })
 
