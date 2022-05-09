@@ -144,7 +144,7 @@ exports.likeUserPost = async (req, res) => {
     console.log(databaseValTest)
 }
 
-// controller function for te GET request at endpoint "/userPost/numComments"
+// controller function for the GET request at endpoint "/userPost/numComments"
 exports.getNumComments = async (req, res) => {
     let userID = req.query.userID;
     const result = await database.getDatabaseValues("Comment", ["CommentID"], "CommenterID", userID);
