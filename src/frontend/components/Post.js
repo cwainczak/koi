@@ -251,7 +251,7 @@ const Post = (props) => {
                 open={Boolean(anchorElOptions)}
                 onClose={handleCloseOptionsMenu}
             >
-                <MenuItem onClick={handleOpenPostDialog}>Update</MenuItem>
+                {/*<MenuItem onClick={handleOpenPostDialog}>Update</MenuItem>*/}
                 <MenuItem onClick={handelOpenConfirmationDialog}>Delete</MenuItem>
             </Menu>
 
