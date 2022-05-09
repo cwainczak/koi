@@ -1,7 +1,7 @@
 import React, {useEffect} from "react";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
-import MyPost from "../components/MyPost";
+import Post from "../components/Post";
 import PostObj from "../../backend/PostObj";
 import PostDialog from "../components/PostDialog";
 import {removeWhiteSpace} from "../../backend/Util";
@@ -87,7 +87,7 @@ const Home = () => {
 
             {posts.map((post,index) => (
                 <>
-                    <MyPost
+                    <Post
                         key={index}
                         username={post.username}
                         title={post.title}

@@ -40,7 +40,7 @@ const theme = createTheme({
     }
 });
 
-const MyPost = (props) => {
+const Post = (props) => {
     // likes
     const [isLiked, setIsLiked] = React.useState(false);
 
@@ -280,4 +280,4 @@ const MyPost = (props) => {
     );
 }
 
-export default MyPost;
+export default Post;
