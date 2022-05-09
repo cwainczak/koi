@@ -36,8 +36,7 @@ const RecoverPassword = (props) => {
         if (entEmail === "") {
             errDialog.hidden = false
             errDialog.textContent = "Please enter your email"
-        }
-        else if (validateEmail(entEmail) === null) {
+        } else if (validateEmail(entEmail) === null) {
             errDialog.hidden = false
             errDialog.textContent = "Invalid email address!"
         } else {
@@ -100,6 +99,14 @@ const RecoverPassword = (props) => {
                         alignItems: 'center',
                     }}
                 >
+                    <Typography
+                        variant="h3"
+                        color="#e4b109"
+                    >
+                        Koi
+                    </Typography>
+                    <br/>
+                    <br/>
                     <Avatar sx={{m: 1, bgcolor: '#e4b109'}}>
                         <LockOutlinedIcon/>
                     </Avatar>
@@ -116,9 +123,12 @@ const RecoverPassword = (props) => {
                             name="email"
                             autoFocus
                         />
-                        <Typography id={"invalidCredentialsRecoverPass"} fontSize={12} color={"red"} paddingTop={1.5}
-                                    textAlign={"center"} hidden={true}>
-
+                        <Typography
+                            id={"invalidCredentialsRecoverPass"}
+                            fontSize={12} color={"red"}
+                            paddingTop={1.5}
+                            textAlign={"center"}
+                            hidden={true}>
                         </Typography>
                         <LoadingButton
                             type="submit"

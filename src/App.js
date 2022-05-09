@@ -9,7 +9,6 @@ import RecoverPassword from "./frontend/pages/RecoverPassword";
 import ResetPassword from "./frontend/pages/ResetPassword";
 import Home from "./frontend/pages/Home";
 import Friends from "./frontend/pages/Friends";
-import Chats from "./frontend/pages/Chats";
 import Profile from "./frontend/pages/Profile";
 
 
@@ -51,7 +50,6 @@ const App = () => {
                         <Switch>
                             <Route exact from="/Home" render={props => <Home {...props} />}/>
                             <Route exact from="/Friends" render={props => <Friends {...props} />}/>
-                            <Route exact path="/Chats" render={props => <Chats {...props} />}/>
                             <Route exact path="/Profile" render={props => <Profile {...props} />}/>
                         </Switch>
                     </div>

@@ -21,6 +21,7 @@ import {
 } from "../../backend/UserPost";
 import {deleteUserAcc} from "../../backend/UserAccount";
 import {curUser} from "../../backend/UserObj";
+import {Snackbar, Alert} from "@mui/material";
 
 
 function shrinkUsername(name) {
@@ -32,28 +33,33 @@ function shrinkUsername(name) {
 const Profile = (props) => {
     const {history} = props;
 
-    const [successfulPostCreationHidden, setSuccessfulPostCreationHidden] = React.useState(true)
-    const [successfulPostDeletionHidden, setSuccessfulPostDeletionHidden] = React.useState(true)
+    // popup snackbar alert message
+    const [isSnackbarOpen, setIsSnackbarOpen] = React.useState(false);
+    const [alertSeverity, setAlertSeverity] = React.useState("");
+    const [alertMessage, setAlertMessage] = React.useState("");
 
-    useEffect(() => {
-        setSuccessfulPostCreationHidden(true)
-        setSuccessfulPostDeletionHidden(true)
-    }, [])
+    const handleOpenSnackbar = (severity, message) => {
+        setAlertSeverity(severity);
+        setAlertMessage(message);
+        setIsSnackbarOpen(true);
+    }
 
-    function showDeletionDialog() {
-        setSuccessfulPostCreationHidden(true);
-        setSuccessfulPostDeletionHidden(false);
+    const handleCloseSnackbar = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setIsSnackbarOpen(false);
     }
 
     const [postOBJs, setPostOBJs] = useState([]);
     const [numFriends, setNumFriends] = useState([]);
     const [numComments, setNumComments] = useState([]);
 
-    function updateLikeCount(postID, likeCount){
+    function updateLikeCount(postID, likeCount) {
         let stateUpdateArr = []
-        for (let i = 0; i < postOBJs.length; i++){
+        for (let i = 0; i < postOBJs.length; i++) {
             let curPost = postOBJs[i]
-            if (curPost.postID === postID){
+            if (curPost.postID === postID) {
                 curPost.likes = likeCount
                 curPost.isLiked = !curPost.isLiked
             }
@@ -156,120 +162,97 @@ const Profile = (props) => {
             errDialog.textContent = "Content is too long. (max: 1000 characters)";
             errDialog.hidden = false;
         } else {
+            setIsPostDialogOpen(false);
             let isSuccess = await createUserPost(curUser.UserID, entTitle, entContent);
 
             if (isSuccess) {
+                handleOpenSnackbar("success", "Your post has been created!");
                 await init();
-                setIsPostDialogOpen(false);
-                setSuccessfulPostCreationHidden(false);
-                setSuccessfulPostDeletionHidden(true);
             } else {
+                handleOpenSnackbar("warning", "Something went wrong! Your post was not created.");
                 console.log("Something went wrong!");
             }
         }
     }
 
     return (
-        <div>
-            <Container>
+        <Container>
+            <Box sx={{display: "flex", flexDirection: "column", margin: "auto", alignItems: "center"}}>
+                <CardContent>
+                    <Avatar
+                        {...shrinkUsername(curUser.Username)}
+                        sx={{width: 100, height: 100, bgcolor: "#e4b109", fontSize: "45px"}}
+                    />
+                </CardContent>
+
+                <Typography variant="h3">{curUser.Username}</Typography>
+
                 <Box sx={{display: "flex", flexDirection: "column", margin: "auto", alignItems: "center"}}>
-                    <CardContent>
-                        <Avatar
-                            {...shrinkUsername(curUser.Username)}
-                            sx={{width: 100, height: 100, bgcolor: "#e4b109"}}
-                        />
-                    </CardContent>
-
-                    <Typography variant="h3">{curUser.Username}</Typography>
-
-                    <Box sx={{display: "flex", flexDirection: "column", margin: "auto", alignItems: "center"}}>
-                        <Grid container spacing={{xs: 2, md: 3}} columns={{xs: 4, sm: 8, md: 12}}>
-                            <Grid item xs="auto">
-                                <Typography variant="subtitle1">{numFriends} friend(s)</Typography>
-                            </Grid>
-                            <Grid item xs="auto">
-                                <Typography variant="subtitle1">|</Typography>
-                            </Grid>
-                            <Grid item xs="auto">
-                                <Typography variant="subtitle1">{postOBJs.length} post(s)</Typography>
-                            </Grid>
-                            <Grid item xs="auto">
-                                <Typography variant="subtitle1">|</Typography>
-                            </Grid>
-                            <Grid item xs="auto">
-                                <Typography variant="subtitle1">{numComments.length} comment(s)</Typography>
-                            </Grid>
+                    <Grid container spacing={{xs: 2, md: 3}} columns={{xs: 4, sm: 8, md: 12}}>
+                        <Grid item xs="auto">
+                            <Typography variant="subtitle1">{numFriends} friend(s)</Typography>
                         </Grid>
-                    </Box>
-
-                    <br/>
-
-                    <Button
-                        variant="outlined"
-                        color="error"
-                        onClick={handelOpenConfirmationDialog}
-                    >
-                        Delete Account
-                    </Button>
+                        <Grid item xs="auto">
+                            <Typography variant="subtitle1">|</Typography>
+                        </Grid>
+                        <Grid item xs="auto">
+                            <Typography variant="subtitle1">{postOBJs.length} post(s)</Typography>
+                        </Grid>
+                        <Grid item xs="auto">
+                            <Typography variant="subtitle1">|</Typography>
+                        </Grid>
+                        <Grid item xs="auto">
+                            <Typography variant="subtitle1">{numComments.length} comment(s)</Typography>
+                        </Grid>
+                    </Grid>
                 </Box>
 
                 <br/>
-                <br/>
-
-                <Typography
-                    id={"newPostMsg"}
-                    fontSize={12}
-                    color={"darkorange"}
-                    textAlign={"center"}
-                    hidden={successfulPostCreationHidden}
-                >
-                    Your post has been created!
-                </Typography>
-
-                <Typography
-                    id={"deletePostMsg"}
-                    fontSize={12}
-                    color={"darkorange"}
-                    textAlign={"center"}
-                    hidden={successfulPostDeletionHidden}
-                >
-                    Your post has been deleted!
-                </Typography>
 
                 <Button
-                    fullWidth
-                    variant="contained"
-                    onClick={handleOpenPostDialog}
+                    variant="outlined"
+                    color="error"
+                    onClick={handelOpenConfirmationDialog}
                 >
-                    Create New Post
+                    Delete Account
                 </Button>
+            </Box>
 
-                <br/>
-                <br/>
+            <br/>
+            <br/>
 
-                {postOBJs.map((postObj, index) => (
-                    <>
-                        <Post
-                            key={index}
-                            contentID={`commentContent${index}`}
-                            errDialogID={`errDialog${index}`}
-                            postID={postObj.postID}
-                            username={postObj.username}
-                            title={postObj.title}
-                            content={postObj.content}
-                            likes={postObj.likes}
-                            comments={postObj.comments}
-                            likePost={clickLike}
-                            init={init}
-                            showDeletionDialog={showDeletionDialog}
-                            isLiked={postObj.isLiked}
-                        />
-                        <br/>
-                    </>
-                ))
-                }
+            <Button
+                fullWidth
+                variant="contained"
+                onClick={handleOpenPostDialog}
+            >
+                Create New Post
+            </Button>
 
-            </Container>
+            <br/>
+            <br/>
+
+            {postOBJs.map((postObj, index) => (
+                <>
+                    <Post
+                        key={index}
+                        contentID={`commentContent${index}`}
+                        errDialogID={`errDialog${index}`}
+                        postID={postObj.postID}
+                        username={postObj.username}
+                        title={postObj.title}
+                        content={postObj.content}
+                        likes={postObj.likes}
+                        comments={postObj.comments}
+                        likePost={clickLike}
+                        init={init}
+                        showDeletionDialog={handleOpenSnackbar}
+                        isLiked={postObj.isLiked}
+                    />
+                    <br/>
+                </>
+            ))
+            }
 
             <ConfirmationDialog
                 isOpen={isConfirmationDialogOpen}
@@ -289,7 +272,23 @@ const Profile = (props) => {
                 handleClose={handleClosePostDialog}
                 handleAction={handlePostDialogAction}
             />
-        </div>
+
+            <Snackbar
+                open={isSnackbarOpen}
+                autoHideDuration={5000}
+                onClose={handleCloseSnackbar}
+                anchorOrigin={{vertical: 'top', horizontal: "center"}}
+            >
+                <Alert
+                    onClose={handleCloseSnackbar}
+                    variant="filled"
+                    severity={alertSeverity}
+                    sx={{width: '100%'}}
+                >
+                    {alertMessage}
+                </Alert>
+            </Snackbar>
+        </Container>
     );
 };
 
