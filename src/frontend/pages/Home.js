@@ -64,9 +64,13 @@ const Home = () => {
 
     return (
         <Container>
-
-            <Typography id={"newPostMsg"} fontSize={12} color={"darkorange"}
-                        textAlign={"center"} hidden={successfulPostCreationHidden}>
+            <Typography
+                id={"newPostMsg"}
+                fontSize={12}
+                color={"darkorange"}
+                textAlign={"center"}
+                hidden={successfulPostCreationHidden}
+            >
                 Your post has been created!
             </Typography>
 
