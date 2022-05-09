@@ -151,14 +151,14 @@ exports.likeUserPost = async (req, res) => {
 // controller function for the GET request at endpoint "/userPost/numComments"
 exports.getNumComments = async (req, res) => {
     let userID = req.query.userID;
-    const result = await database.getDatabaseValues("Comment", ["CommentID"], "CommenterID", userID);
+    const result = await database.readDatabaseValues("Comment", ["CommentID"], "CommenterID", userID);
     res.status(200).send(result);
 }
 
 // controller function for te GET request at endpoint "/userPost/numFriends"
 exports.getNumFriends = async (req, res) => {
     let userID = req.query.userID;
-    const DBRes = await database.getDatabaseValues("User", ["FriendIDs"], "UserID", userID);
+    const DBRes = await database.readDatabaseValues("User", ["FriendIDs"], "UserID", userID);
     const userJSON = DBRes[0];
     const friendIDs = userJSON.FriendIDs;
     const result = User.UserIDTEXTStrToArr(friendIDs).length;
