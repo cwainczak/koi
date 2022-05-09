@@ -32,6 +32,12 @@ function shrinkUsername(name) {
 const Profile = (props) => {
     const {history} = props;
 
+    const [successfulPostCreationHidden, setSuccessfulPostCreationHidden] = React.useState(true)
+
+    useEffect(() => {
+        setSuccessfulPostCreationHidden(true)
+    }, [])
+
     const [postOBJs, setPostOBJs] = useState([]);
     const [numFriends, setNumFriends] = useState([]);
     const [numComments, setNumComments] = useState([]);
@@ -131,6 +137,7 @@ const Profile = (props) => {
             if (isSuccess) {
                 await init();
                 setIsPostDialogOpen(false);
+                setSuccessfulPostCreationHidden(false)
             } else {
                 console.log("Something went wrong!");
             }
@@ -183,6 +190,16 @@ const Profile = (props) => {
 
                 <br/>
                 <br/>
+
+                <Typography
+                    id={"newPostMsg"}
+                    fontSize={12}
+                    color={"darkorange"}
+                    textAlign={"center"}
+                    hidden={successfulPostCreationHidden}
+                >
+                    Your post has been created!
+                </Typography>
 
                 <Button
                     fullWidth
