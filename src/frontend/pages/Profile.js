@@ -287,6 +287,7 @@ const Profile = (props) => {
             >
                 <Alert
                     onClose={handleCloseSnackbar}
+                    variant="filled"
                     severity={alertSeverity}
                     sx={{width: '100%'}}
                 >
