@@ -54,16 +54,6 @@ const Profile = (props) => {
     };
 
 
-    const [successfulPostDeletionHidden, setSuccessfulPostDeletionHidden] = React.useState(true)
-
-    useEffect(() => {
-        setSuccessfulPostDeletionHidden(true)
-    }, [])
-
-    function showDeletionDialog() {
-        setSuccessfulPostDeletionHidden(false);
-    }
-
     const [postOBJs, setPostOBJs] = useState([]);
     const [numFriends, setNumFriends] = useState([]);
     const [numComments, setNumComments] = useState([]);
@@ -235,16 +225,6 @@ const Profile = (props) => {
                 <br/>
                 <br/>
 
-                <Typography
-                    id={"deletePostMsg"}
-                    fontSize={12}
-                    color={"darkorange"}
-                    textAlign={"center"}
-                    hidden={successfulPostDeletionHidden}
-                >
-                    Your post has been deleted!
-                </Typography>
-
                 <Button
                     fullWidth
                     variant="contained"
@@ -270,7 +250,7 @@ const Profile = (props) => {
                             comments={postObj.comments}
                             likePost={clickLike}
                             init={init}
-                            showDeletionDialog={showDeletionDialog}
+                            showDeletionDialog={handleOpenSnackbar}
                             isLiked={postObj.isLiked}
                         />
                         <br/>

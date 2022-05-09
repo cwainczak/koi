@@ -110,13 +110,14 @@ const Post = (props) => {
     }
 
     const handelConfirmationDialogAction = async () => {
+        setConfirmationDialogIsOpen(false);
         let isSuccess = await deletePost(props.postID);
 
         if (isSuccess) {
+            props.showDeletionDialog("success", "Your post has been deleted!");
             props.init();
-            setConfirmationDialogIsOpen(false);
-            props.showDeletionDialog();
         } else {
+            props.showDeletionDialog("warning", "Something went wrong! Your post was not deleted.");
             console.log("Something went wrong!");
         }
     }
