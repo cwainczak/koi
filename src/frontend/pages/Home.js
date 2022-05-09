@@ -16,23 +16,23 @@ let posts = [new PostObj("operatingoracle", "On it differed", "On it differed re
 
 
 const Home = () => {
-    const [isPostDialogOpen, setIsPostDialogOpen] = React.useState(false);
-
     const [successfulPostCreationHidden, setSuccessfulPostCreationHidden] = React.useState(true)
 
     useEffect(() => {
         setSuccessfulPostCreationHidden(true)
     }, [])
 
-    const handleOpenDialog = () => {
+    const [isPostDialogOpen, setIsPostDialogOpen] = React.useState(false);
+
+    const handleOpenPostDialog = () => {
         setIsPostDialogOpen(true);
     }
 
-    const handleCloseDialog = () => {
+    const handleClosePostDialog = () => {
         setIsPostDialogOpen(false);
     }
 
-    const handleDialogAction = async (title, content, errDialog) => {
+    const handlePostDialogAction = async (title, content, errDialog) => {
         let entTitle = removeWhiteSpace(title);
         let entContent = removeWhiteSpace(content);
 
@@ -77,7 +77,7 @@ const Home = () => {
             <Button
                 fullWidth
                 variant="contained"
-                onClick={handleOpenDialog}
+                onClick={handleOpenPostDialog}
             >
                 Create New Post
             </Button>
@@ -105,8 +105,8 @@ const Home = () => {
                 button1="Cancel"
                 button2="Post"
                 isOpen={isPostDialogOpen}
-                handleClose={handleCloseDialog}
-                handleAction={handleDialogAction}
+                handleClose={handleClosePostDialog}
+                handleAction={handlePostDialogAction}
             />
         </Container>
     );
