@@ -234,14 +234,12 @@ const Friends = () => {
                     <Tab label="Find Friends"/>
                 </Tabs>
             </AppBar>
-            <SwipeableViews
-                index={value}
-                onChangeIndex={handleChangeIndex}
-            >
+
+            <SwipeableViews index={value} onChangeIndex={handleChangeIndex}>
+                {/* my friends */}
                 <TabPanel>
                     <SearchField promptText={"Search your friends!"} onClick={handleSearchFriends}/>
                     <br/>
-                    {/* my friends */}
                     <Grid container rowSpacing={2} columnSpacing={2}>
                         {currentFriends.map((friend) => (
                             <Grid item xs={12} sm={6}>
@@ -253,8 +251,9 @@ const Friends = () => {
                         ))}
                     </Grid>
                 </TabPanel>
+
+                {/* friend requests */}
                 <TabPanel>
-                    {/* friend requests */}
                     <Grid container rowSpacing={2} columnSpacing={2}>
                         {friendRequests.map((friend) => (
                             <Grid item xs={12} sm={6}>
@@ -267,11 +266,11 @@ const Friends = () => {
                         ))}
                     </Grid>
                 </TabPanel>
+
+                {/* find friend */}
                 <TabPanel>
-                    <SearchField id="searchField" promptText={"Search to find new friends!"}
-                                 onClick={handleFindFriends}/>
+                    <SearchField id="searchField" promptText={"Search to find new friends!"} onClick={handleFindFriends}/>
                     <br/>
-                    {/* find friend */}
                     <Grid container rowSpacing={2} columnSpacing={2}>
                         {findFriends.map((friend) => (
                             <Grid item xs={12} sm={6}>
