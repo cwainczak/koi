@@ -301,7 +301,7 @@ const Profile = (props) => {
 
             <Snackbar
                 open={isSnackbarOpen}
-                autoHideDuration={6000}
+                autoHideDuration={5000}
                 onClose={handleCloseSnackbar}
                 anchorOrigin={{vertical: 'top', horizontal: "center"}}
             >
