@@ -168,6 +168,10 @@ exports.likeUserPost = async (req, res) => {
 exports.getNumComments = async (req, res) => {
     let userID = req.query.userID;
     const result = await database.readDatabaseValues("Comment", ["CommentID"], "CommenterID", userID);
+    if (result === -1){
+        res.status(500).(new Array[0])
+        return
+    }
     res.status(200).send(result);
 }
 
@@ -175,6 +179,9 @@ exports.getNumComments = async (req, res) => {
 exports.getNumFriends = async (req, res) => {
     let userID = req.query.userID;
     const DBRes = await database.readDatabaseValues("User", ["FriendIDs"], "UserID", userID);
+    if (DBRes === -1){
+        res.status(500).send({numFriends: 0})
+    }
     const userJSON = DBRes[0];
     const friendIDs = userJSON.FriendIDs;
     const result = user.UserIDTEXTStrToArr(friendIDs).length;
