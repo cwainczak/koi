@@ -1,7 +1,7 @@
 const User = require("../User")
 
 /**
- * Receives request at endpoint "/user/getUserObj"
+ * Receives request at endpoint "/userUtil/getUser"
  * @param req -> The GET request consisting of a UserID
  * @param res -> The GET response containing the corresponding User JSON
  */
