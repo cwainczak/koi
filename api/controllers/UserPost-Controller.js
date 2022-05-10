@@ -144,7 +144,7 @@ exports.addUserComment = async (req, res) => {
             console.log(err);
             res.status(500).send("Unsuccessful comment creation!");
         } else {
-            res.status(201).send("Successfully added comment!")
+            res.status(204).send("Successfully added comment!")
         }
     })
 }
@@ -160,7 +160,7 @@ exports.likeUserPost = async (req, res) => {
     const userLikedPost = await post.userLikedPost(postID, curUserID)
     fullResult.likeActionSucceeded = await post.likeAction(!userLikedPost, postID, curUserID)
     fullResult.likeCount = await post.getPostLikeCount(postID)
-    const statusCode = (fullResult.likeActionSucceeded === -1 || fullResult.likeCount === -1) ? (500) : (201)
+    const statusCode = (fullResult.likeActionSucceeded === -1 || fullResult.likeCount === -1) ? (500) : (200)
     res.status(statusCode).send(fullResult)
 }
 

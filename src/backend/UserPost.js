@@ -110,7 +110,7 @@ export const createPostComment = async (postID, commenterID, entContent) => {
             body: JSON.stringify({postID, commenterID, entContent})
         }
     ).then((res) => {
-        return res.status === 201
+        return res.status === 204
     }).catch((err) => {
         console.log(err)
         return false
