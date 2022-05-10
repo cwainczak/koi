@@ -97,11 +97,11 @@ exports.sendFriendReq = async (req, res) => {
     })
 }
 
-// Controller function for GET request to '/userFriend/getUserFriendReqs'
+// Controller function for GET request to '/userFriend/getUserFrdReqs'
 exports.getFriendReqOfUser = async (req, res) => {
     const currentUser = JSON.parse(req.query.curUser)
     if (currentUser.FriendReqIDs === ""){
-        res.status(201).send([])
+        res.status(200).send([])
         return
     }
     const curUserFriendReqIDs = User.cleanUserIDsStr(currentUser.FriendReqIDs)
@@ -112,7 +112,7 @@ exports.getFriendReqOfUser = async (req, res) => {
             console.log(err)
             res.status(500).send("Unsuccessful retrieval of user's friend requests!")
         } else {
-            res.status(201).send(queryRes)
+            res.status(200).send(queryRes)
         }
     })
 }

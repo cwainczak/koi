@@ -62,7 +62,7 @@ export const sendFriendReq = async (curUserID, newFriendUsername) => {
 
 // get all friend requests of user
 export const getFriendReqs = async (curUser) => {
-    const url = "http://localhost:4000/userFriend/getUserFriendReqs?" + new URLSearchParams({curUser})
+    const url = "http://localhost:4000/userFriend/getUserFrdReqs?" + new URLSearchParams({curUser})
     return await fetch(url,
         {
             method: "GET",

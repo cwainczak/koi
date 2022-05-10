@@ -14,7 +14,7 @@ router.get("/getUserFrds", userFriendController.getAllFriendsOfUser)
 
 router.patch("/sendFrdReq", userFriendController.sendFriendReq)
 
-router.get("/getUserFriendReqs", userFriendController.getFriendReqOfUser)
+router.get("/getUserFrdReqs", userFriendController.getFriendReqOfUser)
 
 router.patch("/acceptFrdReq", userFriendController.acceptFriendReq)
 
