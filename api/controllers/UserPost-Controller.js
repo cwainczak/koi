@@ -169,7 +169,7 @@ exports.getNumComments = async (req, res) => {
     let userID = req.query.userID;
     const result = await database.readDatabaseValues("Comment", ["CommentID"], "CommenterID", userID);
     if (result === -1){
-        res.status(500).(new Array[0])
+        res.status(500).send(new Array(0))
         return
     }
     res.status(200).send(result);
