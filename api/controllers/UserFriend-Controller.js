@@ -136,7 +136,7 @@ exports.denyFriendReq = async (req, res) => {
     const friendUserID = req.body.friendUserID
     const success = await updateFriendStatus(curUserID, friendUserID, true, true)
     console.log("is success true? -> " + success)
-    success ? (res.status(201).send()) : (res.status(500).send())
+    success ? (res.status(204).send()) : (res.status(500).send())
 }
 
 // Controller function for PATCH request to '/userFriend/removeFriend'

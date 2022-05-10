@@ -114,7 +114,7 @@ export const denyFriendRequest = async (curUserID, friendUserID) => {
         })
         .then((res) => {
             console.log(res)
-            return res.status === 201
+            return res.status === 204
         })
         .catch((err) => err);
     console.log(result)
