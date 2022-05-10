@@ -81,7 +81,7 @@ exports.getAllFriendsOfUser = async (req, res) => {
     })
 }
 
-// Controller function for PATCH request to '/userFriend/sentFrdReq'
+// Controller function for PATCH request to '/userFriend/sendFrdReq'
 exports.sendFriendReq = async (req, res) => {
     const curUserID = req.body.curUserID
     const newFriendUsername = req.body.newFriendUsername
@@ -92,7 +92,7 @@ exports.sendFriendReq = async (req, res) => {
             console.log(err)
             res.status(500).send("Unsuccessful friend request!")
         } else {
-            res.status(201).send()
+            res.status(204).send()
         }
     })
 }
