@@ -126,7 +126,7 @@ exports.acceptFriendReq = async (req, res) => {
                     await updateFriendStatus(friendUserID, curUserID, false, false) &&
                     await updateFriendStatus(curUserID, friendUserID, true, true) &&
                     await updateFriendStatus(friendUserID, curUserID, true, true)
-    success ? (res.status(201).send()) : (res.status(500).send())
+    success ? (res.status(204).send()) : (res.status(500).send())
 }
 
 // Controller function for PATCH request to '/userFriend/removeFrdReq'
