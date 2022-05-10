@@ -42,7 +42,7 @@ if (process.env.NODE_ENV && process.env.NODE_ENV !== 'development') {
 app.use('/userAccount', userAccountRouter)
 app.use("/userFriend", userFriendRouter)
 app.use('/userPost', userPostRouter)
-app.use("/user", userUtilRouter)
+app.use("/userUtil", userUtilRouter)
 
 // Implement route for errors
 app.use((err, req, res, next) => {
