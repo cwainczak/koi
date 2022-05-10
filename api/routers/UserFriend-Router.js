@@ -10,7 +10,7 @@ const router = express.Router()
 router.get("/search", userFriendController.searchUserData)
 
 // Endpoint for getting a user's current friends
-router.get("/getUserFriends", userFriendController.getAllFriendsOfUser)
+router.get("/getUserFrds", userFriendController.getAllFriendsOfUser)
 
 router.patch("/sentFrdReq", userFriendController.sendFriendReq)
 

@@ -59,14 +59,14 @@ exports.searchUserData = async (req, res) => {
 
 }
 
-// Controller function for GET request to '/userFriend/getUserFriends'
+// Controller function for GET request to '/userFriend/getUserFrds'
 exports.getAllFriendsOfUser = async (req, res) => {
     const currentUser = JSON.parse(req.query.curUser)
     console.log("currentUser UserID: " + currentUser.UserID)
     console.log("currentUser Friends: " + currentUser.FriendIDs)
     const curUserFriendIDs = User.cleanUserIDsStr(currentUser.FriendIDs)
     if (curUserFriendIDs.trim() === ""){
-        res.status(201).send([])
+        res.status(200).send([])
         return
     }
     const query = `SELECT * FROM User WHERE UserID IN (${curUserFriendIDs});`
@@ -76,7 +76,7 @@ exports.getAllFriendsOfUser = async (req, res) => {
             console.log(err)
             res.status(500).send("Unsuccessful retrieval of user's friends!")
         } else {
-            res.status(201).send(queryRes)
+            res.status(200).send(queryRes)
         }
     })
 }

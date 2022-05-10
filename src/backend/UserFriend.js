@@ -23,7 +23,7 @@ export const getUserSearchRes = async (searchInput, isNewFriend, curUser) => {
 
 // gets all friends of user
 export const getAllUserFriends = async (curUser) => {
-    const url = "http://localhost:4000/userFriend/getUserFriends?" + new URLSearchParams({curUser})
+    const url = "http://localhost:4000/userFriend/getUserFrds?" + new URLSearchParams({curUser})
     return await fetch(url,
         {
             method: "GET",
