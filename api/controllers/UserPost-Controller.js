@@ -144,7 +144,7 @@ exports.addUserComment = async (req, res) => {
             console.log(err);
             res.status(500).send("Unsuccessful comment creation!");
         } else {
-            res.status(204).send("Successfully added comment!")
+            res.status(201).send("Successfully added comment!")
         }
     })
 }
