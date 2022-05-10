@@ -82,7 +82,7 @@ exports.getPostComments = async (req, res) => {
                 let curComment = allComments[i];
                 result.push(curComment);
             }
-            res.status(201).json(result);
+            res.status(200).json(result);
         }
     })
 }
