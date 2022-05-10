@@ -139,14 +139,14 @@ exports.denyFriendReq = async (req, res) => {
     success ? (res.status(204).send()) : (res.status(500).send())
 }
 
-// Controller function for PATCH request to '/userFriend/removeFriend'
+// Controller function for PATCH request to '/userFriend/removeFrd'
 exports.removeFriend = async (req, res) => {
     console.log("in remove friend")
     const curUserID = req.body.curUserID
     const friendID = req.body.friendID
     const success = await updateFriendStatus(curUserID, friendID, true, false) &&
                     await updateFriendStatus(friendID, curUserID, true, false)
-    success ? (res.status(201).send()) : (res.status(500).send())
+    success ? (res.status(204).send()) : (res.status(500).send())
 }
 
 /**
