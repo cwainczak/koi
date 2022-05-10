@@ -42,7 +42,7 @@ exports.getUsersPosts = async (req, res) => {
                 let curPost = allPosts[i];
                 result.push(curPost);
             }
-            res.status(201).json(result);
+            res.status(200).json(result);
         }
     })
 }
