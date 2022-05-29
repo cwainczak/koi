@@ -22,6 +22,8 @@ import {
     removeFriend
 } from "../../backend/UserFriend"
 import {curUser} from "../../backend/UserObj";
+import {Alert, Snackbar} from "@mui/material";
+
 
 function TabPanel(props) {
     const {children, value, index} = props;
@@ -34,35 +36,23 @@ function TabPanel(props) {
 }
 
 const Friends = () => {
+    // popup snackbar alert message
+    const [isSnackbarOpen, setIsSnackbarOpen] = React.useState(false);
+    const [alertSeverity, setAlertSeverity] = React.useState("");
+    const [alertMessage, setAlertMessage] = React.useState("");
 
-    const errDialogMsg = {
-        text: "Something went wrong!",
-        color: "red"
+    const handleOpenSnackbar = (severity, message) => {
+        setAlertSeverity(severity);
+        setAlertMessage(message);
+        setIsSnackbarOpen(true);
     }
 
-    const sentFRDialogMsg = {
-        text: "Sent friend request!",
-        color: "white"
+    const handleCloseSnackbar = (event, reason) => {
+        if (reason === 'clickaway') {
+            return;
+        }
+        setIsSnackbarOpen(false);
     }
-
-    const accFRDialogMsg = {
-        text: "Added friend!",
-        color: "white"
-    }
-
-    const denFRDialogMsg = {
-        text: "Declined friend!",
-        color: "white"
-    }
-
-    const removeFriendDialogMsg = {
-        text: "Removed friend!",
-        color: "white"
-    }
-
-    const [dialogMsgHid, setDialogMsgHid] = useState(true)
-
-    const [dialogMsg, setDialogMsg] = useState(errDialogMsg)
 
     const [findFriends, setFindFriends] = useState([]);
 
@@ -72,7 +62,7 @@ const Friends = () => {
     // initialize all friend requests with useEffect hook
     const [friendRequests, setFriendRequests] = useState([])
 
-    async function init(){
+    async function init() {
         await curUser.refreshInstance()
         await fetchCurrentFriends()
         await fetchFriendRequests()
@@ -96,13 +86,13 @@ const Friends = () => {
         let stateUpdateArr = []
         for (let i = 0; i < allFriendReqs.length; i++) {
             let curFriendReq = allFriendReqs[i]
-            stateUpdateArr.push(new FriendObj(curFriendReq.UserID ,curFriendReq.Username, false))
+            stateUpdateArr.push(new FriendObj(curFriendReq.UserID, curFriendReq.Username, false))
         }
         console.log(allFriendReqs)
         setFriendRequests(stateUpdateArr)
     }
 
-    useEffect (init, [])
+    useEffect(init, [])
 
     const handleFindFriends = async (searchText) => {
         await init()
@@ -112,14 +102,13 @@ const Friends = () => {
         console.log(JSON.stringify(curUser.toJSON()))
         const searchRes = await getUserSearchRes(searchText, isNewFriend, JSON.stringify(curUser.toJSON()))
         if (searchRes === -1) {
-            setDialogMsg(errDialogMsg)
-            setDialogMsgHid(false)
+            handleOpenSnackbar("warning", "Something went wrong!");
             return
         }
         console.log(searchRes)
         // This array holds the search-result FriendObj objects so we can change the state of findFriends array
         let stateUpdateArr = []
-        for (let i = 0; i < searchRes.length; i++){
+        for (let i = 0; i < searchRes.length; i++) {
             let curFriend = searchRes[i]
             console.log(curFriend.Username, curFriend.disabled)
             stateUpdateArr.push(new FriendObj(curFriend.UserID, curFriend.Username, curFriend.disabled))
@@ -135,14 +124,13 @@ const Friends = () => {
         const searchRes = await getUserSearchRes(searchText, isNewFriend, JSON.stringify(curUser.toJSON()))
         // if there is an error
         if (searchRes === -1) {
-            setDialogMsg(errDialogMsg)
-            setDialogMsgHid(false)
+            handleOpenSnackbar("warning", "Something went wrong!");
             return
         }
         console.log(searchRes)
         // This array holds the search-result FriendObj objects so we can change the state of searchFriends array
         let stateUpdateArr = []
-        for (let i = 0; i < searchRes.length; i++){
+        for (let i = 0; i < searchRes.length; i++) {
             let curFriend = searchRes[i]
             stateUpdateArr.push(new FriendObj(curFriend.UserID, curFriend.Username, false))
         }
@@ -153,28 +141,28 @@ const Friends = () => {
         console.log("in add friend")
         const addRes = await sendFriendReq(curUser.UserID, username)
         console.log(addRes ? "Succeeded" : "Didn't succeed")
-        setDialogMsgHid(false)
         // if FR succeeded, disable add button
-        if (addRes){
+        if (addRes) {
             // This array holds the search-result FriendObj objects so we can change the state of searchFriends array
             let stateUpdateArr = []
-            for (let i = 0; i < findFriends.length; i++){
+            for (let i = 0; i < findFriends.length; i++) {
                 let curFriend = findFriends[i]
-                if (curFriend.username === username){
+                if (curFriend.username === username) {
                     curFriend.disabled = true
                 }
                 stateUpdateArr.push(curFriend)
             }
             setFindFriends(stateUpdateArr)
-            setDialogMsg(sentFRDialogMsg)
+            handleOpenSnackbar("success", "Sent friend request!");
+        } else {
+            handleOpenSnackbar("warning", "Something went wrong!");
         }
-        else setDialogMsg(errDialogMsg)
     }
 
     const deleteFriend = async (username) => {
         console.log("in delete friend")
         let friendID = -1
-        for (let i = 0; i < currentFriends.length; i++){
+        for (let i = 0; i < currentFriends.length; i++) {
             let curFriend = currentFriends[i]
             console.log("curFriend username: " + curFriend.username)
             console.log("entered username: " + username + " and is type " + typeof username)
@@ -183,42 +171,41 @@ const Friends = () => {
         console.log(friendID)
         if (friendID === -1) return
         const result = await removeFriend(curUser.UserID, friendID)
-        setDialogMsgHid(false)
-        setDialogMsg(result ? (removeFriendDialogMsg) : (errDialogMsg))
+        result ? (handleOpenSnackbar("info", "Removed friend!")) : (handleOpenSnackbar("warning", "Something went wrong!"))
         await init()
     }
 
     const onAcceptFR = async (username) => {
         console.log("onAcceptFR")
         let accFriendUserID = -1
-        for (let i = 0; i < friendRequests.length; i++){
+        for (let i = 0; i < friendRequests.length; i++) {
             let curFriendReq = friendRequests[i]
             if (curFriendReq.username === username) accFriendUserID = curFriendReq.userID
         }
         if (accFriendUserID === -1) return
         const accRes = await acceptFriendRequest(curUser.UserID, accFriendUserID)
-        setDialogMsgHid(false)
-        if (accRes){
-            setDialogMsg(accFRDialogMsg)
+        if (accRes) {
+            handleOpenSnackbar("success", "Added friend!");
+        } else {
+            handleOpenSnackbar("warning", "Something went wrong!");
         }
-        else setDialogMsg(errDialogMsg)
         await init()
     }
 
     const onDenyFR = async (username) => {
         console.log("onDenyFR")
         let denFriendUserID = -1
-        for (let i = 0; i < friendRequests.length; i++){
+        for (let i = 0; i < friendRequests.length; i++) {
             let curFriendReq = friendRequests[i]
             if (curFriendReq.username === username) denFriendUserID = curFriendReq.userID
         }
         if (denFriendUserID === -1) return
         const denRes = await denyFriendRequest(curUser.UserID, denFriendUserID)
-        setDialogMsgHid(false)
-        if (denRes){
-            setDialogMsg(denFRDialogMsg)
+        if (denRes) {
+            handleOpenSnackbar("info", "Declined friend!");
+        } else {
+            handleOpenSnackbar("warning", "Something went wrong!");
         }
-        else setDialogMsg(errDialogMsg)
         await init()
     }
 
@@ -234,10 +221,6 @@ const Friends = () => {
 
     return (
         <Container>
-            <Typography id={"friendErrMessage"} fontSize={12} color={dialogMsg.color}
-                        textAlign={"center"} hidden={dialogMsgHid}>
-                {dialogMsg.text}
-            </Typography>
             <AppBar position="static">
                 <Tabs
                     value={value}
@@ -251,14 +234,12 @@ const Friends = () => {
                     <Tab label="Find Friends"/>
                 </Tabs>
             </AppBar>
-            <SwipeableViews
-                index={value}
-                onChangeIndex={handleChangeIndex}
-            >
+
+            <SwipeableViews index={value} onChangeIndex={handleChangeIndex}>
+                {/* my friends */}
                 <TabPanel>
                     <SearchField promptText={"Search your friends!"} onClick={handleSearchFriends}/>
                     <br/>
-                    {/* my friends */}
                     <Grid container rowSpacing={2} columnSpacing={2}>
                         {currentFriends.map((friend) => (
                             <Grid item xs={12} sm={6}>
@@ -270,8 +251,9 @@ const Friends = () => {
                         ))}
                     </Grid>
                 </TabPanel>
+
+                {/* friend requests */}
                 <TabPanel>
-                    {/* friend requests */}
                     <Grid container rowSpacing={2} columnSpacing={2}>
                         {friendRequests.map((friend) => (
                             <Grid item xs={12} sm={6}>
@@ -284,10 +266,11 @@ const Friends = () => {
                         ))}
                     </Grid>
                 </TabPanel>
+
+                {/* find friend */}
                 <TabPanel>
                     <SearchField id="searchField" promptText={"Search to find new friends!"} onClick={handleFindFriends}/>
                     <br/>
-                    {/* find friend */}
                     <Grid container rowSpacing={2} columnSpacing={2}>
                         {findFriends.map((friend) => (
                             <Grid item xs={12} sm={6}>
@@ -297,6 +280,22 @@ const Friends = () => {
                     </Grid>
                 </TabPanel>
             </SwipeableViews>
+
+            <Snackbar
+                open={isSnackbarOpen}
+                autoHideDuration={5000}
+                onClose={handleCloseSnackbar}
+                anchorOrigin={{vertical: 'top', horizontal: "center"}}
+            >
+                <Alert
+                    onClose={handleCloseSnackbar}
+                    variant="filled"
+                    severity={alertSeverity}
+                    sx={{width: '100%'}}
+                >
+                    {alertMessage}
+                </Alert>
+            </Snackbar>
         </Container>
     );
 };

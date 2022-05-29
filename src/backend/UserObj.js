@@ -39,7 +39,7 @@ export default class UserObj {
 
     async refreshInstance() {
         console.log("Refreshing Instance")
-        const url = "http://localhost:4000/user/getUser?" + new URLSearchParams({UserID: this.UserID})
+        const url = "http://localhost:4000/userUtil/getUser?" + new URLSearchParams({UserID: this.UserID})
         const updatedUser = await fetch(url,
             {
                 method: "GET",

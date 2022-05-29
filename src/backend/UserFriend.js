@@ -23,7 +23,7 @@ export const getUserSearchRes = async (searchInput, isNewFriend, curUser) => {
 
 // gets all friends of user
 export const getAllUserFriends = async (curUser) => {
-    const url = "http://localhost:4000/userFriend/getUserFriends?" + new URLSearchParams({curUser})
+    const url = "http://localhost:4000/userFriend/getUserFrds?" + new URLSearchParams({curUser})
     return await fetch(url,
         {
             method: "GET",
@@ -42,7 +42,7 @@ export const getAllUserFriends = async (curUser) => {
 
 // add user as friend from current account
 export const sendFriendReq = async (curUserID, newFriendUsername) => {
-    const result = await fetch("http://localhost:4000/userFriend/sentFrdReq",
+    const result = await fetch("http://localhost:4000/userFriend/sendFrdReq",
         {
             method: "PATCH",
             headers: {
@@ -53,7 +53,7 @@ export const sendFriendReq = async (curUserID, newFriendUsername) => {
         })
         .then((res) => {
             console.log(res)
-            return res.status === 201
+            return res.status === 204
         })
         .catch((err) => err);
     console.log(result)
@@ -62,7 +62,7 @@ export const sendFriendReq = async (curUserID, newFriendUsername) => {
 
 // get all friend requests of user
 export const getFriendReqs = async (curUser) => {
-    const url = "http://localhost:4000/userFriend/getUserFriendReqs?" + new URLSearchParams({curUser})
+    const url = "http://localhost:4000/userFriend/getUserFrdReqs?" + new URLSearchParams({curUser})
     return await fetch(url,
         {
             method: "GET",
@@ -93,7 +93,7 @@ export const acceptFriendRequest = async (curUserID, friendUserID) => {
         })
         .then((res) => {
             console.log(res)
-            return res.status === 201
+            return res.status === 204
         })
         .catch((err) => err);
     console.log(result)
@@ -114,7 +114,7 @@ export const denyFriendRequest = async (curUserID, friendUserID) => {
         })
         .then((res) => {
             console.log(res)
-            return res.status === 201
+            return res.status === 204
         })
         .catch((err) => err);
     console.log(result)
@@ -123,7 +123,7 @@ export const denyFriendRequest = async (curUserID, friendUserID) => {
 
 // delete current friend
 export const removeFriend = async (curUserID, friendID) => {
-    const url = "http://localhost:4000/userFriend/removeFriend"
+    const url = "http://localhost:4000/userFriend/removeFrd"
     const result = await fetch(url,
         {
             method: "PATCH",
@@ -135,7 +135,7 @@ export const removeFriend = async (curUserID, friendID) => {
         })
         .then((res) => {
             console.log(res)
-            return res.status === 201
+            return res.status === 204
         })
         .catch((err) => err);
     console.log(result)

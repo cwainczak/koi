@@ -10,7 +10,7 @@ import LockOutlinedIcon from "@mui/icons-material/LockOutlined";
 import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
-import {createUserAcc, registrationCheck} from "../../backend/UserLogin"
+import {createUserAcc, registrationCheck} from "../../backend/UserAccount"
 import {validateEmail, removeWhiteSpace} from "../../backend/Util"
 
 
@@ -77,7 +77,7 @@ const SignUp = (props) => {
                     history.push("/SignIn")
                 } else {
                     errDialog.hidden = false
-                    errDialog.textContent = "Email already in use. Please reset password."
+                    errDialog.textContent = "Something went wrong!"
                     // disable button
                     handleLoading();
                 }
@@ -112,6 +112,14 @@ const SignUp = (props) => {
                         alignItems: 'center',
                     }}
                 >
+                    <Typography
+                        variant="h3"
+                        color="#e4b109"
+                    >
+                        Koi
+                    </Typography>
+                    <br/>
+                    <br/>
                     <Avatar sx={{m: 1, bgcolor: '#e4b109'}}>
                         <LockOutlinedIcon/>
                     </Avatar>

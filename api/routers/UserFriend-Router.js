@@ -7,21 +7,20 @@ const userFriendController = require('../controllers/UserFriend-Controller')
 // Create express router
 const router = express.Router()
 
-// Endpoint for checking user credentials
 router.get("/search", userFriendController.searchUserData)
 
 // Endpoint for getting a user's current friends
-router.get("/getUserFriends", userFriendController.getAllFriendsOfUser)
+router.get("/getUserFrds", userFriendController.getAllFriendsOfUser)
 
-router.patch("/sentFrdReq", userFriendController.sendFriendReq)
+router.patch("/sendFrdReq", userFriendController.sendFriendReq)
 
-router.get("/getUserFriendReqs", userFriendController.getFriendReqOfUser)
+router.get("/getUserFrdReqs", userFriendController.getFriendReqOfUser)
 
 router.patch("/acceptFrdReq", userFriendController.acceptFriendReq)
 
 router.patch("/denyFrdReq", userFriendController.denyFriendReq)
 
-router.patch("/removeFriend", userFriendController.removeFriend)
+router.patch("/removeFrd", userFriendController.removeFriend)
 
 // Export router
 module.exports = router

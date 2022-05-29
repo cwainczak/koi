@@ -33,3 +33,45 @@ export const sendEmail = async (someEmailJSData) => {
             return err
         })
 }
+
+/**
+ * Helper method to cast UserID String to UserID Array
+ * @param UserIDsSTR -> A String matching the format of UserID TEXTs in the User & Post table
+ * @returns {*[]|*} -> An array corresponding to the UserIDStr
+ */
+export function UserIDTEXTStrToArr(UserIDsSTR){
+    console.log(UserIDsSTR)
+    if (UserIDsSTR === "") return []
+    return UserIDsSTR.split(",").slice(1)
+}
+
+// checks if an array contains some value, regardless of type
+export function doesContain(someArr, someValue){
+    for (let i = 0; i < someArr.length; i++){
+        //console.log("someArr[${i}]: " + someArr[i] + " and is of type " + typeof(someArr))
+        //console.log("someValue[${i}]: " + someValue + " and is of type " + typeof(someValue))
+        if (someArr[i] == someValue) return true
+    }
+    return false
+}
+
+/**
+ * A function to shuffle an array. Used to populate a shuffled feed.
+ * @param someArr -> The array being shuffled
+ * @returns If successful -> A shuffled array
+ *          If unsuccessful -> -1
+ */
+export function shuffleArray(someArr){
+    if (someArr === null) return -1
+    if (someArr.length <= 1) return someArr
+    let currentIndex = someArr.length,  randomIndex;
+    // While there remain elements to shuffle.
+    while (currentIndex !== 0) {
+        // Pick a remaining element.
+        randomIndex = Math.floor(Math.random() * currentIndex);
+        currentIndex--;
+        // And swap it with the current element.
+        [someArr[currentIndex], someArr[randomIndex]] = [someArr[randomIndex], someArr[currentIndex]];
+    }
+    return someArr;
+}

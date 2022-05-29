@@ -10,7 +10,7 @@ import Typography from "@mui/material/Typography";
 import Paper from "@mui/material/Paper";
 import Container from "@mui/material/Container";
 import {removeWhiteSpace} from "../../backend/Util";
-import {resetPassword} from "../../backend/UserLogin";
+import {resetPassword} from "../../backend/UserAccount";
 
 
 const ResetPassword = (props) => {
@@ -99,6 +99,14 @@ const ResetPassword = (props) => {
                         alignItems: 'center',
                     }}
                 >
+                    <Typography
+                        variant="h3"
+                        color="#e4b109"
+                    >
+                        Koi
+                    </Typography>
+                    <br/>
+                    <br/>
                     <Avatar sx={{m: 1, bgcolor: '#e4b109'}}>
                         <LockOutlinedIcon/>
                     </Avatar>
